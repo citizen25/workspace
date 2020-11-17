@@ -1,0 +1,68 @@
+SELECT d.deptno, d.dname, COUNT(*)
+FROM dept d, emp e
+WHERE d.deptno = e.deptno
+
+
+SELECT d.deptno, dname, ename
+FROM dept d, emp e
+WHERE d.deptno = e.deptno;
+
+
+SELECT d.deptno, dname, COUNT(ename)
+FROM dept d, emp e
+WHERE d.deptno = e.deptno
+GROUP BY d.deptno, dname;
+
+
+SELECT d.deptno, dname, COUNT(ename)
+FROM dept d LEFT OUTER JOIN emp e
+ON d.deptno = e.deptno
+GROUP BY d.deptno, dname;
+
+
+SELECT d.deptno, dname, COUNT(ename)
+FROM dept d LEFT OUTER JOIN emp e
+ON d.deptno = e.deptno
+GROUP BY d.deptno, dname
+ORDER BY d.deptno ASC
+;
+
+
+SELECT d.deptno, dname, COUNT(ename) AS 근무사원수
+FROM dept d LEFT OUTER JOIN emp e
+ON d.deptno = e.deptno
+GROUP BY d.deptno, dname
+ORDER BY d.deptno ASC
+;
+
+
+
+
+SELECT c.category_id, c.name, COUNT(p.product_name) AS 등록상품수
+FROM category c LEFT OUTER JOIN product p
+ON c.category_id = p.category_id
+GROUP BY c.category_id, c.name
+ORDER BY c.category_id ASC
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

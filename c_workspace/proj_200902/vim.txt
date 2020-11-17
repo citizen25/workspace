@@ -1,0 +1,11 @@
+visual studio code가 wimdow recovery 이후로 작동하지 않아 editor를 바꾸기로
+함.
+
+
+vim를 설치하고 사용법을 숙지. -> vimtutor.
+
+git install
+
+mingw gcc install
+
+

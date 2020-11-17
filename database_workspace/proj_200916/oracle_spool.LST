@@ -1,0 +1,259 @@
+SQL> 
+SQL> 
+SQL> -- [join]
+SQL> --     Inner Join : 조인대상 테이블에서 공통적인 데이터만 가져온다
+SQL> --     Outer Join : 공통적인 데이터가 없는 경우엥도 가져올 수 있다.
+SQL> set line 1000
+SQL> set line 150
+SQL> set pagesize 50
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                               
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                               
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                               
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                               
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                               
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                               
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                               
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                               
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                               
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                               
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                               
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                               
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                               
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                               
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                               
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                               
+
+14 rows selected.
+
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME                        LOC                                                                                                           
+---------- ---------------------------- --------------------------                                                                                    
+        10 ACCOUNTING                   NEW YORK                                                                                                      
+        20 RESEARCH                     DALLAS                                                                                                        
+        30 SALES                        CHICAGO                                                                                                       
+        40 OPERATIONS                   BOSTON                                                                                                        
+
+SQL> -- emp테이블에서 봤을 때는 부서가 3개인줄 알았지만,
+SQL> -- dept테이블의 실제 부서 갯수는 4개이다.
+SQL> -- 부서명, 부서위치, 사원명, 급여를 출력
+SQL> SELECT dname, loc, ename, sal FROM dept d, emp e WHERE d.deptno = e.deptno;
+
+DNAME                        LOC                        ENAME                       SAL                                                               
+---------------------------- -------------------------- -------------------- ----------                                                               
+ACCOUNTING                   NEW YORK                   CLARK                      2450                                                               
+ACCOUNTING                   NEW YORK                   KING                       5000                                                               
+ACCOUNTING                   NEW YORK                   MILLER                     1300                                                               
+RESEARCH                     DALLAS                     JONES                      2975                                                               
+RESEARCH                     DALLAS                     FORD                       3000                                                               
+RESEARCH                     DALLAS                     ADAMS                      1100                                                               
+RESEARCH                     DALLAS                     SMITH                       800                                                               
+RESEARCH                     DALLAS                     SCOTT                      3000                                                               
+SALES                        CHICAGO                    WARD                       1250                                                               
+SALES                        CHICAGO                    TURNER                     1500                                                               
+SALES                        CHICAGO                    ALLEN                      1600                                                               
+SALES                        CHICAGO                    JAMES                       950                                                               
+SALES                        CHICAGO                    BLAKE                      2850                                                               
+SALES                        CHICAGO                    MARTIN                     1250                                                               
+
+14 rows selected.
+
+SQL> -- 누락된 것 : 40번 operation 부서
+SQL> 
+SQL> 
+SQL> SELECT d.deptno, dname, loc, ename, sal FROM dept LEFT OUTER JOIN emp e ON d.deptno = e.deptno;
+SELECT d.deptno, dname, loc, ename, sal FROM dept LEFT OUTER JOIN emp e ON d.deptno = e.deptno
+                                                                           *
+ERROR at line 1:
+ORA-00904: "D"."DEPTNO": invalid identifier 
+
+
+SQL> SELECT d.deptno, dname, loc, ename, sal FROM dept d LEFT OUTER JOIN emp e ON d.deptno = e.deptno;
+
+    DEPTNO DNAME                        LOC                        ENAME                       SAL                                                    
+---------- ---------------------------- -------------------------- -------------------- ----------                                                    
+        10 ACCOUNTING                   NEW YORK                   CLARK                      2450                                                    
+        10 ACCOUNTING                   NEW YORK                   KING                       5000                                                    
+        10 ACCOUNTING                   NEW YORK                   MILLER                     1300                                                    
+        20 RESEARCH                     DALLAS                     JONES                      2975                                                    
+        20 RESEARCH                     DALLAS                     FORD                       3000                                                    
+        20 RESEARCH                     DALLAS                     ADAMS                      1100                                                    
+        20 RESEARCH                     DALLAS                     SMITH                       800                                                    
+        20 RESEARCH                     DALLAS                     SCOTT                      3000                                                    
+        30 SALES                        CHICAGO                    WARD                       1250                                                    
+        30 SALES                        CHICAGO                    TURNER                     1500                                                    
+        30 SALES                        CHICAGO                    ALLEN                      1600                                                    
+        30 SALES                        CHICAGO                    JAMES                       950                                                    
+        30 SALES                        CHICAGO                    BLAKE                      2850                                                    
+        30 SALES                        CHICAGO                    MARTIN                     1250                                                    
+        40 OPERATIONS                   BOSTON                                                                                                        
+
+15 rows selected.
+
+SQL> -- OUTER JOIN을 사용해서 40번 OPERATIONS 부서를 출력할 수 있다.
+SQL> 
+SQL> 
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT d.deptno, dname, loc, ename, sal 
+  2  FROM emp e RIGHT OUTER JOIN dept d 
+  3* ON d.deptno = e.deptno
+SQL> /
+
+    DEPTNO DNAME                        LOC                        ENAME                       SAL                                                    
+---------- ---------------------------- -------------------------- -------------------- ----------                                                    
+        10 ACCOUNTING                   NEW YORK                   CLARK                      2450                                                    
+        10 ACCOUNTING                   NEW YORK                   KING                       5000                                                    
+        10 ACCOUNTING                   NEW YORK                   MILLER                     1300                                                    
+        20 RESEARCH                     DALLAS                     JONES                      2975                                                    
+        20 RESEARCH                     DALLAS                     FORD                       3000                                                    
+        20 RESEARCH                     DALLAS                     ADAMS                      1100                                                    
+        20 RESEARCH                     DALLAS                     SMITH                       800                                                    
+        20 RESEARCH                     DALLAS                     SCOTT                      3000                                                    
+        30 SALES                        CHICAGO                    WARD                       1250                                                    
+        30 SALES                        CHICAGO                    TURNER                     1500                                                    
+        30 SALES                        CHICAGO                    ALLEN                      1600                                                    
+        30 SALES                        CHICAGO                    JAMES                       950                                                    
+        30 SALES                        CHICAGO                    BLAKE                      2850                                                    
+        30 SALES                        CHICAGO                    MARTIN                     1250                                                    
+        40 OPERATIONS                   BOSTON                                                                                                        
+
+15 rows selected.
+
+SQL> 
+SQL> 
+SQL> -- 부서번호, 부서명, 근무사원수
+SQL> 
+SQL> SELECT d.deptno, dname, ename
+  2  FROM dept d, emp e
+  3  WHERE d.deptno = e.deptno;
+
+    DEPTNO DNAME                        ENAME                                                                                                         
+---------- ---------------------------- --------------------                                                                                          
+        10 ACCOUNTING                   CLARK                                                                                                         
+        10 ACCOUNTING                   KING                                                                                                          
+        10 ACCOUNTING                   MILLER                                                                                                        
+        20 RESEARCH                     JONES                                                                                                         
+        20 RESEARCH                     FORD                                                                                                          
+        20 RESEARCH                     ADAMS                                                                                                         
+        20 RESEARCH                     SMITH                                                                                                         
+        20 RESEARCH                     SCOTT                                                                                                         
+        30 SALES                        WARD                                                                                                          
+        30 SALES                        TURNER                                                                                                        
+        30 SALES                        ALLEN                                                                                                         
+        30 SALES                        JAMES                                                                                                         
+        30 SALES                        BLAKE                                                                                                         
+        30 SALES                        MARTIN                                                                                                        
+
+14 rows selected.
+
+SQL> -- 이 상태에서 사원수를 세어서 부서별로 나타낸다 == GROUP BY
+SQL> SELECT d.deptno, dname, COUNT(ename)
+  2  FROM dept d, emp e
+  3  WHERE d.deptno = e.deptno
+  4  GROUP BY d.deptno, dname;
+
+    DEPTNO DNAME                        COUNT(ENAME)                                                                                                  
+---------- ---------------------------- ------------                                                                                                  
+        10 ACCOUNTING                              3                                                                                                  
+        20 RESEARCH                                5                                                                                                  
+        30 SALES                                   6                                                                                                  
+
+SQL> -- 집계함수(COUNT)는 이미 그룹화되어 있기 때문에 따로 GROUP BY 하지 않는다
+SQL> -- 40번 부서는 어디로..?
+SQL> SELECT d.deptno, dname, COUNT(ename)
+  2  FROM dept d LEFT OUTER JOIN emp e
+  3  ON d.deptno = e.deptno
+  4  GROUP BY d.deptno, dname;
+
+    DEPTNO DNAME                        COUNT(ENAME)                                                                                                  
+---------- ---------------------------- ------------                                                                                                  
+        10 ACCOUNTING                              3                                                                                                  
+        40 OPERATIONS                              0                                                                                                  
+        20 RESEARCH                                5                                                                                                  
+        30 SALES                                   6                                                                                                  
+
+SQL> -- OUTER JOIN을 쓰면 ROW에 값이 없는 부서의 것도 나온다.
+SQL> SELECT d.deptno, dname, COUNT(ename)
+  2  FROM dept d LEFT OUTER JOIN emp e
+  3  ON d.deptno = e.deptno
+  4  GROUP BY d.deptno, dname
+  5  ORDER BY d.deptno ASC
+  6  ;
+
+    DEPTNO DNAME                        COUNT(ENAME)                                                                                                  
+---------- ---------------------------- ------------                                                                                                  
+        10 ACCOUNTING                              3                                                                                                  
+        20 RESEARCH                                5                                                                                                  
+        30 SALES                                   6                                                                                                  
+        40 OPERATIONS                              0                                                                                                  
+
+SQL> -- 정렬
+SQL> SELECT d.deptno, dname, COUNT(ename) AS 근무사원수
+  2  FROM dept d LEFT OUTER JOIN emp e
+  3  ON d.deptno = e.deptno
+  4  GROUP BY d.deptno, dname
+  5  ORDER BY d.deptno ASC
+  6  ;
+
+    DEPTNO DNAME                        근무사원수                                                                                                    
+---------- ---------------------------- ----------                                                                                                    
+        10 ACCOUNTING                            3                                                                                                    
+        20 RESEARCH                              5                                                                                                    
+        30 SALES                                 6                                                                                                    
+        40 OPERATIONS                            0                                                                                                    
+
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT * FROM category;
+
+CATEGORY_ID NAME                                                                                                                                      
+----------- ----------------------------------------                                                                                                  
+          1 상의                                                                                                                                      
+          2 하의                                                                                                                                      
+          3 악세사리                                                                                                                                  
+          4 신발                                                                                                                                      
+
+SQL> SELECT * FROM product;
+
+PRODUCT_ID CATEGORY_ID CODE                                     PRODUCT_NAME                                  PRICE                                   
+---------- ----------- ---------------------------------------- ---------------------------------------- ----------                                   
+         1           1 JE0007                                   스키니청바지                                  30000                                   
+         2           1 JE0007                                   스키니청바지                                  30000                                   
+         3           1 JE0007                                   스키니청바지                                  30000                                   
+         4           1 JE0007                                   스키니청바지                                  30000                                   
+         5           1 JE0007                                   스키니청바지                                  30000                                   
+         6           1 JE0007                                   스키니청바지                                  30000                                   
+         7           1 JE0007                                   스키니청바지                                  30000                                   
+         8           1 JE0007                                   스키니청바지                                  30000                                   
+         9           1 JE0007                                   스키니청바지                                  30000                                   
+        10           1 JE0007                                   스키니청바지                                  30000                                   
+        11           1 JE0007                                   스키니청바지                                  30000                                   
+        12           1 JE0007                                   스키니청바지                                  30000                                   
+        13           1 JE0007                                   스키니청바지                                  30000                                   
+        14           1 JE0007                                   스키니청바지                                  30000                                   
+        15           1 JE0007                                   스키니청바지                                  30000                                   
+        16           1 JE0007                                   스키니청바지                                  30000                                   
+
+16 rows selected.
+
+SQL> -- 카테고리 pk, 카테고리명, 등록된상품수 출력
+SQL> SELECT c.category_id, c.name, COUNT(p.product_name) AS 등록상품수
+  2  FROM category c LEFT OUTER JOIN product p
+  3  ON c.category_id = p.category_id
+  4  GROUP BY c.category_id, c.name
+  5  ORDER BY c.category_id ASC
+  6  ;
+
+CATEGORY_ID NAME                                     등록상품수                                                                                       
+----------- ---------------------------------------- ----------                                                                                       
+          1 상의                                             16                                                                                       
+          2 하의                                              0                                                                                       
+          3 악세사리                                          0                                                                                       
+          4 신발                                              0                                                                                       
+
+SQL> spool off

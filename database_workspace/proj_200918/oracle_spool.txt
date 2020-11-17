@@ -1,0 +1,392 @@
+SQL> -- 오라클에서도 유용한 기능을 사용하기 위한 함수를 지원한다.
+SQL> -- 이미 내부적으로 정의되어 있음. (숫자관련, 변환함수, 날짜관련, 문자관련, Null관련)
+SQL> -- abs(n) : 인수로 전달된 n에 대한 절대값 반환
+SQL> SELECT -5 FROM DUAL;
+
+        -5                                                                      
+----------                                                                      
+        -5                                                                      
+
+SQL> -- dual : 컬럼 1개와 레코드 1개로 이루어진 의미없는 dummy table
+SQL> -- 출력결과를 1개의 레코드로 보고 싶을 때
+SQL> -- ex) 오늘 날짜
+SQL> SELECT SYSDATE FROM emp;
+
+SYSDATE                                                                         
+--------                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+
+SYSDATE                                                                         
+--------                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+20/09/18                                                                        
+
+14 rows selected.
+
+SQL> SELECT SYSDATE FROM dual;
+
+SYSDATE                                                                         
+--------                                                                        
+20/09/18                                                                        
+
+SQL> DESC DUAL;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DUMMY                                              VARCHAR2(1)
+
+SQL> SELECT * FROM DUAL;
+
+DU                                                                              
+--                                                                              
+X                                                                               
+
+SQL> -- 음수를 제거하고 출력해보자
+SQL> SELECT ABS(5-9) FROM dual;
+
+  ABS(5-9)                                                                      
+----------                                                                      
+         4                                                                      
+
+SQL> -- CEIL(n) : 실수 n보다 큰 정수
+SQL> -- FLOOR(n) : 실수 n보다 작은 정수
+SQL> SELECT CEIL(2.2) FROM DUAL;
+
+ CEIL(2.2)                                                                      
+----------                                                                      
+         3                                                                      
+
+SQL> SELECT FLOOR(2.2) FROM DUAL;
+
+FLOOR(2.2)                                                                      
+----------                                                                      
+         2                                                                      
+
+SQL> -- MOD(a, b) : a를 b로 나눈 나머지를 반환
+SQL> -- 일반적인 프로그래밍 언어세어의 % 연산자와 동일
+SQL> SELECT MOD(5, 3) AS 나머지 FROM DUAL;
+
+    나머지                                                                      
+----------                                                                      
+         2                                                                      
+
+SQL> -- 변환 함수
+SQL> -- 사용 빈도가 상당히 많다. (중요)
+SQL> -- TO_CHAR(문자 or 날짜, 원하는 형식)
+SQL> set line 150;
+SQL> set pagesize 100;
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                               
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                               
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                               
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                               
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                               
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                               
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                               
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                               
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                               
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                               
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                               
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                               
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                               
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                               
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                               
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                               
+
+14 rows selected.
+
+SQL> -- 날짜를 대상으로 내가 원하는 format으로 변환하고 가져오기
+SQL> SELECT TO_CHAR(hiredate, 'yyyy-mm-dd' FROM emp;
+SELECT TO_CHAR(hiredate, 'yyyy-mm-dd' FROM emp
+                                      *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT TO_CHAR(hiredate, 'yyyy-mm-dd') FROM emp;
+
+TO_CHAR(HIREDATE,'YY                                                                                                                                  
+--------------------                                                                                                                                  
+1980-12-17                                                                                                                                            
+1981-02-20                                                                                                                                            
+1981-02-22                                                                                                                                            
+1981-04-02                                                                                                                                            
+1981-09-28                                                                                                                                            
+1981-05-01                                                                                                                                            
+1981-06-09                                                                                                                                            
+1987-04-19                                                                                                                                            
+1981-11-17                                                                                                                                            
+1981-09-08                                                                                                                                            
+1987-05-23                                                                                                                                            
+1981-12-03                                                                                                                                            
+1981-12-03                                                                                                                                            
+1982-01-23                                                                                                                                            
+
+14 rows selected.
+
+SQL> -- TO_NUMBER(data, 원하는형식) : data를 원하는 형식으로 변환
+SQL> -- TO_DATE(날짜형문자, 원하는형식) : 지정한 문자열을 날짜로 변환
+SQL> 
+SQL> 
+SQL> -- [문자관련 함수]
+SQL> -- lower, upper : 대소문자로 변환하는 함수
+SQL> SELECT ename FROM emp;
+
+ENAME                                                                                                                                                 
+--------------------                                                                                                                                  
+SMITH                                                                                                                                                 
+ALLEN                                                                                                                                                 
+WARD                                                                                                                                                  
+JONES                                                                                                                                                 
+MARTIN                                                                                                                                                
+BLAKE                                                                                                                                                 
+CLARK                                                                                                                                                 
+SCOTT                                                                                                                                                 
+KING                                                                                                                                                  
+TURNER                                                                                                                                                
+ADAMS                                                                                                                                                 
+JAMES                                                                                                                                                 
+FORD                                                                                                                                                  
+MILLER                                                                                                                                                
+
+14 rows selected.
+
+SQL> SELECT LOWER(ename) FROM emp;
+
+LOWER(ENAME)                                                                                                                                          
+--------------------                                                                                                                                  
+smith                                                                                                                                                 
+allen                                                                                                                                                 
+ward                                                                                                                                                  
+jones                                                                                                                                                 
+martin                                                                                                                                                
+blake                                                                                                                                                 
+clark                                                                                                                                                 
+scott                                                                                                                                                 
+king                                                                                                                                                  
+turner                                                                                                                                                
+adams                                                                                                                                                 
+james                                                                                                                                                 
+ford                                                                                                                                                  
+miller                                                                                                                                                
+
+14 rows selected.
+
+SQL> SELECT UPPER(LOWER(ename)) FROM emp;
+
+UPPER(LOWER(ENAME))                                                                                                                                   
+--------------------                                                                                                                                  
+SMITH                                                                                                                                                 
+ALLEN                                                                                                                                                 
+WARD                                                                                                                                                  
+JONES                                                                                                                                                 
+MARTIN                                                                                                                                                
+BLAKE                                                                                                                                                 
+CLARK                                                                                                                                                 
+SCOTT                                                                                                                                                 
+KING                                                                                                                                                  
+TURNER                                                                                                                                                
+ADAMS                                                                                                                                                 
+JAMES                                                                                                                                                 
+FORD                                                                                                                                                  
+MILLER                                                                                                                                                
+
+14 rows selected.
+
+SQL> -- CONCAT(a, b) : a와 b를 연결하여 반환.
+SQL> -- 프로그래밍 언어에서는 + 연산자로 처리하지만 오라클을 + 연산자가  지원되지 않음,
+SQL> -- + 를 숫자의 연산자로만 생각함(오라클)
+SQL> SELECT CONCAT('내 이름은 ', ename) FROM emp;
+
+CONCAT('내이름은',ENAME)                                                                                                                              
+------------------------------------------------                                                                                                      
+내 이름은 SMITH                                                                                                                                       
+내 이름은 ALLEN                                                                                                                                       
+내 이름은 WARD                                                                                                                                        
+내 이름은 JONES                                                                                                                                       
+내 이름은 MARTIN                                                                                                                                      
+내 이름은 BLAKE                                                                                                                                       
+내 이름은 CLARK                                                                                                                                       
+내 이름은 SCOTT                                                                                                                                       
+내 이름은 KING                                                                                                                                        
+내 이름은 TURNER                                                                                                                                      
+내 이름은 ADAMS                                                                                                                                       
+내 이름은 JAMES                                                                                                                                       
+내 이름은 FORD                                                                                                                                        
+내 이름은 MILLER                                                                                                                                      
+
+14 rows selected.
+
+SQL> SELECT CONCAT(CONCAT('내 이름은 ', ename)), '입니다.') FROM emp;
+SELECT CONCAT(CONCAT('내 이름은 ', ename)), '입니다.') FROM emp
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments 
+
+
+SQL> SELECT CONCAT(CONCAT('내 이름은 ', ename), '입니다.') FROM emp;
+
+CONCAT(CONCAT('내이름은',ENAME),'입니다.')                                                                                                            
+--------------------------------------------------------------------                                                                                  
+내 이름은 SMITH입니다.                                                                                                                                
+내 이름은 ALLEN입니다.                                                                                                                                
+내 이름은 WARD입니다.                                                                                                                                 
+내 이름은 JONES입니다.                                                                                                                                
+내 이름은 MARTIN입니다.                                                                                                                               
+내 이름은 BLAKE입니다.                                                                                                                                
+내 이름은 CLARK입니다.                                                                                                                                
+내 이름은 SCOTT입니다.                                                                                                                                
+내 이름은 KING입니다.                                                                                                                                 
+내 이름은 TURNER입니다.                                                                                                                               
+내 이름은 ADAMS입니다.                                                                                                                                
+내 이름은 JAMES입니다.                                                                                                                                
+내 이름은 FORD입니다.                                                                                                                                 
+내 이름은 MILLER입니다.                                                                                                                               
+
+14 rows selected.
+
+SQL> --substr : sub하위의 뜻. 즉, 전체 문자열에 대한 일부 문자를 반환
+SQL> -- substr(대상문자열, 시작번째, 가져올 문자열의  총 길이)
+SQL> SELECT SUBSTR(ename, 0, 2) FROM emp;
+
+SUBSTR(ENAME,0,2                                                                                                                                      
+----------------                                                                                                                                      
+SM                                                                                                                                                    
+AL                                                                                                                                                    
+WA                                                                                                                                                    
+JO                                                                                                                                                    
+MA                                                                                                                                                    
+BL                                                                                                                                                    
+CL                                                                                                                                                    
+SC                                                                                                                                                    
+KI                                                                                                                                                    
+TU                                                                                                                                                    
+AD                                                                                                                                                    
+JA                                                                                                                                                    
+FO                                                                                                                                                    
+MI                                                                                                                                                    
+
+14 rows selected.
+
+SQL> -- length(str) : 지정한 문자열의 총 길이 반환
+SQL> SELECT ename, LENGTH(ename) FROM emp;
+
+ENAME                LENGTH(ENAME)                                                                                                                    
+-------------------- -------------                                                                                                                    
+SMITH                            5                                                                                                                    
+ALLEN                            5                                                                                                                    
+WARD                             4                                                                                                                    
+JONES                            5                                                                                                                    
+MARTIN                           6                                                                                                                    
+BLAKE                            5                                                                                                                    
+CLARK                            5                                                                                                                    
+SCOTT                            5                                                                                                                    
+KING                             4                                                                                                                    
+TURNER                           6                                                                                                                    
+ADAMS                            5                                                                                                                    
+JAMES                            5                                                                                                                    
+FORD                             4                                                                                                                    
+MILLER                           6                                                                                                                    
+
+14 rows selected.
+
+SQL> -- 사원의 이름 뒷 2자리만 가져오기.
+SQL> SELECT ename, SUBSTR(ename, LENGTH(ename)-3, 2) FROM emp;
+
+ENAME                SUBSTR(ENAME,LEN                                                                                                                 
+-------------------- ----------------                                                                                                                 
+SMITH                MI                                                                                                                               
+ALLEN                LL                                                                                                                               
+WARD                 WA                                                                                                                               
+JONES                ON                                                                                                                               
+MARTIN               RT                                                                                                                               
+BLAKE                LA                                                                                                                               
+CLARK                LA                                                                                                                               
+SCOTT                CO                                                                                                                               
+KING                 KI                                                                                                                               
+TURNER               RN                                                                                                                               
+ADAMS                DA                                                                                                                               
+JAMES                AM                                                                                                                               
+FORD                 FO                                                                                                                               
+MILLER               LL                                                                                                                               
+
+14 rows selected.
+
+SQL> SELECT ename, SUBSTR(ename, LENGTH(ename)-1, 2) FROM emp;
+
+ENAME                SUBSTR(ENAME,LEN                                                                                                                 
+-------------------- ----------------                                                                                                                 
+SMITH                TH                                                                                                                               
+ALLEN                EN                                                                                                                               
+WARD                 RD                                                                                                                               
+JONES                ES                                                                                                                               
+MARTIN               IN                                                                                                                               
+BLAKE                KE                                                                                                                               
+CLARK                RK                                                                                                                               
+SCOTT                TT                                                                                                                               
+KING                 NG                                                                                                                               
+TURNER               ER                                                                                                                               
+ADAMS                MS                                                                                                                               
+JAMES                ES                                                                                                                               
+FORD                 RD                                                                                                                               
+MILLER               ER                                                                                                                               
+
+14 rows selected.
+
+SQL> -- substr( , , )의 두번째 항에서 '몇번째부터'는 처음이 0이 아니라 1로 쳐야한다.(oracle 에서는
+SQL> SELECT ename, SUBSTR(ename, 1, 3) FROM emp;
+
+ENAME                SUBSTR(ENAME,1,3)                                                                                                                
+-------------------- ------------------------                                                                                                         
+SMITH                SMI                                                                                                                              
+ALLEN                ALL                                                                                                                              
+WARD                 WAR                                                                                                                              
+JONES                JON                                                                                                                              
+MARTIN               MAR                                                                                                                              
+BLAKE                BLA                                                                                                                              
+CLARK                CLA                                                                                                                              
+SCOTT                SCO                                                                                                                              
+KING                 KIN                                                                                                                              
+TURNER               TUR                                                                                                                              
+ADAMS                ADA                                                                                                                              
+JAMES                JAM                                                                                                                              
+FORD                 FOR                                                                                                                              
+MILLER               MIL                                                                                                                              
+
+14 rows selected.
+
+SQL> SELECT ename, SUBSTR(ename, 0, 3) FROM emp;
+
+ENAME                SUBSTR(ENAME,0,3)                                                                                                                
+-------------------- ------------------------                                                                                                         
+SMITH                SMI                                                                                                                              
+ALLEN                ALL                                                                                                                              
+WARD                 WAR                                                                                                                              
+JONES                JON                                                                                                                              
+MARTIN               MAR                                                                                                                              
+BLAKE                BLA                                                                                                                              
+CLARK                CLA                                                                                                                              
+SCOTT                SCO                                                                                                                              
+KING                 KIN                                                                                                                              
+TURNER               TUR                                                                                                                              
+ADAMS                ADA                                                                                                                              
+JAMES                JAM                                                                                                                              
+FORD                 FOR                                                                                                                              
+MILLER               MIL                                                                                                                              
+
+14 rows selected.
+
+SQL> -- substr(대상문자열, 번째(1부터시작), 몇자)
+SQL> -- 번째는 1부터가 원칙이지만, 만일 1보다 작은 수인 0을 넣으면 첫번째로 간주해줌
+SQL> spool off

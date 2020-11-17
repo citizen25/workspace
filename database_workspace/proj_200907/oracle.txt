@@ -1,0 +1,195 @@
+SQL> alter user system
+  2  identified by 1234;
+
+User altered.
+
+SQL> -- 시스템 계정으로 로그인 전환하기
+SQL> connect system/1234
+Connected.
+SQL> -- 확인
+SQL> show user
+USER is "SYSTEM"
+SQL>  drop user user0907 cascade;
+
+User dropped.
+
+SQL> -- 위의 명령은 강사와 함께 진행하기 위해서 이미 만든 것을 지운 것이다.
+SQL> -- 기존에 없던 것을 새로 생성하는 것은 DDL - create
+SQL> DROP TABLESPACE space0907
+  2  ICLUDING CONTENTS AND DATAFILES
+  3  CASCADE CONSTRAINTS;
+ICLUDING CONTENTS AND DATAFILES
+*
+ERROR at line 2:
+ORA-02173: invalid option for DROP TABLESPACE 
+
+
+SQL> de
+SP2-0042: unknown command "de" - rest of line ignored.
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DROP TABLESPACE space0907
+  2  INCLUDING CONTENTS AND DATAFILES
+  3* CASCADE CONSTRAINTS
+SQL> /
+
+Tablespace dropped.
+
+SQL> create  tablespace  space0907
+  2  datafile 'C:\oraclexe\app\oracle\oradata\XE\space0907.dbf'
+  3  size 2M
+  4  /
+
+Tablespace created.
+
+SQL> -- user 만들기
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create user user0907
+  2  identified by 1234
+  3  default tablespace space0907
+  4* quota unlimited on space0907
+SQL> /
+
+User created.
+
+SQL> -- default tablespace ~~ : user가 살아갈 tablespace를 지정해주는 것
+SQL> -- quota unlimited on ~~ : tablespace를 사용할 권한을 무제한으로 줌
+SQL> 
+SQL> 
+SQL> -- 권한을 부여하는 것은 DCL - grant
+SQL> GRANT CREATE SESSION, CREATE TABLE TO user0907;
+
+Grant succeeded.
+
+SQL> show user
+USER is "SYSTEM"
+SQL> connect user0907/1234;
+Connected.
+SQL> show user
+USER is "USER0907"
+SQL> CREATE TABLE member (
+  2  	name VARCHAR(20),
+  3  	age NUMBER,
+  4  	birth DATE
+  5  );
+
+Table created.
+
+SQL> -- DML(조작어 : 넣고 INSET, 수정 UPDATE, 삭제 DELETE)
+SQL> INSERT INTO mamber(name, age, birth) VALUES('NoHongCheol', 30, '1989-09-01');
+INSERT INTO mamber(name, age, birth) VALUES('NoHongCheol', 30, '1989-09-01')
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> INSERT INTO member(name, age, birth) VALUES('NoHongCheol', 30, '1989-09-01');
+
+1 row created.
+
+SQL> INSERT INTO member(name, age, birth) VALUES('ParkNaLae', 27, '1986-07-15');
+
+1 row created.
+
+SQL> -- 트랜잭션을 확정지어야만 데이터가 디스크에 기록됨
+SQL> commit;
+
+Commit complete.
+
+SQL> SELECT name, age, birth FROM member;
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+NoHongCheol                                      30 89/09/01                    
+ParkNaLae                                        27 86/07/15                    
+
+SQL> SELECT name, age, birth FROM member WHERE name='ParkNaLae';
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+ParkNaLae                                        27 86/07/15                    
+
+SQL> SELECT name, birth FROM member WHERE birth='1989-09-01';
+
+NAME                                     BIRTH                                  
+---------------------------------------- --------                               
+NoHongCheol                              89/09/01                               
+
+SQL> SELECT name, age FROM member WHERE age=27;
+
+NAME                                            AGE                             
+---------------------------------------- ----------                             
+ParkNaLae                                        27                             
+
+SQL> UPDATE member SET name='HongCheol';
+
+2 rows updated.
+
+SQL> select * from member;
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+HongCheol                                        30 89/09/01                    
+HongCheol                                        27 86/07/15                    
+
+SQL> rollback
+  2  ;
+
+Rollback complete.
+
+SQL> select * from member;
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+NoHongCheol                                      30 89/09/01                    
+ParkNaLae                                        27 86/07/15                    
+
+SQL> UPDATE member SET name='HongCheol' WHERE name = 'NoHongCheol';
+
+1 row updated.
+
+SQL> SELECT * FROM member;
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+HongCheol                                        30 89/09/01                    
+ParkNaLae                                        27 86/07/15                    
+
+SQL> DELETE FROM member WHERE name='ParkNaLae';
+
+1 row deleted.
+
+SQL> SELECT * FROM member;
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+HongCheol                                        30 89/09/01                    
+
+SQL> alter table mamber
+  2  drop column age;
+alter table mamber
+*
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> alter table member
+  2  drop column age;
+
+Table altered.
+
+SQL> SELECT * FROM member
+  2  ;
+
+NAME                                     BIRTH                                  
+---------------------------------------- --------                               
+HongCheol                                89/09/01                               
+
+SQL> DROP TABLE member;
+
+Table dropped.
+
+SQL> spool off

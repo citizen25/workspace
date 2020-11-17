@@ -1,0 +1,7 @@
+branch는 평행우주
+
+    git branch [만들고싶은branch이름]
+
+    git branch 로 만들어진 branch 확인 가능
+
+    git checkout [만들어진branch이름] 으로 branch 접속 가능

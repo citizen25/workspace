@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투명도</title>
+    <style>
+        #box{
+            width: 200px;
+            height: 200px;
+            background-size: 200px 200px;
+            
+            background-image: url(https://images.unsplash.com/photo-1593642532009-6ba71e22f468?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60);
+            margin: auto;   /* 양 옆에 남는 공간. 즉, margin을 양분하여 동일하게 배분하는 속성 */
+        }
+        #mask{
+            width: 200px;
+            height: 200px;
+            background: black;
+            /* opacity 투명도 */
+            opacity: 0.8; /* 1이 완전 불투명, 0이 완전 투명*/
+        }
+        /* box에 hover시 mask의 opacity를 투명하게 처리 */
+        #box:hover #mask{
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <!-- 이미지 배경을 가진 박스 -->
+    <div id="box">
+        <!-- 이미지를 가릴 마스크 -->
+        <div id="mask"></div>
+    </div>
+</body>
+</html>

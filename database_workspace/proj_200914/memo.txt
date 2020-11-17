@@ -1,0 +1,98 @@
+1,2교시 오라클
+
+제약조건 : Constraint Condition
+	컬럼 정의시 제약, 제한 사항을 두는 것
+	목적 : 결점이 없는 데이터만 받아들이기 위해 (무결성 데이터를 위함)
+	종류
+		Unique : 중복을 허용하지 않는 제약조건 (단, null이 허용되어버린다)
+		Not null : null을 허용하지 않는 제약조건
+		Primary key : Unique + Nut null
+		Default : 기본값
+			ex) regdate date default sysdate, point number default 10000
+		Check : 범위를 제한
+		Foreign key (외래키)
+
+테이블 작성시 무조건무조건 정의해야 하는 컬럼!! == Primary key
+	주민번호과 같은 용도
+	유일성 + null 비허용
+
+
+Foreign key
+	중복되는 데이터에 대한 문제 제기
+
+정규화
+	중복된 데이터는 분리시키자는 설계 원칙
+	정규화 시키고 난 후, 물리적으로 분리된 테이블을 어떻게 합쳐서 보여줘야하지? -> join문
+
+조인분 == join
+	물리적으로 분리된 테이블을 마치 하나의 테이블처럼 합쳐서 보여줄 수 있는 select 문
+
+
+
+
+
+
+
+
+
+
+
+-- 최소급여를 받는 사원과 같은 부서에서 근무하는 모든 사원명,부서명을 출력하세요
+SELECT ename, dname
+FROM emp e, dept d
+WHERE e.deptno = d.deptno
+AND e.deptno = (
+	SELECT deptno FROM emp WHERE sal=(
+		SELECT MIN(sal) FROM emp
+	)
+)
+;
+
+-- 위치가 시카고인 부서에 속한 사원들의 이름과 부서명을 출력하세요
+SELECT e.ename, d.dname
+FROM emp e, dept d
+WHERE e.deptno = d.deptno
+AND loc='CHICAGO'
+;
+
+-- ALLEN 보다 입사일이 빠른 사원의 부서명, 사원명을 출력하세요
+SELECT e.ename, d.dname, e.sal 
+FROM emp e, dept d 
+WHERE d.deptno = e.deptno AND 
+	hiredate < (
+		SELECT hiredate FROM emp WHERE ename = 'ALLEN'
+	)
+;
+
+-- 이름에 M이 들어간 사원들의 이름, 부서명, 급여를 출력하세요
+SELECT ename, dname, sal
+FROM emp e, dept d
+WHERE e.deptno = d.deptno
+	AND ename LIKE '%M%'
+;
+
+-- 입사일이 가장 빠른 사원의 부서명, 사원명, 입사일을 출력하세요
+SELECT dname, ename, hiredate 
+FROM dept d, emp e 
+WHERE d.deptno = e.deptno
+	AND hiredate = (
+		SELECT MIN(hiredate) FROM emp
+	)
+;
+
+-- 커미션을 받지 않는 사원들의 이름, 급여, 부서명, 부서위치를 출력하세요
+SELECT sal, dname, loc
+FROM emp e, dept d
+WHERE d.deptno = e.deptno
+	AND e.comm IS NULL
+;
+
+
+
+
+
+
+
+
+
+

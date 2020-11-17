@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 뒤집기</title>
+    <style>
+        /* 최초에는 350px로 고정시켜 놓음 */
+        img{            
+            width: 350px;   /* html은 width값만 부여할 경우, height는 비율에 맞게 자동으로 조절한다 */
+        }
+        /* 유사클래스를 이용 */
+        img:hover{
+            transform: scaleX(-1);  /* 본연의 크기는 갖되, x축의 방향으로 뒤집는다 */
+        }
+    </style>
+</head>
+<body>
+    <img src="https://images.unsplash.com/photo-1599402544208-e88b7834dd69?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80">
+</body>
+</html>

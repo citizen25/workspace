@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화살표 표현하기</title>
+    <style>
+        /* 4개의 span에 공통적으로 적용할 스타일 정의
+            모든 tag는 box
+                block : 같은 행에, 그 어떤 태그와 공존 불가. 너비, 높이 지정이 가능.
+                inline : block의 반대. 다른 태그와 공존 가능. 너비 높이 지정 불가.
+        */
+        .arrow{
+            border: solid red;
+            display: inline-block;  /* inline이면서 너비, 높이 지정이 가능한 속성 */
+            border-width: 0px 3px 3px 0px;  /* top right bottom left */
+            padding: 3px;
+        }
+        /* 우측 */
+        .right{
+            transform: rotate(-45deg);
+        }
+        /* 좌측 */
+        .left{
+            transform: rotate(135deg);
+        }
+        /* 위 */
+        .up{
+            transform: rotate(-135deg);
+        }
+        /* 아래 */
+        .down{
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- control +slash -->
+    <!-- 특수문자 화살표가 아닌 순수 css 만으로 화살표 만들어보기 -->
+    <!-- span 태그는, 문서 컨텐츠의 일부에 마크업 하고 싶을 때 사용. 아무런 효과없이, 미크업만을 목적으로 할 때. -->
+    <!-- 오늘은 <span>태풍을</span> 조심하세요 -->
+
+    <!-- 복사를 원하는 라인에 커서를 올려놓고 shift+alt+아래방향키 -->
+    <span class="arrow right"></span>
+    <span class="arrow left"></span>
+    <span class="arrow up"></span>
+    <span class="arrow down"></span>
+
+</body>
+</html>

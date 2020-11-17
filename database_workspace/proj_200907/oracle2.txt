@@ -1,0 +1,182 @@
+SQL> -- 현재 계정이 어떤 테이블을 가지고 있는지 조회하기
+SQL> -- 시스템 정보를 가져올 때 사용하는 테이블을 가리켜 딕셔너리라 한다
+SQL> -- 딕셔너리는 무려 수백여개 되므로, 다 객체명을 외울 수가 없다
+SQL> -- 노하우 접두어의 특징 관리자
+SQL> -- 관리자로 로그인 하면 dba_ 시작하는게 많다.
+SQL> -- 일반 계정으로 로그인하면 user_ 시작하는게 많다.
+SQL> 
+SQL> 
+SQL> -- SQLplus tool 명령어 중 화면에 보여줄 텍스트의 버퍼크기 지정
+SQL> SET LINE 200
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+
+14 rows selected.
+
+SQL> -- 한 페이지당 보여질 레코드 수
+SQL> SET PAGESIZE 20
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+
+14 rows selected.
+
+SQL> show user
+USER is "USER0907"
+SQL> -- 현재 계정은 일반 계정이 사용할 수 있는 딕셔너리는 user_로 시작하는 테이블일 것이다.
+SQL> SELECT table_name FROM user_tables;
+
+TABLE_NAME                                                                                                                                                                                              
+------------------------------------------------------------                                                                                                                                            
+DEPT                                                                                                                                                                                                    
+EMP                                                                                                                                                                                                     
+
+SQL> -- 급여가 2000 이하인 사원의 이름, 급여를 출력하시오
+SQL> SELECT ename, pay FROM t_emp WHERE  pay<=2000;
+SELECT ename, pay FROM t_emp WHERE  pay<=2000
+                       *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT ename, sal FROM emp WHERE  sal<=2000;
+
+ENAME                       SAL                                                                                                                                                                         
+-------------------- ----------                                                                                                                                                                         
+SMITH                       800                                                                                                                                                                         
+ALLEN                      1600                                                                                                                                                                         
+WARD                       1250                                                                                                                                                                         
+MARTIN                     1250                                                                                                                                                                         
+TURNER                     1500                                                                                                                                                                         
+ADAMS                      1100                                                                                                                                                                         
+JAMES                       950                                                                                                                                                                         
+MILLER                     1300                                                                                                                                                                         
+
+8 rows selected.
+
+SQL> -- 이름이 S로 시작하는 사원의 이름, 급여, 관리자의 사원번호를 출력하시오
+SQL> SELECT name, sal, mgr FROM emp WHERE ename LIKE 'S%';
+SELECT name, sal, mgr FROM emp WHERE ename LIKE 'S%'
+       *
+ERROR at line 1:
+ORA-00904: "NAME": invalid identifier 
+
+
+SQL> SELECT ename, sal, mgr FROM emp WHERE ename LIKE 'S%';
+
+ENAME                       SAL        MGR                                                                                                                                                              
+-------------------- ---------- ----------                                                                                                                                                              
+SMITH                       800       7902                                                                                                                                                              
+SCOTT                      3000       7566                                                                                                                                                              
+
+SQL> -- 이름 중간에 A자가 들어가는 사원의 사원번호, 이름을 출력하시오
+SQL> SELECT deptno, ename FROM emp WHERE ename LIKE '%A%';
+
+    DEPTNO ENAME                                                                                                                                                                                        
+---------- --------------------                                                                                                                                                                         
+        30 ALLEN                                                                                                                                                                                        
+        30 WARD                                                                                                                                                                                         
+        30 MARTIN                                                                                                                                                                                       
+        30 BLAKE                                                                                                                                                                                        
+        10 CLARK                                                                                                                                                                                        
+        20 ADAMS                                                                                                                                                                                        
+        30 JAMES                                                                                                                                                                                        
+
+7 rows selected.
+
+SQL> -- 이름의 끝이 T로 끝나는 사원의 이름, 업무, 부서번호를 출력하시오
+SQL> SELECT ename, job, deptno FROM emp WHERE ename LIKE '%T';
+
+ENAME                JOB                    DEPTNO                                                                                                                                                      
+-------------------- ------------------ ----------                                                                                                                                                      
+SCOTT                ANALYST                    20                                                                                                                                                      
+
+SQL> -- 커미션이 0인 사원의 이름 , 급여, 커미션을 출력하시오
+SQL> SELECT ename, sal, comm FROM emp WHERE comm=0;
+
+ENAME                       SAL       COMM                                                                                                                                                              
+-------------------- ---------- ----------                                                                                                                                                              
+TURNER                     1500          0                                                                                                                                                              
+
+SQL> -- 커미션 계약을 하지 않은 사원의 이름, 급여 ,커미션을 출력하시오
+SQL> SELECT ename, sal, comm FROM emp WHERE comm ISNULL;
+SELECT ename, sal, comm FROM emp WHERE comm ISNULL
+                                            *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT ename, sal, comm FROM emp WHERE comm IS NULL;
+
+ENAME                       SAL       COMM                                                                                                                                                              
+-------------------- ---------- ----------                                                                                                                                                              
+SMITH                       800                                                                                                                                                                         
+JONES                      2975                                                                                                                                                                         
+BLAKE                      2850                                                                                                                                                                         
+CLARK                      2450                                                                                                                                                                         
+SCOTT                      3000                                                                                                                                                                         
+KING                       5000                                                                                                                                                                         
+ADAMS                      1100                                                                                                                                                                         
+JAMES                       950                                                                                                                                                                         
+FORD                       3000                                                                                                                                                                         
+MILLER                     1300                                                                                                                                                                         
+
+10 rows selected.
+
+SQL> SELECT ename, sal, comm FROM emp WHERE comm IS NOT NULL;
+
+ENAME                       SAL       COMM                                                                                                                                                              
+-------------------- ---------- ----------                                                                                                                                                              
+ALLEN                      1600        300                                                                                                                                                              
+WARD                       1250        500                                                                                                                                                              
+MARTIN                     1250       1400                                                                                                                                                              
+TURNER                     1500          0                                                                                                                                                              
+
+SQL> -- 사원의 총 수, 평균급여, 급여의 합, 최대급여, 최소급여를 출력하시오
+SQL> SELECT COUNT(*), SUM(sal), MAX(sal), MIN(sal) FROM emp;
+
+  COUNT(*)   SUM(SAL)   MAX(SAL)   MIN(SAL)                                                                                                                                                             
+---------- ---------- ---------- ----------                                                                                                                                                             
+        14      29025       5000        800                                                                                                                                                             
+
+SQL> SELECT COUNT(*) AS 사원수, AVG(sal) AS 평균급여, SUM(sal) AS 급여합, MAX(sal) AS 최대급여, MIN(sal) AS 최소급여 FROM emp;
+
+    사원수   평균급여     급여합   최대급여   최소급여                                                                                                                                                  
+---------- ---------- ---------- ---------- ----------                                                                                                                                                  
+        14 2073.21429      29025       5000        800                                                                                                                                                  
+
+SQL> spool off

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout</title>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 800px;
+            margin: auto;
+        }
+        #box1{
+            float: left;
+            width: 400px;
+            height: 600px;
+            background-color: red;
+        }
+        #box2{
+            float: left;
+            width: 300px;
+            height: 600px;
+            background-color: green;
+        }
+        #box3{
+            clear: left; 
+            width: 100%;
+            height: 200px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>float & clear</h1>
+    <p>
+        red와 green은 float:left;로 띄었다. 밑으로 깔려 들어가는 blue를 정상적으로 밑에 붙이기 위해 clear:left;로 red와 green의 float:left;를 무효화한 것.
+    </p>
+    <div id="wrapper">
+        <div id="box1"></div>
+        <div id="box2"></div>
+        <div id="box3"></div>
+    </div>
+</body>
+</html>

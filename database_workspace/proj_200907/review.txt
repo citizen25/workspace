@@ -1,0 +1,292 @@
+온라인 수업 출결체크 방법
+	
+	아침 입실
+		(1) QR코드 처리
+		(2) 신호 전송
+	9~12시 : 신호 전송으로 확인 (벙개)
+	15~18시 : 신호 전송으로 확인 (벙개)
+	저녁퇴실
+		(1) QR코드 처리
+		(2) 신호 전송
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------
+
+
+[Oracle]
+
+보통 sys의 비밀번호는 change_on_install : 
+	설치하고 바꾸하는 얘기
+
+delete, update문은 무서운 문장
+	잘못하면 전부 수정해야함
+		-> backup 잘해놓자..
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+[예제 - Oracle]
+
+오라클의 최고권한 관리자인 sys계정으로 접속하여 system 사용자의 비밀번호를 1234로 변경한 후, system계정으로 로그인 하시오
+	alter user system identified by 1234;
+
+현재 접속한 유저명이 무엇인지 알아보는 명령어 
+	show user
+
+아래의 조건으로 데이터베이스를 생성하시오 
+	TableSpace 명 : space0907 
+	파일명 : space0907.dbf 	
+	파일 사이즈 : 2M 
+
+	CREATE TABLESPACE 테이블스페이스명
+	DATAFILE 데이타파일전체경로
+	SIZE 크기(M);
+	
+아래의 조건으로 유저를 생성하시오 
+	유저명 ; user0907
+	비밀번호 : 1234
+	사용할 TableSpace : space0907
+	테이블스페이스에 대한 사용 할당 무제한 
+
+	CREATE USER user0907
+	IDENTIFIED BY 1234
+	DEFAULT TABLESPACE space0907;
+	QUOTA UNLIMITED ON space0907;
+
+
+아래의 조건으로 유저에게 권한을 부여하시오 
+	접속 권한 	
+	테이블 생성 권한 
+	
+	GRANT CREATE TABLE, CREATE SESSION
+	TO user0907;
+
+
+user0907 계정으로 로그인 한 후, 아래의 조건에 해당하는  테이블을 생성하시오 
+
+	테이블명 : member
+
+	컬럼 구성 
+	이름 : name , 영문 20자 넣을 크기로 생성
+	나이: age , 정수형으로  생성
+	출생일 : birth , 날짜형으로 생성   
+
+	CREATE TABLE member (
+		name VARCHAR2(20),
+		age NUMBER,
+		birth DATE
+	);
+
+
+member 테이블에 두사람의 정보를 아래의 값으로 넣으시오 
+	이름: 노홍철, 나이:30 , 생년월일 1989-09-01
+	이름: 박나래 , 나이:27 , 생년월일 1986-07-15
+
+	INSERT INTO member (name, age, birth)
+	VALUES ('Park Na Rae', 27, '1986-07-15');
+
+
+member 테이블에 입력된 모든  레코드를 출력하시오	
+	SELECT name, age, birth FROM member;
+
+member 테이블의 데이터 중  이름이 박나래 인 사람의 레코드만 출력하시오 
+	SELECT name, age, birth FROM member WHERE name='ParkNaLae';
+
+member 테이블의 데이터 중 생년월일이 1989-09-01 인 사람의 이름과 생년월일을 출력하시오 
+	SELECT name, birth FROM member WHERE birth='1989-09-01';
+
+member 테이블에서 나이가 27세인 사람의 이름, 나이를 출력하시오  
+	SELECT name, age FROM member WHERE age=27;
+
+member 테이블에서 이름이 노홍철인 사람의 이름을 홍철로 수정하시오 
+	UPDATE member SET name='HongCheol' WHERE name = 'NoHongCheol'; 
+
+member 테이블에서 이름이 박나래인 사람의 레코드를 삭제하시오 
+	DELETE FROM member WHERE name='ParkNaLae';
+
+-- 컬럼 제거 (기존 테이블의 구조변경) - DDL (create, alter, drop)
+alter table member
+drop column age;
+
+name 홍철을 null 값으로만 바꾸는건 update로 해주는방법밖에없는건가요?
+	그렇다.
+	update member set name='' where name='NoHongCheol';
+	update member set name=NULL where name='NoHongCheol';
+		이 두개는 다른 것이다.
+
+member 테이블을 제거하시오 (DDL)
+	DROP TABLE member;
+
+-------------------------------------------------------------------------------
+[예제 - MySql]
+
+cmd 창을 열은 후, mysql이 설치된 디렉토리의 bin으로 이동하여 mysql 접속명령어를 이용하여 mysql root 계정으로 로그인 하시오 
+	cd 경로 -> mysql -u root -p
+
+아래의 조건으로 데이터베이스를 생성하시오 
+데이터베이스명 : mydb
+	 CREATE DATABASE mydb;
+
+아래의 조건으로 유저를 생성하시오 
+유저명 : dev0907
+비밀번호 : 1234
+	CREATE USER 'dev0907'@'localhost' IDENTIFIED BY '1234';
+
+
+dev0907계정에게 mydb에 대한 모든사용 권한을 부여하고 , 갱신하시오
+	GRANT ALL PRIVILEGES ON mydb.* TO 'dev0907'@'localhost';
+	갱신 FLUSH PRIVILEGES;
+
+
+dev0907계정으로 로그인 하시오
+	mysql -u dev0907 -p 1234
+	빠져나올 때는 
+		quit;
+
+
+로그인 후, database 접속
+	use db명;
+
+
+dev0907계정에서 아래의 조건으로 테이블을 생성하시오 
+테이블명 : member
+컬럼 구성 
+이름 : name , 영문 20자 넣을 크기로 생성
+나이: age , 정수형으로  생성
+출생일 : birth , 날짜형으로 생성   
+
+CREATE TABLE member(
+	name VARCHAR(20),
+	age INT, 
+	birth TIMESTAMP
+) DEFAULT CHARACTER SET UTF8;
+
+
+member 테이블에 두사람의 정보를 아래의 값으로 넣으시오 
+이름: 노홍철, 나이:30 , 생년월일 1989-09-01
+이름: 박나래 , 나이:27 , 생년월일 1986-07-15
+
+INSERT INTO member(name, age, birth) VALUES('NoHongCheol', 30, '1989-09-01');
+INSERT INTO member(name, age, birth) VALUES('ParkNaLae', 27, '1986-07-15');
+
+
+member 테이블에 입력된 모든  레코드를 출력하시오
+	SELECT * FROM member;
+
+member 테이블의 데이터 중  이름이 박나래 인 사람의 레코드만 출력하시오 
+	SELECT * FROM member WHERE name='ParkNaLae';
+
+member 테이블의 데이터 중 생년월일이 1989-09-01 인 사람의 이름과 생년월일을 출력하시오 
+	SELECT name, birth FROM member WHERE birth='1989-09-01';
+
+member 테이블에서 나이가 27세인 사람의 이름, 나이를 출력하시오  
+	SELECT name, birth FROM member WHERE age=27;
+
+member 테이블에서 이름이 노홀철인 사람의 이름을 홍철로 수정하시오 
+	UPDATE member SET name='HongCheol' WHERE name='NoHongCheol'; 
+		alter(구조, 존재와 관련), update(데이터를 대상으로)
+
+member 테이블에서 이름이 박나래인 사람의 레코드를 삭제하시오 
+	DELETE FROM member WHERE name='ParkNaLae';
+
+member 테이블을 제거하시오 
+	DROP TABLE member;
+
+----------------------------------------------------------------------------------------
+
+[SQL문 기초]
+
+급여가 2000 이하인 사원의 이름, 급여를 출력하시오
+	SELECT ename, pay FROM emp WHERE pay<=2000;
+
+이름이 S로 시작하는 사원의 이름, 급여, 관리자의 사원번호를 출력하시오 
+	SELECT ename, sal, mgr FROM emp WHERE ename='S'; // 이름이 S 라는 사원
+	SELECT ename, sal, mgr FROM emp WHERE ename LIKE 'S%'; // 이름이 S로 시작하는 사원
+
+이름 중간에 A자가 들어가는 사원의 사원번호, 이름을 출력하시오
+	SELECT deptno, ename FROM emp WHERE ename LIKE '%A%';
+
+이름의 끝이 T로 끝나는 사원의 이름, 업무, 부서번호를 출력하시오 
+	SELECT ename, job, deptno FROM emp WHERE ename LIKE '%T';
+		쿼리문장은 대소문자를 가리지 않으나, 데이터는 당연히 구분되어야 함.
+
+커미션이 0인 사원의 이름 , 급여, 커미션을 출력하시오
+	SELECT ename, sal, comm FROM emp WHERE comm=0;
+
+커미션 계약을 하지 않은 사원의 이름, 급여 ,커미션을 출력하시오 
+	SELECT ename, sal, comm FROM emp WHERE comm=0;   // '=' 연산자로는 값이 없는 null을 비교할 수 없다.
+	SELECT ename, sal, comm FROM emp WHERE comm IS NULL;
+	반대는
+		SELECT ename, sal, comm FROM emp WHERE comm IS NOT NULL;
+
+사원의 총 수, 평균급여, 급여의 합, 최대급여, 최소급여를 출력하시오  
+	SELECT COUNT(*), SUM(sal), MAX(sal), MIN(sal) FROM emp;
+	
+	select 실행시 컬럼명에 가칭(alias)을 부여할 수 있다.
+	SELECT COUNT(*) AS 사원수, AVG(sal) AS 평균급여, SUM(sal) AS 급여합, MAX(sal) AS 최대급여, MIN(sal) AS 최소급여 FROM emp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Oracle sample data]
+
+create table dept(
+deptno number 
+,dname varchar2(14)
+,loc varchar2(13)
+,primary key(deptno)
+);
+create table emp(
+empno number 
+,ename varchar2(10)     
+,job varchar2(9)         
+,mgr number
+,hiredate date
+,sal number
+,comm number
+,deptno number
+,primary key(empno)
+);
+insert into dept(deptno,dname,loc) values(10,'ACCOUNTING','NEW YORK');
+insert into dept(deptno,dname,loc) values(20,'RESEARCH','DALLAS');
+insert into dept(deptno,dname,loc) values(30,'SALES','CHICAGO');
+insert into dept(deptno,dname,loc) values(40,'OPERATIONS','BOSTON');
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7369,'SMITH','CLERK',7902,'80/12/17',800,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7499,'ALLEN','SALESMAN',7698,'81/02/20',1600,300,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7521,'WARD','SALESMAN',7698,'81/02/22',1250,500,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7566,'JONES','MANAGER',7839,'81/04/02',2975,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7654,'MARTIN','SALESMAN',7698,'81/09/28',1250,1400,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7698,'BLAKE','MANAGER',7839,'81/05/01',2850,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7782,'CLARK','MANAGER',7839,'81/06/09',2450,10);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7788,'SCOTT','ANALYST',7566,'87/04/19',3000,20);
+insert into emp(empno,ename,job,hiredate,sal,deptno) values(7839,'KING','PRESIDENT','81/11/17',5000,10);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7844,'TURNER','SALESMAN',7698,'81/09/08',1500,0,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7876,'ADAMS','CLERK',7788,'87/05/23',1100,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7900,'JAMES','CLERK',7698,'81/12/03',950,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7902,'FORD','ANALYST',7566,'81/12/03',3000,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7934,'MILLER','CLERK',7782,'82/01/23',1300,10);
+
+
+
+
+

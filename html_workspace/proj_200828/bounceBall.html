@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+#box{
+	width:100px;
+	position:absolute;
+	left:0px;
+	top:100px;
+	animation-name:move;
+	animation-duration:4s;
+	animation-iteration-count:infinite;
+	animation-direction:alternate;
+}
+
+#ball{
+	width:100px;
+	position:absolute;
+	left:0px;
+	top:100px;
+	animation-name:bounce;
+	animation-duration:0.4s;
+	animation-iteration-count:infinite;
+	animation-direction:alternate;
+}
+#shadowWrapper{
+	width:100px;
+	height:10px;
+	position:absolute;
+	left:0px;
+	top:550px;
+	animation-name:move;
+	animation-duration:4s;
+	animation-iteration-count:infinite;
+	animation-direction:alternate;
+}
+#shadow{
+	width:100%;
+	height:100%;
+	background:#cccccc;
+	border-radius:40px;
+	animation-name:size;
+	animation-duration:0.4s;
+	animation-iteration-count:infinite;
+	animation-direction:alternate;
+}
+
+@keyframes move{
+	from{
+		left:0px;
+	}
+	to{
+		left:900px;
+	}
+}
+@keyframes bounce{
+	from{
+		top:300px;
+	}
+	to{
+		top:0px;
+	}
+}
+@keyframes size{
+	from{
+		width:100px;
+		height:20px;
+
+	}
+	to{
+		width:30px;
+		height:10px;
+	}
+}
+</style>
+</head>
+<body>
+	<div id="box">
+		<img id="ball" src="./images/ball.png"/>
+	</div>
+
+	<div id="shadowWrapper">
+		<div id="shadow"></div>
+	</div>
+</body>
+</html>

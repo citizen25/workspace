@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>20200827 종합</title>
+    
+    <style>
+        body{
+            background-image: url(./images/double-bubble.png);
+            background-repeat: repeat;
+        }
+        #wrapper{
+            width: 700px;
+            height: 1200px;
+            margin: auto;
+            background-color: rgb(206, 206, 206);
+        }
+        #header{
+            width: 100%;
+            height: 100px;
+            background-color:rgb(133, 62, 62);
+        }
+        #mid{
+            height: 500px;
+            overflow: hidden;
+            background-color:rgb(151, 66, 130);
+        }
+        #side{
+            height: 100%;
+            width: 300px;
+            float: left;
+            background-color:rgb(73, 165, 153);
+
+        }
+        #content{
+            height: 100%;
+            width: 400px;
+            float: left;
+        }
+        #content12{
+            height: 300px;
+            width: 100%;
+            overflow: hidden;
+        }
+        #content1{
+            height: 100%;
+            width: 200px;
+            float: left;
+            background-color:rgb(74, 58, 134);
+        }
+        #content2{
+            height: 100%;
+            width: 200px;
+            float: left;
+            background-color:rgb(100, 133, 62);
+        }
+        #content3{
+            height: 200px;
+            width: 100%;
+            float: left;
+            background-color:rgb(173, 157, 63);
+        }
+        #footer{
+            height: 100px;
+            width: 100%;
+            background-color:rgb(40, 71, 44);
+        }
+        #survey{
+            height: 500px;
+            width: 100%;
+            background-color:rgb(192, 226, 255);
+        }
+        table{
+            border: rgb(66, 136, 202) solid 1px;
+            width: 700px;
+            height: 100%;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="wrapper">
+        <div id="header"></div>
+        <div id="mid">
+            <div id="side"></div>
+            <div id="content">
+                <div id="content12">
+                    <div id="content1"></div>
+                    <div id="content2"></div>
+                </div>
+                <div id="content3"></div>
+            </div>
+        </div>
+        <div id="footer"></div>
+        <div id="survey">
+
+            <table>
+                <tr>
+                    <td>name</td>
+                    <td><input type="text" placeholder="hong gildong"/></td>
+                </tr>
+                <tr>
+                    <td>phone</td>
+                    <td>
+                        <select>
+                            <option>010</option>
+                            <option>011</option>
+                            <option>017</option>
+                        </select>
+                        -
+                        <input type="text" placeholder="1234" size="5"/>
+                        -
+                        <input type="text" placeholder="1234" size="5"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>email</td>
+                    <td>
+                        <input type="text">
+                        @
+                        <select>
+                            <option>naver.com</option>
+                            <option>google.com</option>
+                            <option>kakao.com</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>receiving consent</td>
+                    <td>
+                        <input type="radio" name="recieving">yes
+                        <input type="radio" name="recieving">no
+                    </td>
+                </tr>
+                <tr>
+                    <td>hobby</td>
+                    <td>
+                        <input type="checkbox">축구
+                        <input type="checkbox">농구
+                        <input type="checkbox">독서
+                        <input type="checkbox">코딩
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td colspan="2">
+                        <button>sign in</button></td>
+                </tr>
+                
+            </table>
+
+        </div>
+    </div>
+
+</body>
+</html>

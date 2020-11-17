@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>animation</title>
+    <style>
+        #superman{
+            width: 100px;
+            position: absolute;
+            animation-name: flying;
+            animation-duration: 3s;
+            animation-direction: normal;
+            animation-iteration-count: 1;
+            animation-fill-mode: both;
+        }
+        #supermanWrapper{
+            height: 100px;
+            width: 100px;
+            position: absolute;
+            animation-name: upDown;
+            animation-duration: 1.5s;
+            animation-direction: alternate;
+            animation-iteration-count: 2;
+            animation-fill-mode: both;
+        }
+        #ground{
+            width: 100%;
+            height: 300px;
+            position: absolute;
+            top: 565px;
+            background-color: rgb(73, 42, 42);
+        }
+        @keyframes flying{
+            from{
+                left: 0px;
+            }
+            to{
+                left: 1300px;
+            }
+        }
+        @keyframes upDown{
+            from{
+                top: 500px;
+            }
+            to{
+                top: 0px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="supermanWrapper">
+        <img id="superman" src="./images/superhero.png"/>
+    </div>
+    <div id="ground"></div>
+</body>
+</html>

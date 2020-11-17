@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition</title>
+    <style>
+        #box1{
+            background-color: red;
+            margin: 20px;
+            height: 100px;
+            width: 100px;
+            transition-duration: 1s;
+        }
+        #box1:hover{
+            background-color: pink;
+        }
+        #box2{
+            background-color: green;
+            margin: 20px;
+            height: 100px;
+            width: 100px;
+            transition-duration: 1s;
+        }
+        #box2:hover{
+            width: 500px;
+        }
+        #box3{
+            background-color: blue;
+            margin: 20px;
+            height: 100px;
+            width: 100px;
+            transition-duration: 1s;
+        }
+        #box3:hover{
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="box1"></div>
+    <div id="box2"></div>
+    <div id="box3"></div>
+</body>
+</html>

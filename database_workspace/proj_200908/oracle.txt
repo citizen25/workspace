@@ -1,0 +1,334 @@
+SQL> show user
+USER is "SYSTEM"
+SQL> -- 딕셔너리 (시스템에서 지원하는 테이블)
+SQL> -- 수백여가지라서 외우기 힘들다
+SQL> -- 접두어 : 관리자 dba_, 일반사용자 user_r_
+SQL> SELECT username FROM  dbaa_users;
+SELECT username FROM  dbaa_users
+                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT username FROM  daa_users;
+SELECT username FROM  daa_users
+                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT username FROM  dba_users;
+
+USERNAME                                                                        
+------------------------------------------------------------                    
+SYS                                                                             
+SYSTEM                                                                          
+ANONYMOUS                                                                       
+USER0907                                                                        
+APEX_PUBLIC_USER                                                                
+FLOWS_FILES                                                                     
+APEX_040000                                                                     
+OUTLN                                                                           
+DIP                                                                             
+ORACLE_OCM                                                                      
+XS$NULL                                                                         
+
+USERNAME                                                                        
+------------------------------------------------------------                    
+MDSYS                                                                           
+CTXSYS                                                                          
+DBSNMP                                                                          
+XDB                                                                             
+APPQOSSYS                                                                       
+HR                                                                              
+
+17 rows selected.
+
+SQL> conn user0907/1234;
+Connected.
+SQL> -- sql 문이 아니라 SQLplus 툴 명령어 : 창에 채워질 글자 수를 조정
+SQL> set line 200
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+
+14 rows selected.
+
+SQL> -- 페이지당 보여질 레코드수를 늘리자
+SQL> set pagesize 20
+SQL> /
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+
+14 rows selected.
+
+SQL> -- '/'는 최신에 쳤던 쿼리문을 불러온다
+SQL> -- 급여의 평균 출력하시오
+SQL> -- 집계함수의 AVG() 사용
+SQL> SELECT AVG(sal) FROM emp;
+
+  AVG(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+2073.21429                                                                                                                                                                                              
+
+SQL> -- 평균 급여보다 높은 급여를 받는 사원의 이름, 급여를 출력하시오
+SQL> SELECT ename, sal FROM emp WHERE sal > 2073.21429
+  2  ;
+
+ENAME                       SAL                                                                                                                                                                         
+-------------------- ----------                                                                                                                                                                         
+JONES                      2975                                                                                                                                                                         
+BLAKE                      2850                                                                                                                                                                         
+CLARK                      2450                                                                                                                                                                         
+SCOTT                      3000                                                                                                                                                                         
+KING                       5000                                                                                                                                                                         
+FORD                       3000                                                                                                                                                                         
+
+6 rows selected.
+
+SQL> -- 위처럼하면 매우 번거롭다.
+SQL> -- subquery 사용
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT ename, sal FROM emp WHERE sal > (SELECT AVG(sal) FROM emp);
+SQL> /
+SELECT ename, sal FROM emp WHERE sal > (SELECT AVG(sal) FROM emp);
+                                                                 *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT ename, sal FROM emp WHERE sal > (SELECT AVG(sal) FROM emp)
+SQL> /
+
+ENAME                       SAL                                                                                                                                                                         
+-------------------- ----------                                                                                                                                                                         
+JONES                      2975                                                                                                                                                                         
+BLAKE                      2850                                                                                                                                                                         
+CLARK                      2450                                                                                                                                                                         
+SCOTT                      3000                                                                                                                                                                         
+KING                       5000                                                                                                                                                                         
+FORD                       3000                                                                                                                                                                         
+
+6 rows selected.
+
+SQL> -- 서브쿼리 (sub query)
+SQL> -- ALLEN과 부서가 같은 사원들의 사원명, 입사일을 출력하되 높은 급여순으로 출력하세요.
+SQL> SELECT ename, hiredate FROM emp WHERE deptno = (SELECT deptno FROM emp  WHERE ename='ALLEN') ORDER BY sal;
+
+ENAME                HIREDATE                                                                                                                                                                           
+-------------------- --------                                                                                                                                                                           
+JAMES                81/12/03                                                                                                                                                                           
+WARD                 81/02/22                                                                                                                                                                           
+MARTIN               81/09/28                                                                                                                                                                           
+TURNER               81/09/08                                                                                                                                                                           
+ALLEN                81/02/20                                                                                                                                                                           
+BLAKE                81/05/01                                                                                                                                                                           
+
+6 rows selected.
+
+SQL> 최대급여를 받는 사원보다 입사일이 늦은 사원의 이름, 입사일을 출력하세요.
+SP2-0734: unknown command beginning "최대급여를..." - rest of line ignored.
+SQL> -- 최대급여를 받는 사원보다 입사일이 늦은 사원의 이름, 입사일을 출력하세요.
+SQL> SELECT ename, hiredate FROM emp WHERE hiredate > (SELECT hiredate FROM emp WHERE sal = (SELECT MAX(sal) FROM emp));
+
+ENAME                HIREDATE                                                                                                                                                                           
+-------------------- --------                                                                                                                                                                           
+SCOTT                87/04/19                                                                                                                                                                           
+ADAMS                87/05/23                                                                                                                                                                           
+JAMES                81/12/03                                                                                                                                                                           
+FORD                 81/12/03                                                                                                                                                                           
+MILLER               82/01/23                                                                                                                                                                           
+
+SQL> 
+SQL> 
+SQL> -- 테이블이 보유한 컬럼들에 대한 정보를 알고 싶을 때
+SQL> -- '설명하다' describe desc라 함
+SQL> DESC emp
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPNO                                                                                                             NOT NULL NUMBER
+ ENAME                                                                                                                      VARCHAR2(10)
+ JOB                                                                                                                        VARCHAR2(9)
+ MGR                                                                                                                        NUMBER
+ HIREDATE                                                                                                                   DATE
+ SAL                                                                                                                        NUMBER
+ COMM                                                                                                                       NUMBER
+ DEPTNO                                                                                                                     NUMBER
+
+SQL> -- 이름에 "T"자가 들어가는 사원들의 급여의 합을 구하세요.
+SQL> SELECT SUM(sal) FROM emp WHERE ename LIKE '%T%';
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      6550                                                                                                                                                                                              
+
+SQL> SELECT SUM(sal) AS 급여합 FROM emp WHERE ename LIKE '%T%';
+
+    급여합                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      6550                                                                                                                                                                                              
+
+SQL> -- 20번 부서의 최고 급여보다 급여가 높은 사원의 사원번호,사원명,급여를 출력하세요.
+SQL> SELECT empno, ename, sal FROM emp WHERE sal > (SELECT MAX(sal) FROM emp WHERE dept = 20);
+SELECT empno, ename, sal FROM emp WHERE sal > (SELECT MAX(sal) FROM emp WHERE dept = 20)
+                                                                              *
+ERROR at line 1:
+ORA-00904: "DEPT": invalid identifier 
+
+
+SQL> SELECT empno, ename, sal FROM emp WHERE sal > (SELECT MAX(sal) FROM emp WHERE deptno = 20);
+
+     EMPNO ENAME                       SAL                                                                                                                                                              
+---------- -------------------- ----------                                                                                                                                                              
+      7839 KING                       5000                                                                                                                                                              
+
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+
+14 rows selected.
+
+SQL> -- SCOTT의 급여에서 1000 을 뺀 급여보다 적게 받는 사원의 이름,급여를 출력하세요.
+SQL> SELECT ename, sal FROM emp WHERE sal < ((SELECT sal FROM emp WHERE ename = 'SCOTT') - 1000);
+
+ENAME                       SAL                                                                                                                                                                         
+-------------------- ----------                                                                                                                                                                         
+SMITH                       800                                                                                                                                                                         
+ALLEN                      1600                                                                                                                                                                         
+WARD                       1250                                                                                                                                                                         
+MARTIN                     1250                                                                                                                                                                         
+TURNER                     1500                                                                                                                                                                         
+ADAMS                      1100                                                                                                                                                                         
+JAMES                       950                                                                                                                                                                         
+MILLER                     1300                                                                                                                                                                         
+
+8 rows selected.
+
+SQL> -- 이름이 S로 시작하고 마지막글자가 H인 사원의 이름을 출력하세요.
+SQL> SELECT ename FROM emp WHERE ename LIKE 'S%H';
+
+ENAME                                                                                                                                                                                                   
+--------------------                                                                                                                                                                                    
+SMITH                                                                                                                                                                                                   
+
+SQL> -- WARD가 소속된 부서의 사원들의 평균 급여보다 급여가 높은 사원의 이름 ,급여를 출력하세요.
+SQL> SELECT ename, sal FROM emp WHERE sal > (SELECT AVG(sal) FROM emp WHERE deptno = (SELECT deptno FROM emp WHERE ename = 'WARD'));
+
+ENAME                       SAL                                                                                                                                                                         
+-------------------- ----------                                                                                                                                                                         
+ALLEN                      1600                                                                                                                                                                         
+JONES                      2975                                                                                                                                                                         
+BLAKE                      2850                                                                                                                                                                         
+CLARK                      2450                                                                                                                                                                         
+SCOTT                      3000                                                                                                                                                                         
+KING                       5000                                                                                                                                                                         
+FORD                       3000                                                                                                                                                                         
+
+7 rows selected.
+
+SQL> -- GROUP BY
+SQL> SELECT job FROM emp;
+
+JOB                                                                                                                                                                                                     
+------------------                                                                                                                                                                                      
+CLERK                                                                                                                                                                                                   
+SALESMAN                                                                                                                                                                                                
+SALESMAN                                                                                                                                                                                                
+MANAGER                                                                                                                                                                                                 
+SALESMAN                                                                                                                                                                                                
+MANAGER                                                                                                                                                                                                 
+MANAGER                                                                                                                                                                                                 
+ANALYST                                                                                                                                                                                                 
+PRESIDENT                                                                                                                                                                                               
+SALESMAN                                                                                                                                                                                                
+CLERK                                                                                                                                                                                                   
+CLERK                                                                                                                                                                                                   
+ANALYST                                                                                                                                                                                                 
+CLERK                                                                                                                                                                                                   
+
+14 rows selected.
+
+SQL> SELECT job FROM emp GROUP BY job;
+
+JOB                                                                                                                                                                                                     
+------------------                                                                                                                                                                                      
+CLERK                                                                                                                                                                                                   
+SALESMAN                                                                                                                                                                                                
+PRESIDENT                                                                                                                                                                                               
+MANAGER                                                                                                                                                                                                 
+ANALYST                                                                                                                                                                                                 
+
+SQL> -- 말이 안되는 쿼리문 : ename은 14개고 job은 5개인데 함께 그룹화할 수 없다.
+SQL> SELECT ename, job FROM emp GROUP BY job;
+SELECT ename, job FROM emp GROUP BY job
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> -- not a GROUP BY expression : 그룹화할 수 없는 경우라는 뜻
+SQL> -- 예외) 집계함수는 group by에 명시하지 않아도 select 절에 올 수 있다.
+SQL> select job, count(job) from emp group by job;
+
+JOB                COUNT(JOB)                                                                                                                                                                           
+------------------ ----------                                                                                                                                                                           
+CLERK                       4                                                                                                                                                                           
+SALESMAN                    4                                                                                                                                                                           
+PRESIDENT                   1                                                                                                                                                                           
+MANAGER                     3                                                                                                                                                                           
+ANALYST                     2                                                                                                                                                                           
+
+SQL> spool off

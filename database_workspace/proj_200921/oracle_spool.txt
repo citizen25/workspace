@@ -1,0 +1,195 @@
+SQL> -- 오라클 함수 예제 풀어보기
+SQL> -- 사원의 입사일을 출력하되 다음과 같은 형식으로 출력
+SQL> -- ex) 1980-08-23
+SQL> -- 변환 함수인 to_char 를 이용
+SQL> SELECT TO_CAHR(hiredate, 'yyyy-mm-dd'), hiredate FROM emp;
+SELECT TO_CAHR(hiredate, 'yyyy-mm-dd'), hiredate FROM emp
+       *
+ERROR at line 1:
+ORA-00904: "TO_CAHR": invalid identifier 
+
+
+SQL> SELECT TO_CHAR(hiredate, 'yyyy-mm-dd'), hiredate FROM emp;
+
+TO_CHAR(HIREDATE,'YY HIREDATE                                                   
+-------------------- --------                                                   
+1980-12-17           80/12/17                                                   
+1981-02-20           81/02/20                                                   
+1981-02-22           81/02/22                                                   
+1981-04-02           81/04/02                                                   
+1981-09-28           81/09/28                                                   
+1981-05-01           81/05/01                                                   
+1981-06-09           81/06/09                                                   
+1987-04-19           87/04/19                                                   
+1981-11-17           81/11/17                                                   
+1981-09-08           81/09/08                                                   
+1987-05-23           87/05/23                                                   
+
+TO_CHAR(HIREDATE,'YY HIREDATE                                                   
+-------------------- --------                                                   
+1981-12-03           81/12/03                                                   
+1981-12-03           81/12/03                                                   
+1982-01-23           82/01/23                                                   
+
+14 rows selected.
+
+SQL> set pagesize 50
+SQL> set line 150
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> -- 입사일이 1980년인 사원의 이름, 입사일을 출력하세요
+SQL> SELECT name, hiredate FROM emp WHERE TO_CHAR(hiredate, 'yyyy') = 1980;
+SELECT name, hiredate FROM emp WHERE TO_CHAR(hiredate, 'yyyy') = 1980
+       *
+ERROR at line 1:
+ORA-00904: "NAME": invalid identifier 
+
+
+SQL> SELECT ename, hiredate FROM emp WHERE TO_CHAR(hiredate, 'yyyy') = 1980;
+
+ENAME                HIREDATE                                                                                                                         
+-------------------- --------                                                                                                                         
+SMITH                80/12/17                                                                                                                         
+
+SQL> -- 입사일의 5월인 사원을 출력하세요
+SQL> SELECT ename, hiredate FROM emp WHERE TO_CHAR(hiredate, 'mm') =
+  2  '05';
+
+ENAME                HIREDATE                                                                                                                         
+-------------------- --------                                                                                                                         
+BLAKE                81/05/01                                                                                                                         
+ADAMS                87/05/23                                                                                                                         
+
+SQL> -- 사원번호가 홀수인 사원의 사원번호, 이름을 출력ㅎ
+SQL> SELECT empno, ename FROM emp WHERE MOD(emp, 2) != 0;
+SELECT empno, ename FROM emp WHERE MOD(emp, 2) != 0
+                                       *
+ERROR at line 1:
+ORA-00904: "EMP": invalid identifier 
+
+
+SQL> SELECT empno, ename FROM emp WHERE MOD(empno, 2) != 0;
+
+     EMPNO ENAME                                                                                                                                      
+---------- --------------------                                                                                                                       
+      7369 SMITH                                                                                                                                      
+      7499 ALLEN                                                                                                                                      
+      7521 WARD                                                                                                                                       
+      7839 KING                                                                                                                                       
+
+SQL> -- mod( ,) 함수 : 나머지 출력
+SQL> 
+SQL> 
+SQL> 
+SQL> -- 사원의 이름, 이름의 길이를 출력
+SQL> SELECT ename, LENGTH(ename) FROM emp;
+
+ENAME                LENGTH(ENAME)                                                                                                                    
+-------------------- -------------                                                                                                                    
+SMITH                            5                                                                                                                    
+ALLEN                            5                                                                                                                    
+WARD                             4                                                                                                                    
+JONES                            5                                                                                                                    
+MARTIN                           6                                                                                                                    
+BLAKE                            5                                                                                                                    
+CLARK                            5                                                                                                                    
+SCOTT                            5                                                                                                                    
+KING                             4                                                                                                                    
+TURNER                           6                                                                                                                    
+ADAMS                            5                                                                                                                    
+JAMES                            5                                                                                                                    
+FORD                             4                                                                                                                    
+MILLER                           6                                                                                                                    
+
+14 rows selected.
+
+SQL> 
+SQL> 
+SQL> -- 함수는 DBMS 제품마다 다르므로 SQL과는 달리 공통적으로 사용할 수 없다.
+SQL> -- mysql, oracle, mssql 등 제품마다 지원된느 함수명이 다르다.
+SQL> -- 지금은 oracle 함수를 사용
+SQL> 
+SQL> 
+SQL> 
+SQL> -- 사원의 업무와 이름을 아래의 형식으로 출력
+SQL> -- ex) CLERK부서의 SMITH
+SQL> -- ex) CLERK 업무담당 SMITH
+SQL> -- 문자 관련 함수 중, CONCAT()을 이용
+SQL> SELECT CONCAT(CONCAT(job, ' 업무담당 '), ename) FROM emp;
+
+CONCAT(CONCAT(JOB,'업무담당'),ENAME)                                                                                                                  
+------------------------------------------------------------------                                                                                    
+CLERK 업무담당 SMITH                                                                                                                                  
+SALESMAN 업무담당 ALLEN                                                                                                                               
+SALESMAN 업무담당 WARD                                                                                                                                
+MANAGER 업무담당 JONES                                                                                                                                
+SALESMAN 업무담당 MARTIN                                                                                                                              
+MANAGER 업무담당 BLAKE                                                                                                                                
+MANAGER 업무담당 CLARK                                                                                                                                
+ANALYST 업무담당 SCOTT                                                                                                                                
+PRESIDENT 업무담당 KING                                                                                                                               
+SALESMAN 업무담당 TURNER                                                                                                                              
+CLERK 업무담당 ADAMS                                                                                                                                  
+CLERK 업무담당 JAMES                                                                                                                                  
+ANALYST 업무담당 FORD                                                                                                                                 
+CLERK 업무담당 MILLER                                                                                                                                 
+
+14 rows selected.
+
+SQL> 
+SQL> 
+SQL> -- 오늘 날짜 출력
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                               
+--------                                                                                                                                              
+20/09/21                                                                                                                                              
+
+SQL> 
+SQL> -- TO_CHAR를 이용하여 오늘과 같은 월에 입사한 사원의 이름, 입사일을 출력
+SQL> -- (== 9월에 입사한 사원 정보 출력)
+SQL> SELECT ename, hiredate FROM emp WHERE TO_CHAR(hiredate, 'mm') = TO_CHAR(SYSDATE, 'mm');
+
+ENAME                HIREDATE                                                                                                                         
+-------------------- --------                                                                                                                         
+MARTIN               81/09/28                                                                                                                         
+TURNER               81/09/08                                                                                                                         
+
+SQL> SELECT ENAME, HIREDATE FROM EMP
+  2  WHERE  TO_CHAR(HIREDATE, 'mm')=( select to_char(sysdate,'mm') from dual)
+  3  /
+
+ENAME                HIREDATE                                                                                                                         
+-------------------- --------                                                                                                                         
+MARTIN               81/09/28                                                                                                                         
+TURNER               81/09/08                                                                                                                         
+
+SQL> SELECT ENAME, HIREDATE FROM EMP
+  2  WHERE  TO_CHAR(HIREDATE, 'mm')=( select to_char(sysdate,'mm') from dual)
+  3  ;
+
+ENAME                HIREDATE                                                                                                                         
+-------------------- --------                                                                                                                         
+MARTIN               81/09/28                                                                                                                         
+TURNER               81/09/08                                                                                                                         
+
+SQL> 
+SQL> 
+SQL> -- ADD_MONTH(대상날짜, 더할월)
+SQL> SELECT ADD_MONTHS(sysdate, 1) FROM DUAL;
+
+ADD_MONT                                                                                                                                              
+--------                                                                                                                                              
+20/10/21                                                                                                                                              
+
+SQL> -- ADD_MONTHS(대상날짜, 더할월)
+SQL> 
+SQL> SELECT ADD_MONTHS(sysdate, 3) FROM DUAL;
+
+ADD_MONT                                                                                                                                              
+--------                                                                                                                                              
+20/12/21                                                                                                                                              
+
+SQL> spool off

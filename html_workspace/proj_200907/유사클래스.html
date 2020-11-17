@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유사클래스</title>
+    <style>
+        /* 
+        css에서 누군가를 가리킬 때 사용하는 주체를 선택자라 한다.
+        그럼 선택자가 될 수 있는 것들은?
+            1. ID를 부여받은 태그
+            2. 태그명
+            3. 클래스가 적용된 태그
+            등등...
+         */
+
+         /* 아래와 같이 특정 요소를 가리키는 방법에 있어 
+        실질적 이름이나, 아이디, 클래스가 아닌 
+        요소의 현재 상태를 이용하여 가리키는 방법을 유사 클래스라 한다. */
+        button:hover div{
+            background-color: yellow;
+            width: 200px;
+            height: 200px;
+        }
+        #bt{}
+        .mybt{}
+        p{
+            display: none;  /* 화면에서 사라지게 함 */
+            background: yellow;
+        }
+        div:hover p{
+            display: block; /* 보이도록 */
+        }
+    </style>
+</head>
+<body>
+    <button class="mybt" id="bt">버튼이당</button>
+
+    <div>나타나게 하려면 마우스를 올리세요
+        <p>여긴는 p영역</p>
+    </div>
+
+</body>
+</html>

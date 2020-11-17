@@ -1,0 +1,1 @@
+이 문서는 my-idea branch의 my-another-idea에 commit 되는 파일.

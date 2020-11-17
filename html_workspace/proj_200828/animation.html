@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation</title>
+    <style>
+        #butterfly{
+            position: absolute;
+            width: 150px;
+            animation-name: upDown;
+            animation-direction: alternate;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+        @keyframes upDown{
+            from{
+                top:0px;
+            }
+            to{
+                top: 600px;
+            }
+        }
+
+        #butterflyWrapper{
+            position: absolute;
+            width: 150px;
+            animation-name: rightLeft;
+            animation-direction: alternate;
+            animation-iteration-count: infinite;
+            animation-duration: 1.8s;
+        }
+        @keyframes rightLeft{
+            from{
+                left: 0px;
+            }
+            to{
+                left: 1200px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="butterflyWrapper">
+        <img id="butterfly" src="./images/butterfly.png"/>
+    </div>
+</body>
+</html>

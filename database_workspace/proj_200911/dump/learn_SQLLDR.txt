@@ -1,0 +1,58 @@
+SQL> show user
+USER is "USER0907"
+SQL> create table animal(
+  2  code number,
+  3  category varchar(20),
+  4  name varchar(20),
+  5  location varchar(20)
+  6  );
+
+Table created.
+
+SQL> SELECT * FROM animal
+  2  ;
+
+      CODE CATEGORY                                 NAME                                     LOCATION                                                                                                   
+---------- ---------------------------------------- ---------------------------------------- ----------------------------------------                                                                   
+         1 조류                                     참새                                     한국                                                                                                       
+         2 조류                                     독수리                                   한국                                                                                                       
+         3 조류                                     까마귀                                   한국                                                                                                       
+         4 조류                                     황새                                     한국                                                                                                       
+         5 조류                                     앵무새                                   한국                                                                                                       
+         6 설치류                                   쥐                                       미국                                                                                                       
+         7 설치류                                   다람쥐                                   미국                                                                                                       
+         8 설치류                                   청설모                                   미국                                                                                                       
+         9 포유류                                   사자                                     아프리카대륙                                                                                               
+        10 포유류                                   호랑이                                   아프리카대륙                                                                                               
+        11 포유류                                   개                                       아프리카대륙                                                                                               
+        12 포유류                                   말                                       아프리카대륙                                                                                               
+        13 포유류                                   돼지                                     아프리카대륙                                                                                               
+        14 포유류                                   소                                       아프리카대륙                                                                                               
+        15 포유류                                   오랑우탄                                 아프리카대륙                                                                                               
+        16 어류                                     붕어                                     태평양                                                                                                     
+        17 어류                                     잉어                                     태평양                                                                                                     
+        18 어류                                     가물치                                   태평양                                                                                                     
+        19 어류                                     도미                                     태평양                                                                                                     
+        20 어류                                     고등어                                   태평양                                                                                                     
+        21 어류                                     꽁치                                     태평양                                                                                                     
+
+21 rows selected.
+
+SQL> -- Dump파일을 넣는 법은 도스창에서 csv, ctl 파일이 있는 폴더로 들어가서 SQLLDR 명령을 치는 것
+SQL> spool off
+
+오라클의 SQLplus 툴에는 대량의 데이터를 덤프(한꺼번에)로
+읽어들일 수 있는 기능이 숨어있다. 
+이 기능을 이용하려면, 오라클에서만 사용되는 특별한 명령어 파일을 
+사용해야 한다.. (컨트롤 파일 확장자가 ctl)
+
+--아래의 테이블을 만든 후 , dump  디렉토리에는 animal.ctl,   animal.csv 파일을 둔다 
+create  table  animal(
+   code number
+ , category varchar(20)
+ , name varchar(20)
+ , location varchar(20)
+)
+
+그리고 나서, animal.ctl 과 animal.csv가 있는 dump  폴더로 이동하여 아래의 명령어 입력한다 
+SQLLDR  userid=user0827/user0827  control='animal.ctl'  data='animal.csv'

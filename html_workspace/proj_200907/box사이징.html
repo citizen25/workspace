@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>box sizing</title>
+    <style>
+        /* 
+            html 요소의 실제 너비 = 자신의 width + border + padding
+            html 요소의 실제 높이 = 자신의 height + border + padding
+        */
+        #box1{
+            width: 170px;
+            height: 180px;
+            background: red;
+            padding-left: 10px; /* 전체크기에 영향을 준다 */
+            border: 10px solid black; /* 전체크기에 영향을 준다 */
+        }
+        #box2{
+            width: 200px;
+            height: 200px;
+            background: yellow;
+            border: 10px solid blue;
+            padding: 30px;
+            /* read width = width + border + padding 알아서 계산. 즉, 우리가 계산할 필요가 없다. */
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="box1">box1</div>
+
+    <div id="box2">box2</div>
+    
+</body>
+</html>
