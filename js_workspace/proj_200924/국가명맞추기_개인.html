@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 500px;
+            height: 800px;
+            margin: auto;
+            background-color: black;
+            text-align: center;
+            font-size: 40px;
+        }
+        #quest{
+            width: 100%;
+            height: 300px;
+            background-color: purple;
+            font-size: 200px;
+            color: white;
+        }
+        #quest img{
+            width: 100%;
+            height: 100%;
+        }
+        #hint{
+            width: 100%;
+            height: 100px;
+            background-color: indigo;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+        }
+        #answerWrapper{
+            width: 100%;
+            height: 100px;
+            background-color: cadetblue;
+        }
+        #answer{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            font-size: 40px;
+        }
+        #feedback{
+            width: 100%;
+            height: 200px;
+            color: white;
+            background-color: chocolate;
+            font-size: 100px;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        #record{
+            width: 100%;
+            height: 100px;
+            background-color: darkcyan;
+            font-size: 50px;
+            color: white;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+    </style>
+    <script>
+        var img;
+        var hint;
+        var answer;
+        var feedback;
+        var record;
+
+        var count = 0;
+        var score = 0;
+
+        var data=[
+            ["../images/nation/1.png", "세계 최대 강대국", "미국"],
+            ["../images/nation/2.jpg", "산초", "멕시코"],
+            ["../images/nation/3.jpg", "로마제국", "이탈리아"],
+            ["../images/nation/4.png", "신사의 나라, 007", "영국"],
+            ["../images/nation/5.jpg", "나찌", "독일"],
+            ["../images/nation/6.png", "무적함대", "스페인"],
+            ["../images/nation/7.jpg", "에펠탑", "프랑스"],
+            ["../images/nation/8.gif", "차이코프스키", "러시아"],
+            ["../images/nation/9.png", "쌈바축구", "브라질"],
+            ["../images/nation/10.jpg", "아이스하키", "캐나다"],
+            ["../images/nation/11.jpg", "후지산", "일본"],
+            ["../images/nation/12.png", "쿵푸 팬더", "중국"],
+            ["../images/nation/13.gif", "코알라", "호주"]
+        ];
+                
+        function init(){
+            quest = document.getElementById("quest");
+            img = document.getElementById("nation");
+            hint = document.getElementById("hint");
+            answer = document.getElementById("answer");
+            feedback = document.getElementById("feedback");
+            record = document.getElementById("record");
+
+            answer.focus();
+
+            hint.innerText = data[0][1];
+            feedback.innerText = "GO!";
+            record.innerText = "GO!";
+
+            
+            answer.addEventListener("keyup", function(){
+                if(event.keyCode == 13){
+                    
+
+                    if(count >= data.length-1){
+                        img.style.display = "none";
+                        quest.innerText = "Over!";
+                        hint.innerText = "The End!";
+                        feedback.innerText = "The End!";
+                    }else{
+                        if(answer.value == data[count][2]){
+                            score = score + 10;
+                            feedback.innerText = "O";
+                            record.innerText = score + "점";
+                        }else{
+                            feedback.innerText = "X";
+                        }
+    
+                        answer.value = "";
+                        count = count + 1;
+                        
+                        img.src = data[count][0];
+                        hint.innerText = data[count][1];
+                    }
+                    
+                }
+            });
+        }
+        
+        window.addEventListener("load", function(){
+            init();
+        });
+        
+        </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="quest">
+            <img id="nation" src="../images/nation/1.png"/>
+        </div>
+        <div id="hint"></div>
+        <div id="answerWrapper">
+            <input id="answer" type="text" placeholder="답을 입력하세요.">
+        </div>
+        <div id="feedback">O</div>
+        <div id="record"></div>
+    </div>
+</body>
+</html>

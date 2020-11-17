@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 600px;
+            height: 500px;
+            background-color: yellow;
+            margin: auto;
+        }
+        .tap{
+            width: 100%;
+            height: 50px;
+            background: greenyellow;
+        }
+        #notice, #qna, #board{
+            width: 100%;
+            height: 450px;
+        }
+        #notice{
+            display: none;
+            background-color: red;
+        }
+        #qna{
+            display: none;
+            background-color: gold;
+        }
+        #board{
+            display: none;
+            background-color: dodgerblue;
+        }
+        .tap a{
+            text-decoration: none;
+            display: inline-block;
+            width: 200px;
+            height: 50px;
+            text-align: center;
+            font-size: 25px;
+        }
+    </style>
+    <script>
+        var notice;
+        var qna;
+        var board;
+
+        function init(){
+            notice = document.getElementById("notice");
+            qna = document.getElementById("qna");
+            board = document.getElementById("board");
+        }
+
+        /* 지금 선택한 탭에 해당하는 div만 나오게 하고, 나머지는 안 나오게 하기 */
+        function showHide1() {
+            /* notice 보이게 */
+            notice.style.display = "block";
+    
+            /* 나머지는 안 보이게 */
+            qna.style.display = "none";
+            board.style.display = "none";
+            
+        }
+        function showHide2() {
+            /* qna 보이게 */
+            qna.style.display = "block";
+
+            /* 나머지는 안 보이게 */
+            notice.style.display = "none";
+            board.style.display = "none";
+        }
+        function showHide3() {
+            /* board 보이게 */
+            board.style.display = "block";
+    
+            /* 나머지는 안 보이게 */
+            notice.style.display = "none";
+            qna.style.display = "none";
+            
+        }
+        
+        window.addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="tap">
+            <a href="javascript:showHide1()" style="background-color: red">공지사항</a><a href="javascript:showHide2()" style="background-color: gold">QnA</a><a href="javascript:showHide3()" style="background-color: dodgerblue">자유게시판</a>
+        </div>
+        <div class="content">
+            <div id="notice"></div>
+            <div id="qna"></div>
+            <div id="board"></div>
+        </div>
+    </div>
+</body>
+</html>

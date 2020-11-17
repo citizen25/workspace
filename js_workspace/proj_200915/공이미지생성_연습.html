@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var cnt = 0;
+
+        function auto(){
+            setInterval("createBall()", 100);
+        }
+        function createBall(){
+            cnt = cnt+1
+
+            if(cnt%5 == 0){
+                createFootball();
+            }
+            else{
+                createBasketball();
+            }
+
+        }
+        function createBasketball(){
+            var basketball = document.createElement("img");
+            basketball.src = "../images/ball/basketball.svg";
+            basketball.style.width = 50+"px";
+            document.body.appendChild(basketball);
+        }
+        function createFootball(){
+            var football = document.createElement("img");
+            football.src = "../images/ball/football.svg";
+            football.style.width = 50+"px";
+            document.body.appendChild(football);
+        }
+    </script>
+</head>
+<body>
+    <button onClick="createBall()" onDblClick="auto()">공생성</button>
+    <!-- <img src = "../images/ball/basketball.svg"/> -->
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 변수는 그 값이 변할 수 있다.     변할 변 + 수
+        /*
+        var x = 7;  // 7 생성
+        var y = 3;  // 3 생성
+
+        x = x+3;
+        document.write(x);
+        */
+
+        // 변수의 값을 1씩 증가시켜보기
+        // 아직 진도는 안나갔지만, 아래의 코드영역은 필요할 때 호출할 수 있는 코드 단위라고만 이해하자!
+
+        var n=0;    // 메모리에 0이라는 데이터를 올리고, 그 0이 올라간 영역의 이름을 n으로 부여하기
+
+        // 주의: html은 문서에 불과하기 때문에 대소문자 가리지 않으나, 모든 프로그래밍 언어에서는 대소문자를 정확히 구분한다.
+        function setCount(){
+            alert("C:\\Users\\chltl\\Desktop\\workspace\\js_workspace\\images"+n+".jpg");
+            n = n+1;
+        }
+    </script>
+</head>
+<body>
+    <button onClick="setCount()">카운터 증가</button>
+</body>
+</html>

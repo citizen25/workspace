@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function setText(){
+            /* id, name, selector 방법으로 접근 가능.. */
+            var bt = document.querySelector("button");
+            bt .innerText = "???";
+        }
+    </script>
+</head>
+<body>
+    <!-- <img id="pic" src="../images/travel/3.jpg" onClick="alert(document.getElementById('pic').src)"/> -->
+    <img id="pic" src="../images/travel/3.jpg" onClick="alert(this.src)"/>
+    <!-- 클릭시, 버튼의 제목을 바꾸는 다양한 방법을 배워보자 -->
+    <button onClick="document.querySelector('button').innerText='왕버튼'">눌러보세요</button>
+    <button onClick="this.innerText='왕버튼'">눌러보세요</button>
+</body>
+</html>

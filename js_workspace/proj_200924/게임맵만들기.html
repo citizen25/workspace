@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            position: relative;
+            width: 1000px;
+            height: 600px;
+            margin: auto;
+            background-image: url(../images/etc/bg3.jpg);
+            background-size: 100% 100%;
+        }
+    </style>
+    <script src="./map.js"></script>
+    <!-- 게임 제작시 복잡한 맵을 구현하는 노하우를 배워보자 -->
+    <script>
+
+        var wrapper;
+
+        /* 블럭 생성 */
+        function createBlock(){
+            for(var i=0; i<map.length; i++){
+                for(var a=0; a<map[i].length; a++){
+
+                    /* 블럭 한개 생성 */
+                    var block = document.createElement("img");
+                    block.src = "../images/etc/block.png";
+                    block.style.width = 20 + "px";
+                    block.style.height = 20 + "px";
+                    block.style.position = "absolute";
+                    block.style.left = (a*20) + "px";     // 안쪽 배열이 결정
+                    block.style.top = (i*20) + "px";      // 바깥쪽 배열이 결정
+                    if(map[i][a] == 1){
+                        wrapper.appendChild(block);    // wrapper에 부착
+                    }
+                }
+            }
+        }
+        
+
+        function init(){
+            wrapper = document.getElementById("wrapper");
+        }
+
+        window.addEventListener("load", function(){
+            init();
+            createBlock();
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

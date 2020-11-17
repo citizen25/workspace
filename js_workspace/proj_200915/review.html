@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body, #wrapper{
+            height: 100%;
+            margin: 0;
+        }
+        #side{
+            float: left;
+            background-color: cornflowerblue;
+            height: 100%;
+            width: 200px;
+        }
+        #main{
+            float: left;
+            position: relative;
+            background-color: cadetblue;
+            height: 100%;
+            width: 800px;
+        }
+    </style>
+    <script>
+        /* 전역 변수 선언 */
+        var img;
+        var main;
+        var stepX;
+        var stepY;
+        var posX;
+        var posY;
+
+        /* 초기 설정 */
+        function init(){
+            
+            main = document.getElementById("main");
+            img = document.createElement("img");
+
+            /* image의 위치 관련 값 정의 */
+            posX = 0;
+            posY = 0;
+            stepX = 7;
+            stepY = 3;
+            
+            /* image 설정 */
+            img.style.width = 100+"px";
+            img.src = "../images/emoticon/normal.svg";
+            img.style.position = "absolute";
+            img.style.left = posX+"px";
+            img.style.top = posY+"px";
+            
+         
+            /* document 내에 추가 */
+            main.appendChild(img);
+        }
+
+        /* emotion change */
+        function cry(){
+            img.src = "../images/emoticon/cry.svg";
+        }
+        function smile(){
+            img.src = "../images/emoticon/smile.svg";
+        }
+        function normal(){
+            img.src = "../images/emoticon/normal.svg";
+        }
+
+        /* bounce ball */
+        function move(){
+
+            // if(parstInt(posX) <= 0 || parseInt(posX) >= (parseInt(main.style.width)-parseInt(img.style.width))){
+            //     stepX = -stepX;
+            // }
+
+            console.log((parseInt(main.style.width)-parseInt(img.style.width)));
+            console.log(main.style.width);
+
+            img.style.left = posX+"px";
+            img.style.top = posY+"px";
+            
+            posX = posX + stepX;
+            posY = posY + stepY;
+        }
+        function autoMove(){
+            setInterval("move()", 10);
+        }
+    </script>
+</head>
+<body onLoad="init()">
+    <div id="wrapper">
+        <div id="side">
+            <div>
+                <button onClick="cry()">cry</button>
+                <button onClick="smile()">smile</button>
+                <button onClick="normal()">normal</button>
+            </div>
+            <div>
+                <button onClick="autoMove()">bounce ball</button>
+            </div>
+        </div>
+        <div id="main"></div>
+    </div>
+</body>
+</html>

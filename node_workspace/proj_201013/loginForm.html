@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form button{
+            background-color: dodgerblue;
+            color: white;
+        }
+        form input[name='m_name'], input[name='m_pass']{
+            background-color: gold;
+        }
+    </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        /* 문서가 로드되면(onload되면), 즉 DOM이 모두 메모리에 올라오면, 익명함수를 호출한다. */
+        $(function(){
+            /* 버튼 클릭 이벤트 구현 - jquery는 css의 선택자를 따른다. */
+            $("form button").on("click", function(){
+                checkValue();
+            });
+        });
+
+        function checkValue(){
+            /* $ 안에 선택자를 가져올 때는 무조건 ""(쌍따옴표)로 명시해줘야 한다. */
+            if($("form input[name='m_name']").val() == ""){
+                alert("아이디를 입력해주세요");
+            }else if($("form input[name='m_pass']").val() == ""){
+                alert("패스워드를 입력해주세요");
+            }else{
+                /* 위의 if문들을 만나지 않았다는 것은, 제대로 입력했다는 것임. 
+                즉, 유효한 입력임. */
+                $("form").attr({
+                    action: "/login",   // 주소를 앞에 써주지 않아도 호출한 서버에서 자동으로 찾아서 넣어준다.??
+                    method: "get",       // get 방식으로 전송하겠다는 의미 (주소창에 정보가 나온다.). -> 편지지 사용 X, 엽서 방식 == 내용이 많지 않다.
+                    // method: "post",       // post 방식으로 전송하겠다는 의미 (주소창에 정보 노출 X). -> 편지지 사용 O, 편지봉투 안에 들어있기 때문에 내용이 가려짐. 내용 제한 없음.
+                });
+                $("form").submit();       // 전송
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- 폼태그란? 서버에 전송 시 전송 범위를 설정할 수 있는 양식 태그 
+        id, name 공통점 : 문서 내의 dom 요소간 구분
+        차이점 : id 중복 허용 X, name 중복 허용 O
+            서버에 전송 시, 변수 역할을 해주는 것은 오직 name만이 가능. -->
+    <form action="">
+        <input type="text" name="m_name" placeholder="아이디 입력"/>
+        <input type="password" name="m_pass" placeholder="비밀번호 입력"/>
+        <!-- html5에서 등장한 아래의 button 태그는 form 안에 둘 경우, 자동 submit이 발생한다. 그래서 type을 button으로 두어서 관여되지 않도록 한다. -->
+        <button type="button">전송</button>
+    </form>
+</body>
+</html>

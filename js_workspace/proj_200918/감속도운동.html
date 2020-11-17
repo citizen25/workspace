@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: black
+        }
+        /* 마우스 이벤트는 body를 대상으로는 반응을 보이지 않을 경우가 있으므로, body 크기의 div로 문서 전체를 덮어버린다. */
+        .wrapper{
+            width: 100%;
+            height: 700px;
+            background-color: blanchedalmond;
+        }
+    </style>
+    <script>
+        var box;
+        var targetX = 800;  // box가 도달할 x축 목표 지점
+        var targetY = 600;  // box가 도달할 y축 목표 지점
+        var deg = 0;    // 각도를 누적시킬 전역변수
+        let a = 0.05;   // let : 상수. 비율 계수가 높아질수록, 남은 거리에 대한 움직임이 커지므로 부드럽지 못하다.
+
+        /* 문서가 로드되면 박스에 대한 초기화를 진행 */
+        function init(){
+            box = document.getElementById("box");
+            box.style.position = "absolute";
+            box.style.left = 0 + "px";
+            box.style.top = 100 + "px";
+        }
+        /* 지금까지의 움직임과는 다르게, 목표지점으로 한꺼번에 건너뛰지 말고 조금씩 다가가자 == 감속도 운동 */
+        function move(){
+            /* box 위치 = 현재 box 위치 + a*(목표 지점의 위치 - 현재 box 위치) */
+            box.style.left = parseInt(box.style.left) + a*(targetX - parseInt(box.style.left)) + "px";
+            box.style.top = parseInt(box.style.top) + a*(targetY - parseInt(box.style.top)) + "px";
+
+            /* 돌려보자 */
+            box.style.transform = "rotate(" + deg + "deg)";
+            deg = deg + 5;
+        }
+        function auto(){
+            setInterval("move()", 10);
+        }
+        /* 문서에 마우스를 click할 때마다, 마우스의 좌표를 구해서 box가 움직일 새로운 목표지점을 설정 */
+        function getPos(){
+            var x = event.clientX;// 마우스의 x좌표
+            var y = event.clientY;// 마우스의 y좌표
+            console.log("x is ", x);
+            console.log("y is ", y);
+
+            /* 구해온 좌표를 targetX와 targetY에 대입. 새로운 목표 지점 설정. */
+            targetX = x;
+            targetY = y;
+        }
+    </script>
+</head>
+<body onLoad="init();auto()" onMouseMove="getPos()">
+    <button onClick="move()">수동 움직이기</button>
+    <button onClick="auto()">자동 움직이기</button>
+    <div class="wrapper">
+        <div id="box"></div>
+    </div>
+</body>
+</html>

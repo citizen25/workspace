@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+var count=0;//전역변수 , 숫자가 누적될 수 있도록 하기 위함..
+    //왜 누적해야 하나? 1,2,3,4,5, 누적해나가다가, 5를
+    //나눈 나머지를 구해야 하니깐...
+function createBall(){
+    count++;
+    console.log("count is " , count);
+
+    var ball=document.createElement("img"); // <img/> 작성과 동일
+    //변수 n의 값을 텍스트박스로부터 구하자!!
+    var n=document.getElementById("txt").value;
+    n=parseInt(n); //주의) parseInt() 대상이 될 수 있는 건 "쌍따옴표"를
+    //벗겻을때 정수가 될수 있는 문자만 가능하다.. 
+    // "1" , "23", "aa"
+    var path = document.getElementById("path").value;
+
+    /* 
+    if(count%n!=0){
+        ball.src="../images/ball/basketball.svg"; // <img src="" /> 작성과 동일
+    }else{
+        ball.src="../images/ball/football.svg"; // <img src="" /> 작성과 동일
+    }
+    */
+    //흑백논리를 처리할때는, 삼항연산자로도 가능 
+    ball.src=(count%n==0)? path:"../images/ball/basketball.svg";
+
+    ball.style.width=50+"px";
+    //body에 부착!!
+    document.body.appendChild(ball);//body에 ball 추가!!
+}    
+</script>
+</head>
+<body>
+    <input id="txt" type="text" placeholder="몇번째 마다 공을 생성할지 숫자입력"/>    
+    <input id="path" type="text" placeholder="사용될 이미지 경로"/>    
+    <button onclick="createBall()">공생성</button>
+    <br>
+</body>
+</html>

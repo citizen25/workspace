@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    var bg = prompt("색상을 선택하세요");
+    /*
+        주의!) prompt()에 입력한 모든 데이터는 문자열이다.
+        따라서 우리가 숫자 5를 입력해도 사실은 "5"이러한 문자열이다.
+        입력한 문자를 숫자화시켜야 한다. 즉, 쌍따옴표를 걷어내야 한다.
+        parseInt()라는 자바스크립트에 내장된 함수를 이용하면, "5" -> 5 정수화 될 수 있다.
+    */
+    bg = parseInt(bg);  // parseInt("숫자화시키고싶은대상문자");
+
+    document.write("당신이 입력한 숫자는 "+bg);
+    // 무려 7개 이상이 되므로, else if문을 써야 하지만, 코드의 단순화 및 식별성을 위해 같은 목적이지만 좀 더 줄여쓰는 switch문
+    // switch(판단대상데이터)
+    // case의 조건이 참인 이후엔, break문이 없을 경우 조건을 따지지 않고 이후의 문장을 수행해버림..
+    switch(bg){     // 1~7까지를 대상으로 case by case를 따져서 수행
+        case 1:
+            document.body.style.background = "red";
+            break;
+        case 2:
+            document.body.style.background = "orange";
+            break; 
+        case 3:
+            document.body.style.background = "yellow";
+            break; 
+        case 4:
+            document.body.style.background = "green";
+            break; 
+        case 5:
+            document.body.style.background = "blue";
+            break; 
+        case 6:
+            document.body.style.background = "navy";
+            break; 
+        case 7:
+            document.body.style.background = "purple";
+            break; 
+        /* case에 지정하지 않은 모든 데이터에 대한 처리 */
+        default:
+            alert("사용법을 먼저 숙지하세요!");
+    }
+
+
+</script>
+<body>
+    
+</body>
+</html>

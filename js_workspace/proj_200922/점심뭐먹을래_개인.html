@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var food = new Array();
+        food[0] = "김밥";
+        food[1] = "비빔밥";
+        food[2] = "삼계탕";
+        food[3] = "물";
+        food[4] = "굶는다";
+        food[5] = "쌀전병";
+        
+        var h;
+        var bt;
+        var r;
+
+        function choose(){
+            r = Math.floor(food.length * Math.random());
+            console.log(r);
+            return r;
+        }
+
+        function run(){
+            h.innerText = food[choose()];
+        }
+
+
+        window.addEventListener("load", function(){
+            h = document.getElementById("screen");
+            bt = document.getElementById("bt");
+            bt.addEventListener("click", function(){
+                h.innerText = food[choose()];
+            });
+        });
+    </script>
+</head>
+<body>
+    <button onClick="run()">점심메뉴 보여주기</button>
+    <button id="bt">점심메뉴 보여주기2</button>
+    <h1 id="screen"></h1>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var bg = prompt("원하시는 색을 선택하세요\n1. 빨간색  2. 주황색  3. 노란색  4. 초록색  5. 파란색  6. 남색  7. 보라색");
+
+        document.write("당신이 입력한 배경색은 " + bg);
+
+        // body에 배경색을 적용하자.
+        if(bg == 1){
+            document.body.style.background = "red";
+        }else if(bg == 2){
+            document.body.style.background = "orange";
+        }else if(bg == 3){
+            document.body.style.background = "yellow";
+        }else if(bg == 4){
+            document.body.style.background = "green";
+        }else if(bg == 5){
+            document.body.style.background = "blue";
+        }else if(bg == 6){
+            document.body.style.background = "navy";
+        }else if(bg == 7){
+            document.body.style.background = "purple";
+        }else{
+            alert("올바르지 않은 입력");
+        }
+        /*
+            if문 하나 : 단일 판단
+            if~else : 흑백논리 판단, 삼항연산자와 같다
+            else of : 다중판단, 판단대상이 여러개일 경우
+        */
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

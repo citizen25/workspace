@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            자바스크립트를 이용하면, 실행타임(rumtime)에도 CSS를 동적으로 변경할 수 있다.
+        */
+        var op=1; // 변수 선언시 그냥 막 하지 말고, 의미를 살리자. 그래야 유지보수가 편해짐(나중에 변수명 봐도 기억이 나니깐)
+        function transparent(){
+            // 문서 내의 pic이라는 요소의 CSS 중 투명도값을 투명하게 하자
+            op = op-0.1;
+            document.getElementById("pic").style.opacity = op;
+        }
+        function unTransparent(){
+            op = op+0.1;
+            document.getElementById("pic").style.opacity = op;
+        }
+    </script>
+</head>
+<body>
+    <img src="../images/travel/1.jpg" id="pic"/>
+    <button onClick="unTransparent()">점점 불투명하게...</button>
+    <button onClick="transparent()">점점 투명하게...</button>
+</body>
+</html>

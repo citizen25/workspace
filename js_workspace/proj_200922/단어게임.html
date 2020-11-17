@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 400px;
+            height: 650px;
+            background-color: red;
+            margin: auto;
+        }
+        #question{
+            width: 100%;
+            height: 250px;
+            background-color: yellow;
+            font-size: 95px;
+            text-align: center;
+        }
+        .word-input{
+            width: 100%;
+            height: 100px;
+            background-color: aquamarine;
+        }
+        .word-input input{
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            font-size: 60px;
+            text-align: center;
+        }
+        #feedback{
+            width: 100%;
+            height: 200px;
+            font-size: 170px;
+            text-align: center;
+        }
+        #record{
+            width: 100%;
+            height: 100px;
+            background-color: beige;
+            font-size: 80px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        /*
+            게임에서 진행할 데이터를 생성하되, 순서를 갖게 해야한다.
+            enter 칠때마다 해당 단어의 다음 단어, 그 다음 단어를 구현하려면
+            순서라는 것이 존재해야 한다.
+            배열을 사용 -> 데이터가 순서를 가지며 메모리에 올라간다.
+        */
+        var word = new Array(); // 배열 준비 (크기는 정하지 않는다.)
+        word[0] = "apple";
+        word[1] = "corona";
+        word[2] = "banana";
+        word[3] = "rain";
+        word[4] = "phone";
+        word[5] = "cup";
+        word[6] = "sun";
+        word[7] = "hood";
+        word[8] = "camera";
+        word[9] = "hat";
+        var question;
+        var txt;
+        var feedback;
+        var record;
+        var n = 0;      // 단어 배열의 index 정보를 가진 변수
+        var score = 0; // 점수를 누적시킬 변수
+
+        function init(){
+            /* 아이디가 부여된 엘리먼트들을 전역변수로 미리 선언해 놓자 */
+            question = document.getElementById("question");
+            txt = document.getElementById("txt");
+            feedback = document.getElementById("feedback");
+            record = document.getElementById("record");
+
+            printWord();    // 단어 출력
+            printScore();   // 점수 출력
+
+            /* 
+                txt를 대상으로 키보드 구현
+                총알이라면 눌렀다는 이벤트에 반응하면 되지만,
+                글씨 입력이라면 눌렀다 떼었을 때가 하나의 철자가 입력되는 시점이다.
+             */
+            txt.addEventListener("keyup", function(){
+                console.log("철자를 쳤습니다");
+                /* 키보드 중, enter키를 누를 때 다음 단어 나오게 처리 */
+                // alert(event.keyCode);
+                if(event.keyCode == 13){
+                    /* 입력값과 출력된 단어와의 일치성을 판단한 후, 피드백 처리 */
+                    if(txt.value == question.innerText){
+                        /* 칭찬의 피드백 O 출력 */
+                        feedback.innerText = "O";
+                        /* 점수 10점 증가 */
+                        score += 10;
+                        printScore();
+
+                    }else{
+                        /* 틀렸다는 피드백 X 출력 */
+                        feedback.innerText = "X";
+                    }
+                    /* 텍스트 박스에 입력한 데이터 지우기 */
+                    txt.value = "";
+
+                    /* 다음 단어 나오게.. */
+                    n++;
+                    if(n >= word.length){   // 준비된 단계가 모두 소진되면..
+                        question.innerText = "Game over!";
+                    }else{
+                        printWord();
+                    }
+                }
+            });
+
+            /* txt에 프로그래밍적으로 커서를 올려놓기 */
+            txt.focus();
+        } 
+
+        /* 단어 출력 처리 */
+        function printWord(){
+            question.innerText = word[n];
+        }
+
+        /* 점수 출력 처리 */
+        function printScore(){
+            record.innerText = score + " 점";
+        }
+        
+        window.addEventListener("load", function(){
+            init();
+        });
+        
+
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="question"></div>
+        <div class="word-input">
+            <input id="txt" type="text" placeholder="따라치세요"/>
+        </div>
+        <div id="feedback"></div>
+        <div id="record"></div>
+    </div>
+</body>
+</html>

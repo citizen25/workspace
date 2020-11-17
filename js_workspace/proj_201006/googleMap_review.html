@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #mapArea{
+            width: 700px;
+            height: 700px;
+            background-color: black;
+            margin: auto;
+        }
+    </style>
+    <script>
+
+        function init(){
+            
+            var map = new google.maps.Map(document.getElementById("mapArea"), {
+                center: new google.maps.LatLng(37.495103, 126.960312),
+                zoom: 10,
+            });
+    
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(37.495103, 126.960312)
+            });
+            marker.setMap(map);
+
+            var infowindow = new google.maps.InfoWindow({
+                content: "hello simin!"
+            });
+
+            google.maps.event.addListener(marker, 'click', function(){
+                map.setZoom(15);
+                map.setCenter(marker.getPosition());
+                infowindow.open(map, marker);
+            });
+
+            
+
+        }
+    </script>
+</head>
+<body>
+    <div id="mapArea"></div>
+</body>
+</html>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnvlIPrQuU8EBYLmBTuh8pP0k9swFbf-I&callback=init"></script>

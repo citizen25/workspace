@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var n = 1;  // 변수명을 정의할 때는 영문으로 해야 함
+                    // 특수문자도 허용하지 않음 (허용 예외 -> $, _(언더바)는 가능)
+                    // 숫자로 시작해서도 안됨 ex) var 3x=6;
+        function next(){
+            n = n+1;
+            // 문서 내의 pic이라 불리는 요소의 src 속성 교체
+            document.getElementById("pic").src = "../images/hero/image"+n+".png";
+        }
+    </script>
+</head>
+<body>
+    <img src="../images/hero/image1.png" id="pic"/>
+    <button onClick="next()">다음 프레임 보기</button>
+</body>
+</html>

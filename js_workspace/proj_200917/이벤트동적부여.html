@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /* 지금까지 사용해왔던 html의 모든 eventHandler(onClick, onLoad, onMouseOver, onKeyDown..)는 모두 자바스크립트로도 처리가 가능하다. */
+        
+        /* onLoad에 대한 자바스크립트 처리 방법 */
+        window.addEventListener("load", function(){
+            // alert("문서가 로드되었습니다.");
+
+            /* 없었던 요소를 생성하는 것은 createElement() */
+            var bt = document.createElement("button");
+            bt.innerText = "나 눌러봐";
+
+            /* body에 추가하기 */
+            document.body.appendChild(bt);
+
+            /* 버튼에 click이벤트 구현하기 */
+            bt.addEventListener("click", function(){
+                alert("나 눌렀어?");
+            })
+        });
+
+    </script>
+</head>
+<body>
+    <!-- 
+        문서가 로드되면 버튼을 등장시키고, 그 버튼을 누르면 '나 눌렀어?'라는 메세지 alert()로 출력되도록.
+        html body에 작성 금지, 오직 자바스크립트로만 처리.
+    -->
+</body>
+</html>

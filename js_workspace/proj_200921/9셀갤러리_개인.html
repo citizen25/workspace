@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #mask{
+            width: 300px;
+            height: 300px;
+            background-color: darksalmon;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+            margin-top: 900px;
+        }
+        #box{
+            width: 900px;
+            height: 900px;
+            background-color: cornsilk;
+        }
+    </style>
+    <script>
+
+        var img;
+        let a = 0.1;
+        var targetX;
+        var targetY;
+
+        function init(){
+            box = document.getElementById("box");
+            box.style.position = "absolute";
+            box.style.left = -300 + "px";
+            box.style.top = -300 + "px";
+            
+            targetX = -300;
+            targetY = -300;
+
+
+            for(var i=1; i<=9; i++){
+                img = document.createElement("img");
+                img.style.width = 300 + "px";
+                img.style.height = 300 + "px";
+                img.style.float = "left";
+                img.src = "../images/travel/" + i + ".jpg";
+                
+                box.appendChild(img);
+            }
+
+            setInterval("move()", 10);
+                
+        }
+        
+        document.onkeydown = function control(){
+            if(event.keyCode == 38){    // up
+                setTarget(parseFloat(box.style.left), parseFloat(box.style.top)+300);
+            }else if(event.keyCode == 40){  // down
+                setTarget(parseFloat(box.style.left), parseFloat(box.style.top)-300);
+            }else if(event.keyCode == 37){  // left
+                setTarget(parseFloat(box.style.left)+300, parseFloat(box.style.top));
+            }else if(event.keyCode == 39){  // right
+                setTarget(parseFloat(box.style.left)-300, parseFloat(box.style.top));
+            }
+        }
+        
+        function setTarget(x, y){
+            targetY = y;
+            targetX = x;
+        }
+        
+        function move(){
+            box.style.left = parseFloat(box.style.left) + a*(targetX - parseFloat(box.style.left)) + "px";
+            box.style.top = parseFloat(box.style.top) + a*(targetY - parseFloat(box.style.top)) + "px";
+            // console.log(box.style.left);
+            // console.log(box.style.top);
+            // console.log(targetX);
+            // console.log(targetY);
+        }
+        
+        window.addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div id="mask">
+        <div id="box"></div>
+    </div>
+</body>
+</html>

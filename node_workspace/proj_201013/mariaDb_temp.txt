@@ -1,0 +1,51 @@
+create table hclass(
+	hclass_id int primary key auto_increment
+	, id varchar(20)
+	, pass varchar(20)
+) default character set utf8;
+
+insert into hclass(id, pass) values('admin', '1234');
+
+select * from hclass;
+
+select * from hclass where id='admin' and pass='1234';
+
+---------------------------------------------------------------------
+
+drop table member2;
+
+create table member2(
+	member2_id int primary key auto_increment
+	, uid varchar(20)
+	, password varchar(20)
+	, uname varchar(20)
+	, phone varchar(13)
+	, email varchar(50)
+	, recieve varchar(3)
+	, addr varchar(100)
+	, memo text
+) default character set utf8;
+
+create table skill(
+	skill_id int primary key auto_increment
+	, name varchar(20)
+);
+
+create table member_skill(
+	member_skill_id int primary key auto_increment
+	, member2_id int
+	, skill_id int 
+	, foreign key (member2_id) references member2(member2_id)
+	, foreign key (skill_id) references skill(skill_id)
+);
+
+insert into skill(name) values('java');
+insert into skill(name) values('oracle');
+insert into skill(name) values('android');
+insert into skill(name) values('python');
+insert into skill(name) values('swift');
+insert into skill(name) values('R');
+
+
+
+

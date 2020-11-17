@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 400px;
+            height: 300px;
+            background-color: yellow;
+            font-size: 170px;
+            text-align: center; /* div 안쪽 컨텐츠의 정렬 */
+        }
+    </style>
+    <script>
+        // 버튼을 누를 때마다 1씩 증가시키되, 3으로 나누었을 때 나머지가 0이라면, 문서내의 div의 컨텐츠에 숫자대신 원하는 단어를 출력
+        var n = 0;  // 숫자를 누적시킬 변수
+        var msg;
+        function setCount(){
+            n++;
+            // 아래의 변수값은 숫자이거나, 안주 명칭니거나 둘중에 하나가 되어야 함.
+            // 결정되어 있지 않으므로 변수로 처리해야 한다.
+            msg = (n%3 == 0) ? "치킨" : n;
+            document.getElementById("box").innerText = msg;
+        }
+    </script>
+</head>
+<body>
+    <button onClick="setCount()">카운터 증가</button>
+    <div id="box">0</div>
+</body>
+</html>

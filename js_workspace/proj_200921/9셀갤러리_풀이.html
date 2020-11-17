@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 600px;
+            height: 600px;
+            background-color: yellow;
+            margin: auto;
+        }
+        #mask{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            /* 본연의 위치에서 left 200, top 200 떨어뜨리기. 이유: 정중앙으로 위치하기 위해 */
+            position: relative;
+            left: 200px;
+            top: 200px;
+            overflow: hidden;
+        }
+        #cell{
+            width: 600px;
+            height: 600px;
+            background-color: blue;
+        }
+    </style>
+    <script>
+        var cell;   // 이미지를 포함할 div : 움직일 것이다.
+        var x = 0;  // cell의 x좌표
+        var y = 0;  // cell의 y좌표
+        var a = 0.1;
+        var targetX = 0;    // 목표 x지점
+        var targetY = 0;    // 목표 y지점
+        var img;
+
+        function init(){
+            cell = document.getElementById("cell");
+            cell.style.position = "absolute";
+            cell.style.left = 0 + "px";
+            cell.style.top = 0 + "px";
+
+            var n = 0;
+            for(var j=1; j<=3; j++){    // 층을 결정, top값을 결정
+                for(var i=1; i<=3; i++){    // 호수를 결정, left 값을 결정
+                    n++;
+                    img = document.createElement("img")
+                    img.src = "../images/travel/" + n + ".jpg";
+                    img.style.width = 200 + "px";
+                    img.style.height = 200 + "px";
+                    img.style.position = "absolute";
+                    img.style.left = (i-1)*200 + "px";
+                    img.style.top = (j-1)*200 + "px";
+
+                    cell.appendChild(img);
+
+                }
+            }
+
+            /* 문서 전체를 대상으로 키보드 이벤트 구현 */
+            document.body.addEventListener("keydown", function(){
+
+                /* 모든 키보드에 반응하면 안되고, 오직 방향키에만 반응하도록 조건문을 부여하자 */
+                var key = event.keyCode;   // 키보드에 대한 이벤트 정보 객체로부터 아스키 코드 받기
+
+                switch(key){
+                    case 37: x=x-200; break;
+                    case 39: x=x+200; break;
+                    case 38: y=y-200; break;
+                    case 40: y=y+200; break;
+                }
+
+                /* 셀 div의 좌표를 설정해서 움직이도록 한다. */
+                // setTarget();
+                targetX = x;
+                targetY = y;
+
+            });
+
+            
+
+        }
+
+
+        /* 목표지점까지 부드럽게 움직일 수 있도록 감속도로 처리 */
+        function move(){
+            cell.style.left = parseFloat(cell.style.left) + a*(targetX-parseFloat(cell.style.left)) + "px";
+            cell.style.top = parseFloat(cell.style.top) + a*(targetY-parseFloat(cell.style.top)) + "px";
+        }
+
+        function setTarget(){
+            cell.style.left = x + "px";
+            cell.style.top = y + "px";
+
+            printPos();
+        }
+
+        /* 디버깅을 위한 좌표 출력(필수는 아님) */
+        function printPos(){
+            cell.style.color = "white";
+            cell.innerText = "x좌표" + cell.style.left + "\n";
+            cell.innerText += "y좌표" + cell.style.top;
+        }
+
+        window.addEventListener("load", function(){
+            init();
+            setInterval("move()", 25);
+        });
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="mask">
+            <div id="cell"></div>
+        </div>
+    </div>
+</body>
+</html>

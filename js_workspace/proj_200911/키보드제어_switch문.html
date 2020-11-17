@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            background-image: url(../images/bg.jpg);
+            background-size: 1024px 768px;
+            /* 배경의 위치 */
+            background-position: 0px 0px;
+            width: 1024px;
+            height: 768px;
+            margin: auto;
+            position: relative;
+            /* 자식요소에 posotion이 명시되어 있기 때문에 부모에도 반드시 position이 명시되어야 함. */
+            overflow: hidden;
+        }
+        #bird{
+            width: 100px;
+            height: 100px;
+            /* 앵그리버드 이미지를 wrapper라는 div를 기준으로, 즉 부모로 위치를 설정하자. wrapper에 대한 absolute로 처리하자 */
+            position: absolute; /* 부모 요소를 기준으로 한 위치 설정 방법 */
+            top: 50px;
+            left: 100px;
+        }
+    </style>
+    <script>
+        /* 
+            우리가 원하는 것은 프로그램이 끝날 때까지 그 값을 계속 유지하면서 x값에 누적시키기 위함! 
+            전역변수 : 브라우저 닫을 때까지 그 값이 유지되는 전역변수자!!!
+            따라서 프로그램이 수행되는 동안, 어떤 값을 누적시키시고 싶다면... 전역변수를 이용해야한다. ex) 게임에서 누적될 점수(게임 끝날 때까지 유지되어야 하므로...)
+        */
+        var x = 100;
+        var y = 50;
+        var bg = 0; // 배경의 위치값을 누적할 변수.
+
+        /* 키보드를 누르면 해당 키에 맞는 움직임을 처리 */
+        function joystick(){
+            /*
+                움직이는게 우선이 아니다!
+                사용자가 누른 키보드감 무엇인지부터 판단해야 한다.
+                컴퓨터는 오직 1/0 이진수로 표현되는 전기신호만 이해한다.
+                따라서, 우리가 컴퓨터 자판을 입력했을 때, 각 자판의 철자마다 1:1로 대응하는 10진수 체계가 지원되고 있는 것이다...(왜 ANSI는 a를 96으로 했을까? 그건 ANSI만 안다!!)
+                이 10진수가 내부적으로 컴퓨터에게 전달될 때는 이진수로 변환되는 것이다.
+                그러나 겁먹지 말자. 우리는 인간이므로 그냥 프로그램에 집중하면 된다..
+                그리고 ASCII코드는 외우는 것이 아니라, 프로그래밍 언어를 통해 조사하면 된다.
+                참고로, 컴퓨터가 개발된 초창기에는 영미권에서만 컴퓨터를 사용했기 때문에 자판의 수가 특수문자 포함해서 100여개 밖에 되지 않았기 때문에 ASCII 코드가 표현했던 코드의 갯수는 256개로도 충분했다.
+                하지만, 이제는 모든 나라가 컴퓨터를 이용하므로 (1000자문만 해도 그 수가 많다..) ASCII코드를 더 확장하여 늘려놓았는데, 이 코드 체계가 유니코드이다..
+                앞으로 우리가 배울 Java 언어는 한글 뿐 아니라 모든 언어를 지원하므로 유니코드 기반이다.
+            */
+            console.log("당신이 누른 키보드에 1:1로 대응하는 아스키 코드 값은 ", event.keyCode);
+            // 37 left, 38 up, 39 right, 40 down
+
+            switch(event.keyCode){
+                case 37:
+                    moveLeft();
+                    break;
+                case 38:
+                    moveUp();
+                    break;
+                case 39:
+                    moveRight();
+                    break;
+                case 40:
+                    moveDown();
+                    break;
+                case 32:
+                    resetPos();
+                    break;
+            }
+        }
+
+        /* 위로 이동하는 함수 */
+        function moveUp(){
+            y = y - 10;
+            document.getElementById("bird").style.top = y + "px";
+        }
+
+        /* 아래로 이동하는 함수 */
+        function moveDown(){
+            y = y + 10;
+            document.getElementById("bird").style.top = y + "px";
+        }
+
+        /* 좌측으로 이동하는 함수 */
+        function moveLeft(){
+            x = x - 10;
+            document.getElementById("bird").style.left = x + "px";
+        }
+
+        /* 우측으로 이동하는 함수 */
+        function moveRight(){
+            /* var x = 100; 지역변수: 함수 호출할 때마다 생성시키는 것은 현재 프로그램에 맞지 않음. */
+            /*
+            console.log("x: ", x);  // 개발자 모드에서 확인해가면서 개발하기 위해...
+            // 문서 내의 bird라는 요소의 css의 포지션 중 left, top을 제어해 본다.
+            */
+            x = x+10;
+            document.getElementById("bird").style.left = x + "px";
+        }
+        function resetPos(){
+            x = 100;
+            y = 50;
+            document.getElementById("bird").style.left = x+"px";
+            document.getElementById("bird").style.top = y+"px";
+        }
+
+        /* 배경을 제어하자! */
+        function moveBg(){
+            bg = bg - 1;
+            // 문서 내의 wrapper의 백그라운드 position 변경
+            document.getElementById("wrapper").style.backgroundPositionX = bg + "px";
+        }
+        /* 자동으로 호출하기 : 우리가 정의해 놓은 기능을 컴퓨터가 대신 호출하도록 하는 것. */
+        function auto(){
+            // 지정한 시간마다 지정한 함수를 호출해주는 자동 호출 함수.
+            // 자바스트립트 내장 함수 setInterval();
+            setInterval("moveBg()", 1);
+        }
+
+    </script>
+</head>
+<!-- onKeyDown : 키보드를 누르면... -->
+<body onKeyDown="joystick()">
+    <!-- 
+        과거에는 html문서에 미디어를 넣기 위해서는 상당히 복잡한 외부 플러그인이 필요했다.
+        하지만 html5가 지원되면서부터, 자체적으로도 미디어 처리가 가능하다.(플래시 X, 실버라이트 X)
+     -->
+    <audio controls>
+        <source src="../sounds/angryBird.mp3" type="audio/mpeg">
+    </audio>
+    <button onClick="auto()">배경 테스트</button>
+    <div id="wrapper">
+        <img id="bird" src="../images/angryBird.svg"/>
+    </div>
+</body>
+</html>

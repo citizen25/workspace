@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        #wrapper{
+            width: 400px;
+            height: 75px;
+            background-color: white;
+            margin: auto;
+            position: relative;     /* 자식이 position 속성을 가졌으므로.. */
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        var arr = new Array(5); // 반복문으로 채워넣기 위해..
+        var flag = false;
+
+        function init(){
+            /* 이미지 5개를 동적으로 생성하여 wrapper 추가 */
+            for(var i=0; i<5; i++){
+                img = document.createElement("img");  // <img/>
+                arr[i] = img;   // arr[0]=0번째img, arr[1]=1번째img, arr~~
+
+                img.src = "../images/travel/" + (i+1) + ".jpg";
+                img.style.width = 100 + "px";
+                img.style.height = 75 + "px";
+                img.style.position = "absolute";
+                img.style.left = (i*100) + "px";
+                img.innerText = img.style.left;
+
+                /* 테두리 */
+                img.style.border = "5px solid white";
+                img.style.boxSizing = "border-box";
+
+                /* wrapper에 부착 */
+                var wrapper = document.getElementById("wrapper");
+                wrapper.appendChild(img);
+            }
+        }
+
+        /* 이미지들의 좌표를 좌측방향으로 (x의 음수방향) 이동시키기 */
+        function move(){
+            if(flag == true){
+                for(var i=0; i<5; i++){
+                    arr[i].style.left = parseInt(arr[i].style.left) - 1 + "px";
+                }
+
+                /*
+                if(parseInt(arr[1].style.left) == 0){
+                    arr[0].style.left = 400 + "px";
+                }else if(parseInt(arr[2].style.left) == 0){
+                    arr[1].style.left = 400 + "px";
+                }else if(parseInt(arr[3].style.left) == 0){
+                    arr[2].style.left = 400 + "px";
+                }else if(parseInt(arr[4].style.left) == 0){
+                    arr[3].style.left = 400 + "px";
+                }else if(parseInt(arr[0].style.left) == 0){
+                    arr[4].style.left = 400 + "px";
+                }
+                */
+
+                for(var i=0; i<arr.length; i++){
+                    if(parseInt(arr[0].style.left) == 0){
+                        arr[arr.length-1].style.left = 400 + "px";
+                    }else if(parseInt(arr[i].style.left) == 0){
+                        arr[i-1].style.left = 400 + "px";
+                    }
+                }
+            }
+        }
+
+        function onOff(){
+            flag = !flag;
+        }
+
+        window.addEventListener("load", function(){
+            init();
+            setInterval("move()", 10);
+        });
+
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+    <button onClick="onOff()">움직임</button>
+</body>
+</html>

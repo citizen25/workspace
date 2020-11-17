@@ -1,0 +1,41 @@
+<script>
+    /* 방법1 : new 연산자로 선언 후 각 요소의 index를 명시하여 구성하는 법 */
+    // var box = new Array();
+
+    var box = [
+        ["호랑이", "사자", "말"], 
+        ["장미", "튤립", "백합"], 
+        ["java", "oracle", "spring"]
+    ]
+
+    // var animal = ["호랑이", "사자", "말"];
+    // var flower = ["장미", "튤립", "백합"];
+    // var it = ["java", "oracle", "spring"];
+
+
+    // box.push(animal);
+    // box.push(flower);
+    // box.push(it);
+/*
+    for(var i=0; i<box.length; i++){
+        for(var a=0; a<box[i].length; a++){
+            document.write(box[i][a]);
+            document.write("&nbsp;")
+        }
+        document.write("<br/>");
+    }
+*/
+
+    document.write("<table border='1px' width='300px'>");
+    for(var i=0; i<box.length; i++){
+        document.write("<tr>");
+        for(var a=0; a<box[0].length; a++){
+            document.write("<td>" + box[i][a] + "</td>");
+        }
+        document.write("</tr>");
+    }
+    document.write("</table>");
+
+
+
+</script>

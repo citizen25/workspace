@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        /* jquery는 개발자가 직접 작성해야 할 자바스크립트 코드를 단순화 시켜놓은 라이브러리 이다.
+        따라서, 우리가 기존에 작성했던 코드의 규모가 상당히 작아진다. */
+
+        /* load되면.. addEventListener("load", function)의 단축형이다. */
+        $(document).ready(function(){
+            console.log("loaded");
+
+            /* 순수 js로 실행 */
+            // var box1 = document.getElementById("box1");
+            // box1.style.backgroundColor = "red";
+            // box1.style.width = 100 + "px";
+            // box1.style.height = 100 + "px";
+
+            /* jQuery로 작성 */
+            /* JQuery는 CSS의 선택자 규칙을 따른다. 따라서 CSS에서 사용했던 #id, .class, tag 등이 모두 적용된다. */
+            var color = "green";
+
+            $("#box1").css({
+                "background": color,
+                "width": "100px",
+                "height": "100px",
+            }).css("border", "5px solid red");      // chaining이라 부른다. 근데 json쓰면 되기 때문에 그닥.
+
+
+        });
+
+
+    </script>
+</head>
+<body>
+    <div id="box1"></div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 600px;
+            height: 500px;
+            background-color: bisque;
+            margin: auto;
+        }
+        #navi{
+            width: 100%;
+            height: 50px;
+            background-color: blueviolet;
+        }
+        .menu{
+            float: left;
+            width: 200px;
+            height: 100%;
+            border: 1px solid brown;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 50px;
+        }
+        .menu:first-child{
+            background-color: dodgerblue;
+        }
+        .menu:nth-child(2){
+            background-color: darkgoldenrod;
+        }
+        .menu:last-child{
+            background-color: darkmagenta;
+        }
+        #content{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 450px;
+            background-color: crimson;
+        }
+
+    </style>
+    <script>
+        var gongji;
+        var qna;
+        var free;
+        var content;
+
+        function init(){
+            gongji = document.querySelector(".menu:first-child");
+            qna = document.querySelector(".menu:nth-child(2)");
+            free = document.querySelector(".menu:last-child");
+            content = document.getElementById("content");
+
+            gongji.addEventListener("mouseover", function(){
+                content.style.backgroundColor = "dodgerblue";
+            });
+            gongji.addEventListener("mouseout", function(){
+                content.style.backgroundColor = "crimson";
+            });
+
+            qna.addEventListener("mouseover", function(){
+                content.style.backgroundColor = "darkgoldenrod";
+            });
+            qna.addEventListener("mouseout", function(){
+                content.style.backgroundColor = "crimson";
+            });
+
+            free.addEventListener("mouseover", function(){
+                content.style.backgroundColor = "darkmagenta";
+            });
+            free.addEventListener("mouseout", function(){
+                content.style.backgroundColor = "crimson";
+            });
+        }
+
+
+
+        window.addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="navi">
+            <div class="menu">공지사항</div>
+            <div class="menu">질문게시판</div>
+            <div class="menu">자유게시판</div>
+        </div>
+        <div id="content"></div>
+    </div>
+</body>
+</html>

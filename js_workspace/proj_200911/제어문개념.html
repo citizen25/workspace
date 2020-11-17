@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.write("A");
+        /*
+            제어문이란?
+            : 실행부의 실행을 제어할 수 있는 구문
+                - 조건문 : 조건문의 소괄호의 값이 true인 경우만, 조건문 블럭을 수행
+                    if, if~else, if~ifelse, switch
+                - 반복문 : 
+
+
+            브레이스라 하는 중괄호의 역할
+            1) 범위를 설정한다 (지역화 시킴)
+            2) 변수의 생명력을 제한한다.    
+        */
+        var x = 3;  // 전역변수 : 프로그램이 종료될 때 소멸 == 브라우저 끝날 때.
+        if(false){
+            var a = 7; // 지역변수 : 브레이스 범위 내에서만 생명력을 갖는다.
+            document.write("B");
+            document.write("C");
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

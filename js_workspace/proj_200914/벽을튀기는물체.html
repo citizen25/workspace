@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 500px;
+            height: 500px;
+            background-color: cadetblue;
+            margin: auto;
+            position: relative; /* 자식 때문에 넣어준다. */
+        }
+    </style>
+    <script>
+        /* 변수 선언 영역 */
+        var box;    // 문서 내의 div 박스를 담아놓을 변수
+        var x=50;    // box의 x좌표를 결정하는 전역변수
+        var y=80;  // box의 y좌표를 결정하는 전역변수
+
+        var stepY = 5;
+        var stopX = 8;
+
+        /* 문서가 로드되면 초기화 작업을 해주는 함수 */
+        function init(){
+            // 박스의 스타일을 css에서가 아니라 js 프로그래밍으로 처리 -> css를 프로그램으로 제어 가능
+            box = document.getElementById("box");   // 전역변수에 보관.
+
+            box.style.width = 50+"px";
+            box.style.height = 50+"px";
+            box.style.background = "red";
+            box.style.position = "absolute";
+            box.style.left = x+"px";
+            box.style.top = y+"px";
+        }
+
+        /* 클릭시, 수동으로 box의 left, top을 변경시키는 함수 */
+        function move(){
+            // y축에 발이 닿았는지 여부 판단하자 (판단기준 700수평선-50=650)
+            if(y >= 450 || y <= 0){
+                box.style.backgroundColor="blue";
+                // 이 순간에는 y축의 증가분을 반대로 돌려놓아야 한다. 즉, 부호를 전환. x축은 그냥 냅둔다.
+                stepY = -stepY;
+            }
+            
+            x = x + stepX;
+            y = y + stepY;
+
+            // box에 숫자 출력(디버깅 목적으로...)
+            box.innerText = "x="+x+" y+"+y;
+            box.style.left = x+"px";
+            box.style.top = y+"px";
+
+        }
+
+        /* 클릭시, 자동으로 box의 left, top을 변경시키는 함수 */
+        function auto(){
+            setInterval("move()", 10)
+        }
+
+    </script>
+</head>
+<body onLoad="init()">
+    <button onClick="move()">수동</button>
+    <button onClick="auto()">자동</button>
+    <div id="wrapper">
+        <div id="box"></div>
+    </div>
+</body>
+</html>

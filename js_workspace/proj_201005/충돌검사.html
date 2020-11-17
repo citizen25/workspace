@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        #wrapper{
+            width: 100%;
+            height: 800px;
+            background-color: black;
+        }
+    </style>
+    <script src="./Box.js"></script>
+    <script src="../js/lib.js"></script>
+    <script>
+        var b1, b2;
+
+        /* 마우스를 움직이는 동안 호출할 함수 */
+        function getPos(){
+            var x = event.clientX;  // 마우스 x좌표
+            var y = event.clientY;  // 마우스 y좌표
+            
+            drag(x, y);
+        }
+
+        /* 박스 나르기 */
+        function drag(x, y){
+            /* 마우스 좌표를 구해온 수, b1박스의 x, y 좌표값에 대입. 그래야 정보가 계속 유지됨. */
+            b1.x = x;
+            b1.y = y;
+
+            /* 클릭을 누르는 순간부터 박스의 좌표를 마우스의 좌표과 일치시키자 */
+            b1.div.style.left = x + "px";
+            b1.div.style.top = y + "px";
+
+            /* 좌표 출력 */
+            b1.div.innerText = "x:" + b1.x + "\ny:" + b1.y;     // 마우스 좌표 정보
+            b2.div.innerText = "x:" + b2.x + "\ny:" + b2.y;     // 원래 자기 자신의 정보
+
+            /*
+            // if(빨간사각형의x축 + 너비 >= 목표사각형의x축){}
+            if(b1.x + b1.width >= b2.x){
+                console.log("x");
+            }
+            
+            // if(빨간사각형의y축 + 높이 >= 목표사각형의y축){}
+            if(b1.y + b1.height >= b2.y){
+                console.log("y");
+            }
+            
+            if((b1.x + b1.width >= b2.x) && (b1.y + b1.height >= b2.y)){
+                console.log("crash");
+                b1.div.style.backgroundColor = "green";
+            }else{
+                b1.div.style.backgroundColor = "red";
+                
+            }
+               */
+
+            var result = collisionCheck(b1.div, b2.div);
+            console.log("충돌여부: ", result);
+
+            if(result){
+                b1.div.style.backgroundColor = "green";
+            }else{
+                b1.div.style.backgroundColor = "red";
+            }
+        }
+
+        function init(){
+            b1 = new Box("red", 100, 200);  // 빨간 상자
+            b2 = new Box("dodgerBlue", 500, 200);  // 파란 상자
+        }
+        window.addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body onMouseMove = "getPos()">
+    <div id="wrapper"></div>
+</body>
+</html>

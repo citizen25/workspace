@@ -1,0 +1,21 @@
+GAN based data augmentation approach of multi-featured and multi-dimensional time-series wearable motion data for robust HMR with DCNN
+
+Source : 다기능, 다차원 시계열 모션 데이터.
+Purpose : DCNN을 이용한 강력한 HMR 생성.
+To use DCNN : GAN기반 데이터 증식.
+내가 할일 : GAN기반 데이터 증식 접근 방법?
+
+
+*DCNN : Deep Convolution Neural Network
+*HMR : Human Motion Recognition
+*GAN : Generative Adversarial Network
+
+
+
+
+
+
+
+
+
+

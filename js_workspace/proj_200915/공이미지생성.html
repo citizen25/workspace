@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        var n = prompt("몇 번째마다 다른 공을 생성하실래요?");
+        // 5를 입력해도 프롬프트의 특징상 "5" 문자로 이해한다.
+        // 숫자로 바꾼다 -> parseInt()
+        n = parseInt(n);    // "5" 쌍따옴표 제거 --> 5(정수)
+
+        /* 전역변수, 숫자가 누적될 수 있도록 하기 위함
+        1, 2, 3, 4, 5, ... 누적해나가다가, 5를 나눈 나머지를 구해야 하니깐 */
+        var count = 0;
+        function createBall(){
+            count++;
+            console.log("count is ", count);
+
+            var ball = document.createElement("img");   // <img/> 작성
+
+            /*
+            if(count%n != 0){
+                ball.src = "../images/ball/basketball.svg";   // <img src=""/> 작성
+            }else{
+                ball.src = "../images/ball/football.svg";   // <img src=""/> 작성
+            }
+            */
+
+            // 흑백 논리를 처리할 때는, 삼항연산자로도 가능하다.
+            ball.src = (count%n == 0)? "../images/ball/football.svg" : "../images/ball/basketball.svg";
+
+            ball.style.width = 50 + "px";
+            document.body.appendChild(ball);    // body에 ball 추가
+        }
+    </script>
+</head>
+<body>
+    <button onClick="createBall()">공생성</button>
+</body>
+</html>

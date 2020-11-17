@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var msg; // 짝수 or 홀수를 담게 될 변수
+        function openPrompt(){
+            // 자바스크립트에 이미 내장된 함수인 prompt()를 호출해보자
+            // 프롬프트 창에 사용자가 입력한 데이터는 확인 버튼 누름과 동시에 반환된다. 그 반환된 값을 n 변수에 대입해놓자!
+            var n = prompt("원하시는 숫자를 넣어주세요");
+            // alert("당신이 입력한 값은 "+n+"이군요!");
+            // 어떤수를 2로 나누어서 나머지가 0이면 짝수, 아니면 홀수.
+            // 삼항연산자의 용도 : 판단 대상이 단 2가지로만 분류될 때(흑백논리)
+            msg = (n%2 == 0) ? "짝수" : "홀수";
+            document.getElementById("result").style.background = "yellow";
+            // 문서 내의 id="result"인 요소의 value값에 결과 문자를 넣자
+            document.getElementById("result").value = msg + "입니다";
+        }
+    </script>
+</head>
+<body>
+    <button onClick="openPrompt()">프롬프트 띄우기</button>
+    <!-- 아래의 text 박스에 홀수인지 짝수인지 여부를 출력 -->
+    <input id="result" type="text" value="결과를 기다리고 있어요"/>
+</body>
+</html>

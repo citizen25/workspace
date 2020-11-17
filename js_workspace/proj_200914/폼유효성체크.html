@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+.wrapper{
+    width:700px;
+    background-color:#f2f2f2;
+    margin: auto;
+    padding:20px;
+}
+/*입력 텍스트 박스 대한 디자인 일괄처리 */
+input[type=text], input[type=password], select, textarea{
+    width:100%;
+    padding:12px; /*텍스트 박스에 쓰여질 글씨와의 간격을 두자*/
+    border-radius: 4px; /*텍스트 박스의 모서리를 부드럽게*/
+    box-sizing: border-box; /*전체 너비에 border + padding 알아서 계산*/
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+button{
+    background-color: #4CAF50;
+    color:white; /*글씨색*/
+    padding:12px 20px;  /* 위,아래 12px    좌,우 20px*/
+    border:none;
+    border-radius: 4px;
+    cursor:pointer; /*손가락 모양으로 커서를 전환*/
+}
+</style>
+<script src="http://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+<script>
+    function init(){
+        CKEDITOR.replace('content'); //기존의 textarea를, 편집기 디자인으로 대체
+    }
+
+    function regist(){
+        /*
+            폼태그는 사용자가 입력한 데이터를 서버에 전송하는 목적의 태그이므로, 폼태그의 속성을 이용하면 전송할 서버의 주소, 전송 방법 등을 지정할 수 있다.
+        */
+
+        /* 
+            아래의 이 전송이라는 행위는 아무나 하게 해줘야 할까??
+            아니다!. 제대로 입력 양식을 작성한 사람에게만 기회를 줘야 한다.
+        */
+        
+        /* 아이디를 입력했는지 여부 체크. 안했다면 전송기능에 도달해서는 안됨 */
+        var user = document.getElementById("user");
+        var pass = document.getElementById("password");
+        var as = document.getElementById("as");
+        var content = document.getElementById("content");
+
+        // alert("당신이 입력한 아이디는 " + user.value); 
+        // 텍스트박스에는 value라는 속성을 이용하여 현재 텍스트 박스에 입력되어있는 문자열을 얻어올 수 있다.
+
+        if(user.value==""){
+            // 아무것도 입력하지 않으면... 욕하자!
+            alert("아이디를 넣어주세요");
+            user.focus();   // 커서 올리기
+        }else if(pass.value==""){
+            alert("비밀번호를 넣어주세요");
+            pass.focus();
+        }else if(as.value == ""){
+            alert("AS Type을 선택하세요");
+            as.focus();
+        }else if(content.value == ""){
+            alert("접수 내용을 입력하세요");
+            content.focus();
+        }else{
+            form1.action = "http://naver.com"; // 전송할 서버의 URL
+            form1.submit(); // 전송행위가 일어나는 시점!
+        }
+    }
+</script>
+</head>
+<body onLoad="init()">
+    <div class="wrapper">
+        <!--눈에 보여지지는 않지만, 서버로 전송대상이 되는 컴포넌트의 범위를
+        설정하는 용도로 사용한다.  -->
+        <!-- 
+            id와 name의 차이점 및 공통점
+            공통점 : 식별자로써의 역할이다.
+                태그와 태그를 구분하기 위해서, id나 name을 줄 수 있다.
+            차이점 : id는 말 그대로 명칭이 유일해야 하지만, name은 중복이 가능.
+         -->
+        <form name="form1" onSubmit="event.preventDefault()">
+            <label for="user">접수자 ID</label>
+            <input type="text" id="user" placeholder="접수자 아이디 입력..."/>                        
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="비밀번호 입력..."/>                        
+
+            <label for="as">AS Type</label>
+
+            <!-- 
+                option에서 태그 사이에 적은 글은 "디자인"이다.
+                form으로 전송되는 "실질적인 정보"는 option 태그의 속성인 value이다.
+             -->
+            <select id="as">
+                <option value="">AS 유형 선택</option>
+                <option value="컴퓨터">컴퓨터</option>                    
+                <option value="TV">TV</option>                    
+                <option value="세탁기">세탁기</option>                    
+            </select>
+            
+            <!--  input type=text는 한줄만 입력, textare 멀티라인 -->
+            <label for="content">접수하실 내용</label>
+            <textarea id="content" rows="10"></textarea>    
+             
+            <!-- form태그 안에 button태그를 넣어주면, 무조건 현재 폼을 서버에 전송하려고 한다. (페이지가 깜빡거리는 것을 볼 수 있다.) 
+            방지방법) form태그에 onSubmit="event.preventDefault()"를 넣어준다.
+            -->
+
+
+            <button onClick="regist()">등록하기</button>
+        </form>                
+    </div>        
+</body>
+</html>

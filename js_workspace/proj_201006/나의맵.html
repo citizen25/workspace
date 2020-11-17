@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #myMap{
+            width: 1000px;
+            height: 800px;
+            background-color: yellow;
+            margin: auto;
+        }
+    </style>
+    <script>
+        var myMap;  // div
+        function init(){
+            // console.log("구글맵 준비되었어?");
+
+            myMap = document.getElementById("myMap");
+            var pos = new google.maps.LatLng(37.496257, 126.957253);
+
+            var mapProp= {
+                center: pos,   // JSON : JavaScript Object Notation -> 일회성 객체. 원본 없음.
+                zoom: 10
+            };
+
+            /* 구글맵 객체 생성 */
+            var map = new google.maps.Map(myMap, mapProp);
+
+
+            /* 마커 생성 */
+            var marker = new google.maps.Marker({
+                position: pos,
+                animation: google.maps.Animation.BOUNCE,
+                icon:{
+                    url: "../images/shooting/e1.png",
+                    scaledSize: new google.maps.Size(45, 45)
+                }
+            });
+            marker.setMap(map);
+
+            /* 마커에 클릭 이벤트 부여 */
+            google.maps.event.addListener(marker, "click", function(){
+                // alert("여기가 궁금해?");
+                map.setZoom(15);
+            });
+            
+            /* 정보창 띄우기 */
+            var pop = new google.maps.InfoWindow({
+                content: "여기가 숭실대학교예용!",
+            });
+            pop.open(map, marker);
+
+        }
+
+
+
+    </script>
+</head>
+<body>
+    <div id="myMap">구글 지도 나올 예정</div>
+</body>
+</html>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=init"></script>

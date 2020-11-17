@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 700px;
+            height: 600px;
+            margin: auto;
+            border: 5px solid black;
+        }
+        .thumb{
+            float: left;
+            width: 150px;
+            height: 100%;
+            overflow: scroll;
+        }
+        .detail{
+            float: left;
+            width: 550px;
+            height: 100%;
+        }
+        .thumb img{
+            width: 120px;
+        }
+        .detail img{
+            width: 450px;
+            padding: 50px;
+        }
+    </style>
+    <script>
+        var detailImage;    // createDetail() 함수가 호출될 때, 이 값이 채워질 것이다. 전역변수로 되어 있어야 다른 곳에서 사용 가능.
+        /* 문서가 로드되면, 썸네일 이미지와 큰 이미지를 원하는 만큼 등장시키자 */
+        window.addEventListener("load", function(){
+            /* 썸네일 이미지를 생성 및 thumb div에 추가 */
+            createThumb();
+            /* 큰 이미지를 생성 및 detail div에 추가 */
+            createDetail();
+        });
+        function createThumb(){
+            for(var i=1; i<=10; i++){
+                var thumbImage = document.createElement("img");     // <img/>
+                thumbImage.src = "../images/travel/"+i+".jpg";    // <img src=""/>
+                var thumbDiv = document.querySelector(".thumb");  // .thumb 
+                thumbDiv.appendChild(thumbImage);   // 부착
+                console.log(i, "번째 이미지 생성");
+
+                /* 프로그래밍적으로 이벤트 구현하기 */
+                /*
+                    아래의 콜백함수는 click이라는 이벤트가 발생할 때만 수행되므로, 코드 위쪽에 명시된 for문의 i를 사용할 수 없다.
+                    why? 클릭이 일어난 시점에는 이미 for문의i는 11이므로.. 
+                */
+                thumbImage.addEventListener("click", function(){
+                    /* 이벤트 핸들러 내에서는, 이벤트를 일으킨 주체를 this로 가리킬 수 있다. 이벤트를 일으킨 주체 : 버튼, 텍스트박스 등의 UI 컴포넌트 */
+                    // alert("나 눌렀어?");
+                    /* 지금 선택한 썸네일과 같은 주소의 큰 이미지가 나오도록.. */
+                    console.log("지금 누른 이미지의 경로는 ", this.src);
+                    detailImage.src = this.src; 
+                });
+            }
+        }
+        function createDetail(){
+            detailImage = document.createElement("img");    // <img/>
+
+            detailImage.src = "../images/travel/1.jpg";     // <img src=""/>
+            var detailDiv = document.querySelector(".detail");
+            detailDiv.appendChild(detailImage);     // 부착
+        }
+
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="thumb"></div>
+        <div class="detail"></div>
+    </div>
+</body>
+</html>

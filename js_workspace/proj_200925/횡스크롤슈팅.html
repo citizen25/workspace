@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        #wrapper{
+            width: 100%;
+            height: 640px;
+            background-image: url(../images/shooting/bg.jpg);
+        }
+    </style>
+    <script>
+        /* 어떤 경우에 .js로 분리시켜야 하는가?
+            기준은 재사용성! 현재 프로젝트 뿐만 아니라 미래의 프로젝트에서도 쓴다면 빼놓는다.
+            Class는 외부로 빼 놓는 것이 암묵적인 rule이다.
+                클래스의 사용 목적 자체가 여기저기 재사용하기 위함이기 때문. */
+    </script>
+    <script src="./Hero.js"></script>
+    <script src="./Enemy.js"></script>
+    <script src="./Bullet.js"></script>
+    <script>
+        /* 게임의 움직임을 처리하기 위해서는 setInterval과 같은 자동함수의 사용이 필수이다.
+        이때, 이 자동함수는 가급적 1개만 만들어야 동기화에 문제가 생기지 않는다.
+        게임 가동과 함께, 엔진이라고 할 수 있는 setInterval을 작동시켜놓자. */
+
+        /* 모든 게임의 객체들을 대상으로 주기적 함수 호출을 시도할 엔진 루프 */
+
+        var count = 0;
+        var bgX = 0;   // 배경의 x축 position 결정. 배경은 좌측으로 움직인다 -> 음수값.
+        var enemySrc = [
+            "../images/shooting/e1.png",
+            "../images/shooting/e2.png",
+            "../images/shooting/e3.png",
+            "../images/shooting/e4.png",
+            "../images/shooting/e5.png"
+        ];
+        var wrapper;
+        var hero;   // 주인공을 가리키는 변수.
+        var bullet;
+
+        /* 주인공 등장시키는 함수 */
+        function createHero(){
+            /* 주인공 거푸집은 Hero 클래스로부터 주인공 인스턴스 1개를 생성 */
+            /* 생성된 객체를 제어하려면, 반드시 변수나 배열이 있어야 한다. */
+            hero = new Hero(wrapper, 200, 200, 100, 70);  // container, x, y, width, height
+        }
+
+        /* 적군 등장시키는 함수 */
+        function createEnemy(){
+            for(var i=0; i<5; i++){
+                /* 사용자마다 모니터 너비, 높이가 다르므로, 프로그래밍적으로 얻어온 결과를 이용해 위치를 설정해보자 */
+                new Enemy(wrapper, 50, 50, screen.width-150, (i+1)*100, enemySrc[i]);     // container, width, height, x, y, src
+            }
+            // alert(screen.height);
+            // alert(screen.height);
+        }
+
+        /* 배경 움직임 처리 */
+        function moveBg(){
+            bgX -= 1;
+            wrapper.style.backgroundPosition = bgX + "px 0px";
+        }
+
+        /* 총알 생성 */
+        function createBullet(){
+            bullet = new Bullet(wrapper, hero.x, hero.y);
+        }
+
+        /* 게임에 등장하는 모든 요소를 움직여주는 심장과 같은 역할! */
+        function gameLoop(){
+            count++;
+            // console.log("count : ", count);
+            moveBg();
+            bullet.move();
+        }
+        function init(){
+            wrapper = document.getElementById("wrapper");
+
+            /* interval에 지정한 시간은 게임의 실행 속도를 좌우한다. (FPS : Frame Per Second. 1초에 몇번의 실행을 하는지 빈도수) */
+            setInterval("gameLoop()", 10);  // 게임 루프 사동 시작
+            createHero();
+            createEnemy();
+
+            /* 키보드 이벤트 구현하기 */
+            document.body.addEventListener("keydown", function(e){
+                // alert(e.keyCode);
+                if(e.keyCode == 32){
+                    createBullet();     // 총알 생성 함수 호출
+                }
+            });
+        }
+        window.addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<script src="Tetris.js"></script>
+<script>
+    var tetris;
+    
+    function init(){
+        var blockW = 50;
+        var blockH = 50;     
+
+        map = [
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1]
+        ];
+
+        tetris = new Tetris();
+
+        var wrapper = document.createElement("div");
+        wrapper.style.margin = "auto";
+        wrapper.style.height = (blockH * tetris.map.length) + "px";
+        wrapper.style.width = (blockW * tetris.map[0].length) + "px";
+        wrapper.style.backgroundColor = "white";
+        wrapper.style.position = "relative";
+        wrapper.style.marginTop = 200 + "px";
+        wrapper.style.borderRadius = 2 + "px";
+
+        document.body.appendChild(wrapper);
+
+        for(var i=0; i<tetris.map.length; i++){
+            for(var j=0; j<tetris.map[0].length; j++){
+                if(tetris.map[i][j] == 1){
+                    var box = document.createElement("div");
+                    box.style.height = blockH + "px";
+                    box.style.width = blockW + "px";
+                    box.style.position = "absolute";
+                    box.style.left = (j*blockW) + "px";
+                    box.style.top = (i*blockH) + "px";
+                    box.style.backgroundColor = "black";
+                    box.style.borderRadius = 10 + "px";
+                    wrapper.appendChild(box);
+                }
+            }
+        }
+    }
+
+
+    window.addEventListener("load", function(){
+        init();
+
+        tetris.tick();
+    });
+
+</script>

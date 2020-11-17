@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1200px;
+            height: 80px;
+            margin: auto;
+        }
+        #control{
+            text-align: center;
+        }
+        #ball{
+            width: 50px;
+            height: 50px;
+            background-color: dodgerblue;
+            border-radius: 50%;
+            padding: 20px;
+            font-size: 15px;
+            color: white;
+        }
+        #result{
+            position: relative;
+            width: 100%;
+            height: 750px;
+        }
+    </style>
+    <script>
+        var ball;
+        var targetX;
+        var targetY;
+        let a = 0.1;
+        var tx;
+        var ty;
+
+        function init(){
+            ball = document.getElementById("ball");
+            ball.style.position = "absolute";
+            ball.style.left = 0 + "px";
+            ball.style.top = 0 + "px";
+
+            targetX = document.getElementById("targetX");
+            targetY = document.getElementById("targetY");
+
+            setInterval("move()", 20);
+        }
+
+        function move(){
+            ball.style.left = (parseInt(ball.style.left) + a*(tx - parseInt(ball.style.left))) + "px";
+            ball.style.top = (parseInt(ball.style.top) + a*(ty - parseInt(ball.style.top))) + "px";
+            ball.innerHTML = "x:" + ball.style.left + "<br/>y:" + ball.style.top;
+        }
+
+        function sendData(){
+            tx = parseInt(targetX.value);
+            ty = parseInt(targetY.value);
+        }
+
+    </script>
+</head>
+<body onLoad="init()">
+    <div id="wrapper">
+        <div id="control">
+            <input id="targetX" type="text" placeholder="이동할 x좌표"/>
+            <input id="targetY" type="text" placeholder="이동할 y좌표"/>
+            <button onClick="sendData()">실행</button>
+        </div>
+        <div id="result">
+            <div id="ball"></div>
+        </div>
+    </div>
+</body>
+</html>

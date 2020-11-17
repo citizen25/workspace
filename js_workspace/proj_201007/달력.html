@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a{
+            text-decoration: none;  /*링크 밑줄 없애기 */
+        }
+        .wrapper{
+            width: 700px;
+            height: 800px;
+            background-color: yellow;
+            margin: auto;
+        }
+        #head{
+            width: 100%;
+            height: 100px;
+            background-color: tan;
+            text-align: center;
+            font-size: 50px;
+        }
+        #content{
+            width: 100%;
+            height: 700px;
+            background-color: cornflowerblue;
+        }
+    </style>
+    <script src="../js/lib.js"></script>
+    <script src="./Cell.js"></script>
+    <script>
+
+        /* 
+            해결과제
+                1) 날짜 출력은 각 월의 마지막 날까지만. 예) 10월은 31일까지
+                2) 각 월의 시작 요일이 반영되도록.
+        */
+
+        var head, content, info;
+
+        var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        var startDay = 0;   // 각 월의 시작 요일.(매 월마다 1일이 무슨 요일인지 저장.)
+        var currentYear = 0;    // 현재 사용자가 보고있는 연도
+        var currentMonth = 0;   // 현재 사용자가 보고 있는 월
+
+        /* 요일 출력 */
+        function createDay(){
+            for(var i=0; i<days.length; i++){
+                new Cell(content, 100, 100, days[i]);
+            }
+        }
+
+        function createCell(){
+            var n = 0;
+            var num = 0;    // 출력될 날자를 갖는 변수.
+            for(var a=0; a<6; a++){
+                for(var i=0; i<7; i++){
+                    /* 무조건 하면 안되고, 각 월마다 시작요일을 알아내서 그 요일부터 이 작업을 수행 */
+                    var txt = "";
+                    if(n >= startDay){
+                        num++;
+                        txt = num;
+                    }else{
+                        txt = "";
+                    }
+                    new Cell(content, 100, 100, txt);    // container, width, height, text
+                    n++;
+                }
+            }
+        }
+
+        /* 현재 날짜 구하기 */
+        function getCurrentDate(){
+            var d = new Date();
+            /* 이전, 다음 버튼을 구현하기 위해서 현재 유저가 보고있는 달력의 년, 월을 알아야 한다. */
+            currentYear = d.getFullYear();
+            currentMonth = d.getMonth();
+
+            printDate(currentYear, currentMonth+1);
+
+            d.setDate(1);      // 1일로 조작. 반복문의 시작점을 설정하기 위해 1일이 무슨 요일인지 알아야 한다.
+            console.log((d.getMonth()+1), "월의 시작 요일은" + days[d.getDay()])
+            startDay = d.getDay();
+        }
+
+        /* 원하는 날짜를 조작할 수 있는 함수 */
+        function getCustomDate(){
+
+        }
+
+        /* 원하는 날짜를 출력하는 함수 */
+        function printDate(yy, mm){
+            info.innerText = yy + "년 " + getZeroDate(mm) + "월";
+        }
+
+        /* 현재 보고 있는 달력의 이전 월 구하기 */
+        function prev(){
+            var d = new Date();
+            d.setFullYear(currentYear);
+            d.setMonth(currentMonth - 1);  // 이전 월로 조작
+
+            /* 조작이 완료 되었으면, 갱신된 정보를 전역변수에 다시 대입. */
+            currentMonth = d.getMonth();
+            currentYear = d.getFullYear();
+            
+            printDate(currentYear, currentMonth+1);
+            
+            d.setDate(1);   // 1일로 조작
+            startDay = d.getDay();
+            
+            content.innerText = "";     // 모두 비우고..
+            createDay();
+            createCell();
+            
+        }
+        
+        /* 현재 보고 있는 달력의 다음 월 구하기 */
+        function next(){
+            /* 다음 월로 조작을 가해야 한다. */
+            var d = new Date();
+            d.setFullYear(currentYear);
+            d.setMonth(currentMonth + 1);   // 다음 월을 표현.
+            
+            /* 실제 데이터도 +1 해준다. */
+            // currentMonth++;      // 11, 12, 13, 14, ...
+            currentMonth = d.getMonth();    // 11, 12, 1, 2, ...
+            currentYear = d.getFullYear();  // 13으로 넘어간 후, 년도 계산을 반영해야 하므로.
+            
+            printDate(currentYear, currentMonth+1);
+            
+            d.setDate(1);   // 1일로 조작
+            startDay = d.getDay();
+            
+            content.innerText = "";     // 모두 비우고..
+            createDay();
+            createCell();
+        }
+        
+        function init(){
+            head = document.getElementById("head");
+            content = document.getElementById("content");
+            info = document.getElementById("info");
+        }
+        window.addEventListener("load", function(){
+            init();
+            getCurrentDate();   // 현재 날짜 구하기
+
+            content.innerText = "";     // 모두 비우고..
+            createDay();
+            createCell();
+        });
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="head">
+            <a href="javascript:prev()">◀</a>
+            <span id="info">2020년 10월</span>
+            <a href="javascript:next()">▶</a>
+
+        </div>
+        <div id="content"></div>
+    </div>
+</body>
+</html>

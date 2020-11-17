@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game</title>
+    <style>
+        /* 
+            html은 문서이기 때문에, tag만으로는 컨텐츠의 위치를 마음대로 지정할 수 없다. css를 이용하면 html의 문서로서의 한계를 극복함
+            CSS position을 이용해보자!!
+        */
+        body{
+            /* 배경은 다른 요소들과 물리적인 충돌이 없다. 배경에 적용되므로.. */
+            background-image: url(./images/background.png);
+            background-size: 500px;
+            background-repeat: repeat-x;
+            background-position: 0px 50px;
+        }
+        #pic{
+            width: 100px;
+            position: absolute; /* 절대위치(부모 요소를 기준으로 한 배치방법) */
+            left: 200px;
+            top: 200px;
+        }
+    </style>
+    <script>
+        var x = 200;    // left값을 결정짓는 변수
+        var y = 200;    // top값을 결정짓는 변수
+        var bgX = 0;
+
+        function moveRight(){
+            // 문서 내의 pic리아는 요소의 CSS 중 position: left값을 증가
+            x = x + 10;
+            document.getElementById("pic").style.left = x + "px";
+        }
+        function moveLeft(){
+            x = x - 10;
+            document.getElementById("pic").style.left = x + "px";
+        }
+        function moveUp(){
+            y = y - 5;
+            document.getElementById("pic").style.top = y + "px";
+        }
+        function moveDown(){
+            y = y + 5;
+            document.getElementById("pic").style.top = y + "px";
+        }
+        function moveBg(){
+            // body에 적용된 배경 CSS의 position 값을 x축의 음수 값으로 감소시키자
+
+            // body는 어차피 문서 내에 1개 밖에 없는 유일한 요소이므로, 굳이 id까지 부여할 필요가 없음!
+            bgX = bgX - 1;
+            document.body.style.backgroundPosition = bgX + "px 50px"
+        }
+        // 사람이 아닌, 프로그램 언어에서 자동으로 moveBg()를 일정시간 동안 계속 호출해준다면, 이것을 자동이라고 할 수 있다.
+        function auto(){
+            // 형식 : setInterval("호출하고싶은함수명()", 호출간격(1/1000초까지 표현))
+            setInterval("moveBg()", 10);    // 10/1000초 간격으로.
+        }
+    </script>
+</head>
+
+<div id="control">
+    <button onClick="moveLeft()">◀</button>
+    <button onClick="moveDown()">▼</button>
+    <button onClick="moveUp()">▲</button>
+    <button onClick="moveRight()">▶</button>
+    <button onClick="moveBg()">수동 배경이동</button>
+    <button onClick="auto()">자동(한번만 누르기)</button>
+</div>
+
+<!-- A태그 안에 B태그를 넣으면, A는 B의 부모요소가 된다. -->
+<img id="pic" src="./images/aeroplane.png"/>
+</body>
+</html>
+            <body>

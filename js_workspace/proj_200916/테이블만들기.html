@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function createTable(){
+            /* 
+                프로그램에서 사용되는 "는 일반적으로 문자열을 감싸는 용도의 특수한 기능을 가지고 있다. 
+                "가 단순한 문자인 경우에는 어떻게 처리??
+                    예) 인용문을 표현하고자 할 때.
+                해결책) \"로 사용한다.
+                document.write("철수가 나에게 \"바보\"라고 놀렸다.");
+            */
+
+            /* body에 디자인적으로 table을 생성하지 않고, "프로그램"으로 table을 화면에 출력 */
+            document.write("<table border=\"2px\" width=\"600px\">");
+            for(var i=9; i>=1; i--){
+                document.write("<tr>");
+                for(var j=1; j<=5; j++){
+                    document.write("<td>" + i + "0"+j+"호</td>");
+                }
+                document.write("</tr>");
+            }
+            document.write("</table>");
+        }
+    </script>
+</head>
+<body onLoad="createTable()">
+    <!--
+        <table border="2px" width="600px">
+            <tr>
+                <td>301호</td>
+                <td>302호</td>
+                <td>303호</td>
+            </tr>
+            <tr>
+                <td>201호</td>
+                <td>202호</td>
+                <td>203호</td>
+            </tr>
+            <tr>
+                <td>101호</td>
+                <td>102호</td>
+                <td>103호</td>
+            </tr>
+        </table>
+    -->
+    
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            overflow: hidden;
+            margin: auto;
+            margin-top: 100px;
+            width: 900px;
+            height: 600px;
+            background-color: palegreen;
+        }
+        #side{
+            float: left;
+            width: 150px;
+            height: 100%;
+            overflow: scroll;    
+            background-color: white;
+        }
+        #side img{
+            width: 130px;
+        }
+        #result{
+            float: left;
+            width: 750px;
+            height: 100%;
+            padding-top: 50px;
+            background-color: white;
+        }
+        #result img{
+            width: 100%;
+        }
+    </style>
+    <script>
+        function setImage(n){
+            var pic = document.getElementById("pic");
+            pic.src = "../images/travel/"+n+".jpg";
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="side">
+            <img onClick="setImage(1)" src="../images/travel/1.jpg"/>
+            <img onClick="setImage(2)" src="../images/travel/2.jpg"/>
+            <img onClick="setImage(3)" src="../images/travel/3.jpg"/>
+            <img onClick="setImage(4)" src="../images/travel/4.jpg"/>
+            <img onClick="setImage(5)" src="../images/travel/5.jpg"/>
+            <img onClick="setImage(6)" src="../images/travel/6.jpg"/>
+            <img onClick="setImage(7)" src="../images/travel/7.jpg"/>
+            <img onClick="setImage(8)" src="../images/travel/8.jpg"/>
+            <img onClick="setImage(9)" src="../images/travel/9.jpg"/>
+            <img onClick="setImage(10)" src="../images/travel/10.jpg"/>
+        </div>
+        <div id="result">
+            <img id="pic"/>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .wrapper{
+        width: 1000px;
+        height: 800px;
+        /* background-color: yellow; */
+        margin: auto;
+    }
+    #header{
+        width: 100%;
+        height: 100px;
+        /* background-color: hotpink; */
+        font-size: 50px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .content{
+        width: 100%;
+        height: 600px;
+        overflow: hidden;
+        /* background-color: dodgerblue; */
+    }
+    #photo{
+        width: 50%;
+        height: 100%;
+        float: left;
+        /* background-color: chartreuse; */
+    }
+    #desc{
+        width: 50%;
+        height: 100%;
+        float: left;
+        /* background-color: khaki; */
+        font-size: 25px;
+    }
+    #desc li{
+        margin-bottom: 15px;
+    }
+    #thumb{
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 100px;
+        /* background-color: darksalmon; */
+    }
+
+</style>
+<script src="./data.json"></script>
+<script src="./Thumbnail.js"></script>
+<script src="./Pointer.js"></script>
+<script>
+    var head, photo, desc, thumb;
+    var thumbArray = new Array();       // Thumbnail 인스턴스를 보유할 배열.
+    var pointer;
+
+    /* 영화 목록을 생성한다. (데이터는 movie라는 변수에 json 배열 형태로 들어있다.) */
+    function createThumb(){
+        
+        for(var i=0; i<movie.marvel.length; i++){
+            var json = movie.marvel[i];     // 영화 한편씩 꺼내자
+            var obj = new Thumbnail(thumb, 100, 100, 5, json.url, i*100);    // container, width, height, bd, src, x
+            thumbArray.push(obj);
+        }
+    }
+
+    /* 포인터 생성하기 */
+    function createPointer(){
+        pointer = new Pointer(thumb, 100, 100, 5, 0, 0, 0);     // container, width, height, bd, x, y, targetX
+    }
+
+    /* 영화에 대한 상세정보 처리 */
+    function getDetail(index){
+        console.log("넘어온 index:", index);
+        var json = movie.marvel[index]; // 영화 한편의 정보 json을 받아놓는다.
+
+        /* 1) 지금 선택한 썸네일을 크게 보여준다. */
+        photo.innerHTML = "<img src=\"" + json.url + "\" width=\"100%\" height=\"100%\"/>";
+
+        /* 2) 제목을 출력한다. */
+        header.innerHTML = json.title;
+
+        /* 3) 상세 설명을 출력한다. */
+        var tag = "<ul>";
+        tag += "<li>장르: " + json.category_name + "</li>";
+        tag += "<li>개봉일: " + json.release_date + "</li>";
+        tag += "<li>예산: " + json.budget + "달러</li>";
+        tag += "<li>수입: " + json.gross + "달러</li>";
+        tag += "<li>상영시간: " + json.running_time + "분</li>";
+        tag += "</ul>";
+
+        desc.innerHTML = tag;
+    }
+
+
+    /* 자동으로 움직이게 하려면, 반드리 자동호출이 필요하다 */
+    function gameLoop(){
+        console.log("gameLoop() called..")
+        pointer.tick();
+        pointer.render();
+    }
+
+    function init(){
+        head = document.getElementById("header");
+        photo = document.getElementById("photo");
+        desc = document.getElementById("desc");
+        thumb = document.getElementById("thumb");
+    }
+    window.addEventListener("load", function(){
+        init();
+        createThumb();
+        createPointer();
+
+        /* 키보드 이벤트 구현하기 */
+        document.body.addEventListener("keydown", function(){
+            // console.log("키보드 눌렀어?");
+        });
+
+        setInterval("gameLoop()", 10);
+    });
+</script>
+<body>
+    <div class="wrapper">
+        <div id="header">영화</div>
+        <div class="content">
+            <div id="photo"></div>
+            <div id="desc"></div>
+        </div>
+        <div id="thumb"></div>
+    </div>
+</body>
+</html>

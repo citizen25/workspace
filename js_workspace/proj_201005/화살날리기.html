@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /* 객체의 개념 잡기 
+            현실의 화살을 표현하기 위해, 변수와 함수를 조합하면 충분히 수행 가능.
+            하지만, 화살을 여러개 만들어야 한다면?
+        */
+
+        var arr = new Array();  // 화살을 다량으로 담게 될 배열
+
+        /* 자주 사용될 코드(변수, 함수)를 또 하나의 단위로 묶어서 이름을 붙여놓은 코드 단위 == 클래스
+        이 클래스는 사물 자체를 정의한 것이 아니라, 사물을 생성해낼 수 있는 틀(거푸집)을 의미한다. */
+        class Arrow{
+            /* 객체 중심적 코드로 이해하고 접근 */
+
+            /* 자바스크립트에서는 객체가 보유한 변수(속성)을 반드시 constructor() 메서드 내에서만 정의할 수 있다. 
+            매개변수가 없는 클래스는 모두 동일한 모습을 가지므로, 다른 모습을 가지고 태어나려면 생성자의 매개변수를 달리 해줘야 한다. */
+            constructor(x, y, velX){  // 이미 명칭이 정해진 메서드이므로, 다른 이름 불가.
+                this.span;
+                this.x = x;
+                this.y = y;
+                this.velX = velX;  // 속도를 설정하는 함수
+                this.createArrow();
+            }
+            
+            createArrow(){
+                /* 스팬을 생성하여 화면에 부착 */
+                this.span = document.createElement("span");
+                this.span.innerText = "→";
+                this.span.style.position = "absolute";
+                this.span.style.left = this.x + "px";
+                this.span.style.top = this.y + "px";
+    
+                document.body.appendChild(this.span);
+            }
+    
+            /* 물리량 변화. render()와 짝을 이룸. */
+            tick(){
+                this.x += this.velX;     // 물리량 변화. 사물의 상태 변경.
+            }
+    
+            /* 화살을 움직이기 위한 함수(x축 값을 변경) */
+            render(){  // 화면에 그래픽 처리
+                this.span.style.left = this.x + "px";
+            }
+        }
+
+        /* 끝 없이 실행되는 게임 루프 영역. */
+        function gameLoop(){
+            console.log("gameLoop Called...");
+            // a1.tick();
+            // a1.render();
+            // a2.tick();
+            // a2.render();
+            // a3.tick();
+            // a3.render();
+
+            for(var i=0; i<arr.length; i++){
+                arr[i].tick();
+                arr[i].render();
+            }
+
+        }
+        
+        window.addEventListener("load", function(){
+            /* 화살의 인스턴스 3개를 생성해보자!! */
+            // a1 = new Arrow(0, 50, 5);    // 클래스명으로 된 함수를 가리켜 생성자 함수라 한다. 따라서, Arrow()란 constructor()를 호출한 것.
+            // a2 = new Arrow(0, 150, 2);
+            // a3 = new Arrow(0, 200, 8);
+
+            /* 다량의 화살 생성 */
+            for(var i=0; i<100; i++){
+                arr.push(new Arrow(0, i*5, i*0.1));
+            }
+
+            setInterval("gameLoop()", 10);
+        });
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

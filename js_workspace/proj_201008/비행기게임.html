@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최대한 자바에 근접한 기술로 게임을 만든다.</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        #wrapper{
+            width: 1280px;
+            height: 640px;
+            margin: auto;
+            background-image: url(../images/shooting/bg.jpg);
+            position: relative;
+        }
+    </style>
+    <script src="./GameObject.js"></script>
+    <script src="./Hero.js"></script>
+    <script src="./Enemy.js"></script>
+    <script src="./Bullet.js"></script>
+    <script>
+        var bgPos = 0;
+
+        var wrapper;
+        var hero;
+        var bulletArray = new Array();      // 총알들을 담을 배열.
+
+        /* 주인공 생성 */
+        function createHero(){
+            hero = new Hero(wrapper, "../images/shooting/plane.png", 100, 65, 100, 100, 0, 0);  // container, src, width, height, x, y, velX, velY
+        }
+        /* 적군 생성 */
+        function createEnemy(){
+            new Enemy(wrapper, "../images/shooting/e1.png", 100, 65, 900, 200, 0, 0);  // container, src, width, height, x, y, velX, velY
+            new Enemy(wrapper, "../images/shooting/e2.png", 100, 65, 900, 300, 0, 0);  // container, src, width, height, x, y, velX, velY
+            new Enemy(wrapper, "../images/shooting/e3.png", 100, 65, 900, 400, 0, 0);  // container, src, width, height, x, y, velX, velY
+            new Enemy(wrapper, "../images/shooting/e4.png", 100, 65, 900, 500, 0, 0);  // container, src, width, height, x, y, velX, velY
+        }
+        /* 총알 생성 */
+        function createBullet(){
+            var bullet = new Bullet(wrapper, "../images/shooting/e4.png", 25, 25, hero.x, hero.y, 10, 0);  // container, src, width, height, x, y, velX, velY
+            bulletArray.push(bullet);    // 배열에 총알 추가
+        }
+
+        /* 우주선 움직이기 */
+        function move(velX, velY){
+            hero.velX = velX;
+            hero.velY = velY;
+        }
+
+        function moveBg(){
+            bgPos--;
+            wrapper.style.backgroundPosition = bgPos + "px";
+        }
+
+        function gameLoop(){
+            console.log("gameLoop() called..");
+
+            hero.tick();
+            hero.render();
+
+            moveBg();
+            for(var i=0; i<bulletArray.length; i++){
+                bulletArray[i].tick();
+                bulletArray[i].render();
+            }
+        }
+        function init(){
+            wrapper = document.getElementById("wrapper");
+
+            /* 키보드 이벤트 구현하기 */
+            document.body.addEventListener("keydown", function(e){
+                switch(e.keyCode){
+                    case 32: createBullet(); break;     // spacebar 누르면 총알 생성
+                    case 38: move(0, -5); hero.render(); break;
+                    case 40: move(0, 5); hero.render(); break;
+                    case 37: move(-5, 0); hero.render(); break;
+                    case 39: move(5, 0); hero.render(); break;
+                }
+            });
+            document.body.addEventListener("keyup", function(e){
+                switch(e.keyCode){
+                    case 38: move(0, 0); hero.render(); break;
+                    case 40: move(0, 0); hero.render(); break;
+                    case 37: move(0, 0); hero.render(); break;
+                    case 39: move(0, 0); hero.render(); break;
+                }
+            });
+        }
+        
+        /* load이유 : 모든 태그마다 1:1 대응되는 객체인 .DOM이 메모리에 올라올 때까지 기다렸다가 실행하기 위해. */
+        window.addEventListener("load", function(){
+            init();
+            createHero();
+            createEnemy();
+            setInterval("gameLoop()", 10);
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

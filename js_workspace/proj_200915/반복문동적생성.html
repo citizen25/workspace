@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 700px;
+            height: 600px;
+            background-color: black;
+            margin: auto;
+            overflow: scroll;   /* 자식 요소에 의해 내용이 넘치면 scroll 처리 */
+        }
+    </style>
+    <script>
+        function create(){
+            /*
+                지금까지는 문서내의 요소에 접근하기 위해 id를 부여하고 접근하였으나, js에서는 selector를 이용한 접근방법도 지원한다.
+                selector: css에서 요소를 특정짓기 위한 지칭법.
+            */
+            var box = document.querySelector("div");    // css의 선택자는 모두 표현 가능
+
+            /* 반복횟수를 몇번으로 할지를 text박스에서 구해오자 */
+            var n = document.querySelector("input[type='text']").value;
+            n = parseInt(n);    // 문자열 -> 정수
+
+            /* 100번 넣기 */
+            for(var i=0; i<n; i++){
+                /* 이미지 태그요소를 동적으로 만들어서 box에 추가하자 */
+                var img = document.createElement("img");  // <img/>
+                img.src = "../images/ball/football.svg";    // <img src="../images/ball/football.svg"/>
+                img.style.width = 50+"px";
+                box.appendChild(img);   // box에 추가하기
+            }
+            
+        }
+    </script>
+</head>
+<body>
+    <button onClick="create()">동적생성</button>
+    <input type="text" placeholder="생성 갯수 입력"/>
+    <div></div>
+</body>
+</html>

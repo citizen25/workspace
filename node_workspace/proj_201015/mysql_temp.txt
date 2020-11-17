@@ -1,0 +1,45 @@
+// 동물의 종류
+CREATE TABLE category(
+	category_id INT PRIMARY KEY AUTO_INCREMENT
+	, category_name VARCHAR(20)
+) DEFAULT CHARACTER SET UTF8;
+
+// 소속된 동물
+CREATE TABLE animal(
+	animal_id INT PRIMARY KEY AUTO_INCREMENT
+	, name VARCHAR(25)
+	, category_id INT
+	, FOREIGN KEY(category_id) REFERENCES category(category_id)
+) DEFAULT CHARACTER SET UTF8;
+
+
+INSERT INTO category(category_name) VALUES('포유류');
+INSERT INTO category(category_name) VALUES('어류');
+INSERT INTO category(category_name) VALUES('양서류');
+INSERT INTO category(category_name) VALUES('조류');
+
+
+INSERT INTO animal(name, category_id) VALUES('호랑이', 1);
+INSERT INTO animal(name, category_id) VALUES('사자', 1);
+INSERT INTO animal(name, category_id) VALUES('곰', 1);
+INSERT INTO animal(name, category_id) VALUES('말', 1);
+INSERT INTO animal(name, category_id) VALUES('하이에나', 1);
+
+INSERT INTO animal(name, category_id) VALUES('참치', 2);
+INSERT INTO animal(name, category_id) VALUES('고등어', 2);
+INSERT INTO animal(name, category_id) VALUES('멸치', 2);
+INSERT INTO animal(name, category_id) VALUES('붕어', 2);
+INSERT INTO animal(name, category_id) VALUES('돔', 2);
+
+UPDATE category SET category_name='갑각류' WHERE category_id=3;
+
+INSERT INTO animal(name, category_id) VALUES('게', 3);
+INSERT INTO animal(name, category_id) VALUES('가재', 3);
+INSERT INTO animal(name, category_id) VALUES('새우', 3);
+
+INSERT INTO animal(name, category_id) VALUES('독수리', 4);
+INSERT INTO animal(name, category_id) VALUES('오리', 4);
+INSERT INTO animal(name, category_id) VALUES('참새', 4);
+INSERT INTO animal(name, category_id) VALUES('부엉이', 4);
+
+

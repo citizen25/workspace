@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            지금까지는 필요한 태그가 있을 경우, body태그 안에 직접 작성하여 넣었지만, 이번엔 프로그램에서 태그를 생성해보자!
+            자바스크립트를 이요하면 실행 타임에도 body에 없었던 태그 요소를 동적으로 생성할 수 있다.
+         */
+        function createImage(){
+            // 이미 body에 존재하는 것을 대상으로 가져올 때는 getElementById()를 사용한다.
+            // document.getElement("pic");
+
+            // but 존재하지 않는 것을 새로 생성할 때는 createElement("요소명"); 을 사용한다.
+            var img = document.createElement("img");  // <img/>태그를 명시한 것과 동일한 상태임
+            img.src = "../images/hero/image1.png";  // <img src=""/> 작성한 것과 동일한 상태임
+            img.style.border = "2px solid red";
+            img.style.width = 50+"px";
+
+            // appendChild(넣을자식) : 자식요소를 추가해주는 method
+            document.body.appendChild(img);  // 생성된 이미지를 body 요소 안에 넣어주자
+
+        }
+    </script>
+</head>
+<body>
+    <button onClick="createImage()">이미지 동적 생성</button>
+
+    <img src="../images/hero/image1.png"/>
+
+</body>
+</html>

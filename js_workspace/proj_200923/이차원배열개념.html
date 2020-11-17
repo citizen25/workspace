@@ -1,0 +1,28 @@
+<script>
+    var fruit = ["apple", "banana", "graph", "orange"];
+    var car = ["bmw", "audi", "benz", "kia"];
+
+    var box = [];   // var box = new Array(); 와 동일
+    
+
+    box.push(fruit);    // 기존의 1차원이었던 box에 또 다른 배열 추가.
+    box.push(car);
+
+    /*
+        자바스크립트의 배열은 자바의 어레이리스트 같은건가요?
+            비슷하다. 자바의 ArrayList는 객체만을 담을 수 있다.
+            자바스크립트는 객체뿐만 아니라 숫자, 문자, 논리값 모두 담을 수 있다.
+            공통점은 동적으로 늘어난다는 것.
+    */
+
+
+    for(var i=0; i<box.length; i++){    
+        for(var a=0; a<box[i].length; a++){
+            document.write(box[i][a]);
+            document.write("<br/>");
+        }
+    }
+
+    
+    
+</script>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /* html에서 div의 name값이 중복되므로, 내부적으로는 배열로 존재한다. -> 프로그래밍적으로 배열의 장점을 활용할 수 있음. */
+        window.addEventListener("load", function(){
+            /* 정말로 배열로 존재하는지부터 확인 */
+            var box = document.getElementsByName("box");
+            console.log("생성된 div의 수는 " + box.length);
+            console.log(box[0]);
+
+            for(var i=0; i<box.length; i++){
+                box[i].style.backgroundColor = "red";
+                box[i].style.width = 100 + "px";
+                box[i].style.height = 100 + "px";
+                box[i].style.border = "1px solid yellow";
+            }
+
+        });
+    </script>
+</head>
+<body>
+    <!-- 
+        지금까지 사용해왔던 id와 name은 공통점과 차이점이 뭘까.
+            공통점 : 문서내의 수많은 요소들 간 구분을 위한 식별자로서의 역할
+                ex) 대한민국 모든 국민들에게 이름이 있는 것과 같다.
+            차이점 : 현실에서 name(이름)은 동명이인이 있을 수 있으므로, 유일한 식별자로서는 부족함.
+                    html에서도 name(이름)은 중복을 허용해준다. 중복없이 식별하기 위해서는 id를 사용해야 한다.
+            name의 특징 : 이름이 같은 경우, 내부적으로 배열로 인식! (이용가치가 있음)
+     -->
+    <div name="box"></div>
+    <div name="box"></div>
+    <div name="box"></div>
+</body>
+</html>

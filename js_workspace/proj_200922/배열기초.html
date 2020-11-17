@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /* 좋아하는 과일명을 10개 정도 메모리에 올려보자 */
+        // var q = "포도";
+        // var f = "딸기";
+        // var s = "체리";
+        // var w = "바나나";
+        // var x = "홍시";
+        // var v = "홍삼";
+        // var g = "레몬";
+        // var h = "귤";
+        // var y = "자두";
+        // var d = "오렌지";
+
+        /* 메모리에 올려진 데이터를 출력도 해보자 */
+        // document.write(q);
+        // document.write(f);
+        // document.write(s);
+        // document.write(w);
+        // document.write(x);
+        // document.write(v);
+        // document.write(g);
+        // document.write(h);
+        // document.write(y);
+        // document.write(d);
+
+        /* 우리나라 모든 국민의 이름을 출력하시오. */
+
+        /*
+            현실에서도 물체, 물건을 순서대로 나열해 놓은 것을 배열이라한다.
+            배열화 시켜놓으면 특정 물체를 가리키기 위한 이름을 줄 필요가 없고 순서가 있다보니 일괄처리가 가능하다.
+
+            따라서 현실에서의 이 좋은 개념을 컴퓨터에서 사용 안 할리가 없다.
+            전산분야에서도 배열의 개념을 도입한 문법을 지원하고 '배열'이라 부른다.
+        */
+
+        var arr = new Array(10);    // 배열 선언 [][][][][][][][][][] 공간이 생긴것
+
+        arr[0] = "포도";
+        arr[1] = "딸기";
+        arr[2] = "체리";
+        arr[3] = "바나나";
+        arr[4] = "홍시";
+        arr[5] = "홍삼";
+        arr[6] = "레몬";
+        arr[7] = "귤";
+        arr[8] = "자두";
+        arr[9] = "오렌지";
+
+        /* 모든 과일 출력 */
+        for(var i=0; i<=9; i++){
+            document.write(arr[i]);
+        }
+
+        document.write("<br/>--------------------------------------------------------<br/>")
+
+
+        /* 첫번째부터 4번째 과일을 출력 */
+        for(var i=0; i<4; i++){
+            document.write(arr[i]);
+        }
+
+        document.write("<br/>--------------------------------------------------------<br/>")
+
+        /* 홀수번째 과일을 출력 */
+        for(var i=0; i<=9; i++){
+            if(i%2 == 0){
+               document.write(arr[i]);
+            }
+        }
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

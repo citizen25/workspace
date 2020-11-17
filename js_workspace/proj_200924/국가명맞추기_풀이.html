@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width:400px;
+            height:650px;
+            background:red;
+            margin: auto;
+            position: relative;
+        }    
+        #pic{
+            width:100%;
+            height:250px;
+        }
+        #question{
+            width:100%;
+            height:100px;
+            background-color: yellow;
+            font-size:35px;
+            text-align:center;
+        }
+        .word-input{
+            width:100%;
+            height:100px;
+            background-color: aquamarine;
+        }
+        .word-input input{
+            width:100%;
+            height:100%;
+            box-sizing: border-box;
+            font-size:40px;
+            text-align: center;
+        }
+        #feedback{
+            width:100%;
+            height:200px;
+            font-size:170px;
+            text-align: center;
+        }
+        #record{
+            width:100%;
+            height:100px;
+            background-color: beige;
+            font-size:80px;
+            text-align: center;
+        }
+    </style>
+    <script src="./nation.js"></script>
+    <script>
+        var pic;    
+        var question;
+        var txt;
+        var feedback;
+        var record;
+        var n=0;    // 전체 2차원 배열의 index정보를 가진변수(즉 몇번째 데이터를 보여줄지결정)
+        var score=0; // 점수를 누적시킬 변수
+
+        /* 단어 출력처리 */
+        function printWord(){
+            question.innerText=data[n][1];
+        }
+
+        //점수 출력처리 
+        function printScore(){
+            record.innerText=score+" 점";
+        }
+
+        function printFlag(){
+            pic.src = data[n][0];     // 국기
+        }
+
+        function init(){
+            //아이디가 부여된 엘리먼트들을 전역변수로 미리 선언해 놓자!
+            pic = document.getElementById("pic");
+            question = document.getElementById("question");
+            txt = document.getElementById("txt");
+            feedback = document.getElementById("feedback");
+            record = document.getElementById("record");
+
+
+            //txt를 대상으로 키보드 이벤트 구현
+            //총알이라면, 눌렀다는 이벤트에 반응하면 되지만, 
+            //글씨 입력이라면, 눌렀다 떼었을때가 하나의 철자가 입력되는 시점이다
+            txt.addEventListener("keyup", function(){
+                //console.log("철자를 쳤네요");
+                //alert(event.keyCode);
+                //키보드 중, 엔터키를 누를때 다음 단어 나오게 처리...
+                if(event.keyCode == 13){//Enter 아스키 코드값
+                    //입력값과 출력된 단어와의 일치성을 판단한 후, 피드백 처리 
+                    if(txt.value == data[n][2]){
+                        //칭찬의 피드백 O  출력
+                        feedback.innerText="O";
+                        score+=10;//점수10점 증가 
+                        printScore();//점수출력
+                    }else{
+                        //틀렸다는 피드백 X 출력
+                        feedback.innerText="X";      
+                    }
+                    //텍스트 박스에 입력한 데이터 초기화 
+                    txt.value="";
+
+                    //다음 단어 나오게...
+                    n++;
+
+                    if(n>=data.length){//준비된 단어가 모두 소진되면...
+                        alert("게임종료");
+                        question.innerText="Game Over!!";
+                    }else{
+                        printFlag();
+                        printWord();
+                    }
+                }
+            });
+        }
+
+        window.addEventListener("load", function(){
+            init();
+            printWord(); // 단어 출력!!
+            printScore(); // 점수 출력!!
+            printFlag();
+            
+            txt.focus(); // txt에 프로그래밍적으로 커서 올려놓기!!
+        });
+
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <img id="pic" src="../images/nation/1.png"/>
+        <div id="question">단어 나올곳</div>
+        <div class="word-input">
+            <input id="txt" type="text" placeholder="단어 따라치세요"/>
+        </div>
+        <div id="feedback"></div>
+        <div id="record"></div>
+    </div>        
+</body>
+</html>

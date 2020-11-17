@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 700px;
+            height: 600px;
+            background-color: cornflowerblue;
+            margin: auto;
+            position: relative;
+            border: 2px solid royalblue;
+        }
+        .regist-area{
+            width: 200px;
+            height: 100%;
+            background-color: #dfdfdf;
+            position: absolute;
+            left: 0px;
+        }
+        #result-area{
+            width: 500px;
+            height: 100%;
+            position: absolute;
+            left: 200px;
+        }
+        input[type='text']{
+            margin: 5px 5px;
+            padding: 6px;
+        }
+        button{
+            margin: 0px 5px 0px 5px;
+            padding: 6px;
+            width: 70px;
+        }
+    </style>
+    <script>
+        /* 변수 */
+        var count = 0;  // 누른 횟수를 점점 증가시키기 위한 전역변수
+
+        /* 사용자 정보 등록 버튼 */
+        function regist(){
+
+            count++;
+            /* regist-area div에 등록된 사람의 정보 table을 출력 */
+            // document.write();   // 문서에 출력. == body에 출력. -> 불가.
+            var area = document.getElementById("result-area");
+            /*
+                document.write() 다르게 innerText는 두가지 문제가 있다.
+                1) 마지막에 수행된 innerText가 이전의 innerText를 대체해버린다.
+                    == 누적이 되지 않는다!
+                    해결) 변수에 누적시켜 마지막에 출력한다.
+                2) <꺽쇠>를 넣어도 태그로 인식하지 않고 그냥 문자로 간주 된다.
+                    해결) innerText 대신 innerHTML을 사용
+            */
+            /*
+                매번 innerText를 작성하면 코드가 너무 중복이 많아 코드량이 많아진다.
+                area.innerText = "<table>";
+                area.innerText = area.innerText + "</table>";
+            */
+           
+
+            /*
+                문서 내의 요소를 접근하는 방법에는 여러가지가 있다.
+                개발자는 여러 방법중 원하는 방법을 선택하면 된다.
+                1) id나 name을 부여한 수 가져오는 방법
+                    document.getElementById("부여한id");
+                    document.getElementByName("부여한name");
+                2) CSS의 선택자를 이용하는 방법
+                    document.querySelector("css의 선택자 모두 표현 가능함");
+            */
+
+            /* 테이블 출력 전에, 사용자가 입력한 데이터 가져오기. -> 문서 내에 id라는 이름을 가진 요소 접근 */
+            var id = document.querySelector("input[name='id']");
+            var pass = document.querySelector("input[name='pass']");
+            var name = document.querySelector("input[name='name']");
+
+            
+            var str = "<table width=\"100%\" border=\"1px\">";    // 변수str에 문자열 담기, escape 시킨 특수문자는 일반문자화 되므로, \"라는 두개의 특수문자가 모여서 한개의 따옴표"를 표현한다.
+            str = str + "<tr>";
+            str = str + "<td>ID</td>";
+            str = str + "<td>Password</td>";
+            str = str + "<td>Name</td>";
+            str = str + "</tr>";
+
+            /* 누적될 데이터를 표현할 tr세트 */
+            for(var i=1; i<=count; i++){
+                str = str + "<tr>";
+                str = str + "<td>"+id.value+"</td>";        // 입력한 텍스트 박스의 값을 얻어올 때는 value를 가져온다.
+                str = str + "<td>"+pass.value+"</td>";      // 입력한 텍스트 박스의 값을 얻어올 때는 value를 가져온다.
+                str = str + "<td>"+name.value+"</td>";      // 입력한 텍스트 박스의 값을 얻어올 때는 value를 가져온다.
+                str = str + "</tr>";
+            }
+
+            str = str + "</table>"; // 기존 str에 문자열 누적
+
+            area.innerHTML = str;   // 문자열 내에 <꺽쇠>가 있다면, 태그로 해석.
+        }
+        function remove(){
+            document.getElementById("result-area").innerHTML = "";
+        }
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="regist-area">
+            <!-- 버튼에 의한 무조건적인 전송방지 -> 방지하지 않으면, 새로고침 때문에 페이지가 갱신됨. -->
+            <form onSubmit="event.preventDefault()">
+                <input type="text" name="id" placeholder="ID 입력..."/>
+                <input type="text" name="pass" placeholder="Password 입력..."/>
+                <input type="text" name="name" placeholder="Name 입력..."/>
+
+                <button onClick="regist()">등록</button>
+                <button onClick="remove()">지우기</button>
+            </form>
+        </div>
+        <div id="result-area"></div>
+    </div>
+</body>
+</html>

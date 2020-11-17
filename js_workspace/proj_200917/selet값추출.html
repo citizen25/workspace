@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 400px;
+            height: 400px;
+            border: 5px solid cornflowerblue;
+            margin: auto;
+        }
+        select{
+            width: 100%;
+            height: 40px;
+            background-color: dodgerblue;
+            color: white;
+            font-size: 30px;
+        }
+        #content{
+            width: 100%;
+            height: 360px;
+            background-color: black;
+        }
+    </style>
+    <script>
+
+        function setColor(){
+            /* 문서 내의 select 박스의 현재 선택된 값을 추출해보자 */
+            var sel = document.getElementById("sel");
+            console.log("당신이 선택한 옵션의 값은 ", sel.value);
+
+            /* 문서 내의 content 영역에 추출한 값을 이용하여 배경색상을 부여하자 */
+            var content = document.getElementById("content");
+            content.style.backgroundColor = sel.value;
+        }
+
+        /* this를 이용 */
+        function setColor2(c){
+            var content = document.getElementById("content");
+            content.style.backgroundColor = c;
+        }
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <select id="sel" onChange="setColor2(this.value)">
+            <option value="red">red</option>
+            <option value="orange">orange</option>
+            <option value="yellow">yellow</option>
+            <option value="green">green</option>
+            <option value="blue">blue</option>
+            <option value="navy">navy</option>
+            <option value="purple">purple</option>
+        </select>
+        <div id="content"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%="게시판 목록"%>      <!-- 문자열을 출력하라는 ejs의 방식. -->
+    <table width="100%" border="1px">
+        <tr>
+            <td>No</td>
+            <td>제목</td>
+            <td>작성자</td>
+            <td>등록일</td>
+            <td>조회수</td>
+        </tr>
+
+        <%
+        // "%"로 감싼 코드만 렌더링의 대상이 된다.
+        var total = 100;
+        %>
+        <%for(var i=1; i<=total; i++){%>
+        <!-- "i" 앞에 "="이 붙는 것은 브라우저에 print 하는 것이라 생각하면 된다.
+        "<% %>"는 javascript 영역이라는 것을 정의해주는 것이다. "%"로 감싼 것만 rendering 대상이다. -->
+        <tr <%if(i%3==0){%>bgColor="yellow"<%}%>>
+            <td><%=i%></td>
+            <td><a href="/board/list?no=<%=i%>">내일부터는 대면 강의 시작입니다.</a></td>
+            <td>노동부</td>
+            <td>2020-10-15</td>
+            <td>543</td>
+        </tr>
+        <%}%>
+    </table>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<script>
+    var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+
+    var yy = parseInt(prompt("원하시는 년도를 입력하세요"));
+    var mm = parseInt(prompt("원하시는 월을 입력하세요"));
+
+    /* 사용자가 입력한 날짜로, 날짜 객체를 조작해보자 */
+    var d = new Date();
+    d.setFullYear(yy);
+    d.setMonth(mm-1);   // 월은 0부터 시작하므로, 사용자가 생각하는 숫자에 -1을 해야 해당 월을 의미하는 것이다.
+    d.setDate(1);   // 매월 1일이 무슨 요일인지 알아야 하므로 날짜를 1로 조작.
+
+    /* 조작이 완료되었으므로, 요일을 물어본다. */
+    var day = d.getDay();
+
+    document.write(yy + "년, " + mm + "월 1일의 요일은 " + days[day] + "입니다.");
+</script>

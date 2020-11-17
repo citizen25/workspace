@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 600px;
+            border: 2px solid red;
+            margin: auto;
+            position: relative;
+        }
+    </style>
+    <script>
+        var wrapper;
+        var bar = new Array(7);
+        var targetH = new Array(7);  // bar의 목표높이.
+        var color = new Array(7);
+        let a = 0.1;
+
+        /* 막대 생성 */
+        function createBar(){
+            for(var i=0; i<bar.length; i++){
+                bar[i] = document.createElement("div");
+                bar[i].style.position = "absolute";
+                bar[i].style.left = (i*100) + "px";
+                bar[i].style.top = 0 + "px";
+                bar[i].style.width = 100 + "px";
+                bar[i].style.height = 20 + "px";
+                bar[i].style.borderRadius = "4px";
+                bar[i].style.backgroundColor = color[i];
+
+                wrapper.appendChild(bar[i]);   // wrapper에 추가.
+            }
+        }
+
+        function setTarget(){
+            var r;
+
+            for(var i=0; i<bar.length; i++){
+                r = Math.floor(Math.random()*600);
+                targetH[i] = r;
+            }
+        }
+
+        /* 막대 길이 변경 함수 */
+        function move(){
+            for(var i=0; i<bar.length; i++){
+                bar[i].style.height = parseFloat(bar[i].style.height) + a*(targetH[i] - parseFloat(bar[i].style.height)) + "px";
+                bar[i].innerText = parseFloat(bar[i].style.height);
+            }
+        }
+
+        function init(){
+            color[0] = "red";
+            color[1] = "orange";
+            color[2] = "yellow";
+            color[3] = "green";
+            color[4] = "blue";
+            color[5] = "navy";
+            color[6] = "purple";
+
+            wrapper = document.getElementById("wrapper");     
+            createBar();
+            setInterval("move()", 5);
+            setInterval("setTarget()", 200);
+        }
+
+        window.addEventListener("load", function(){
+            init();
+        }); 
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1000px;
+            height: 1000px;
+        }
+        #control{
+            background-color: red;
+            width: 100%;
+            height: 100px;
+        }
+        #result{
+            background-color: blue;
+            width: 100%;
+            height: 900px;
+            
+        }
+        #pic{
+            
+        }
+    </style>
+    <script>
+        var w;
+        function setWidth(){
+            w = w + 50;
+            document.getElementById("pic").style.width = w + "px";
+        }
+    </script>
+</head>
+<body>
+    <div id="control">
+        <button onClick="setWidth">width</button>
+        <button></button>
+        <button></button>
+    </div>
+    <div id="result">
+        <img id="pic" src="../images/">
+    </div>
+</body>
+</html>

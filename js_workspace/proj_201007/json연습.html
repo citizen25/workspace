@@ -1,0 +1,36 @@
+<script>
+
+    /* JSON은 프로그래밍 언어 x, 단지 표기법일 뿐이다. 문자취급해야한다.
+    단지 자바스크립트에서는 저 표기법을 객체로 인식하는 것 뿐이다.
+    즉, 다른 프로그래밍 언어에서는 JSON이 단지 문자열일 뿐이다.
+    자바스크립트가 아래의 JSON 표기법 문자열을 인식하여 객체로 변환하는 것 뿐이다. */
+
+    var json = {
+        "name": "철수",
+        "age": 27,
+        "language": ["java", "python", "c", "swift"],
+        "isMarried": false,
+        "pet": [
+            {
+                "type": "dog",
+                "name": "뽀삐",
+                "age": 8,
+                "color": "white"
+            },
+            {
+                "type": "cat",
+                "name": "나비",
+                "age": 7,
+                "color": "black"
+            },
+            {
+                "type": "snake",
+                "name": "아나콘다",
+                "age": 20,
+                "color": "gray"
+            }
+        ]
+    }
+
+
+</script>

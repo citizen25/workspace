@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function init(){
+            for(var i=2000; i>=1930; i--){
+                /* option 태그를 동적으로 만들어 select 박스에 추가 */
+                var op = document.createElement("option");  // <option></option>
+                op.text = i;   // <option>2000</option>
+                
+                /* 생성된 option 요소를 select 박스에 추가 */
+                var yy = document.getElementById("year");  // 이미 있는 것은 get 사용.
+                yy.add(op);  // select 박스에 option 요소 추가
+            }   
+        }
+    </script>
+</head>
+<body onLoad="init()">
+    <select id="year">
+        <option>출생년도</option>
+    </select>
+    <select>
+        <option>1월</option>
+        <option>2월</option>
+        <option>3월</option>
+        <option>4월</option>
+        <option>5월</option>
+        <option>6월</option>
+        <option>7월</option>
+        <option>8월</option>
+        <option>9월</option>
+        <option>10월</option>
+        <option>11월</option>
+        <option>12월</option>
+    </select>
+</body>
+</html>

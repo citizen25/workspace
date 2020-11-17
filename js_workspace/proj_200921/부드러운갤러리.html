@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 500px;
+            height: 450px;
+            background-color: antiquewhite;
+            margin: auto;
+        }
+        #mask{
+            width: 500px;
+            height: 400px;
+            background-color: burlywood;
+            overflow: hidden;
+        }
+        #navi{
+            text-align: center; /* div의 컨텐츠를 가운데 정렬 */
+            font-size: 30px;
+        }
+        a{
+            text-decoration: none;  /* link의 밑줄 없애기 */
+        }
+        #box{
+            width: 3500px;
+            height: 400px;
+            background-color: cadetblue;
+        }
+
+    </style>
+    <script>
+
+        var box;
+        let a = 0.07;
+        var targetX = 0
+
+        /* 프로그램이 가동되자마자 실행되어야 할 것이 있다면, 초기화 함수에서 처리하면 좋다. */
+        function init(){
+            box = document.getElementById("box");
+            box.style.position = "relative";
+            box.style.left = 0 + "px";
+
+            /* 원하는 이미지 갯수만큼 반복문을 수행하여 이미지를 동적으로 생성하자 */
+            for(var i=1; i<=7; i++){
+                var img = document.createElement("img");  // <img/>
+                img.src = "../images/travel/" + i + ".jpg";     // <img src=""/>
+                img.style.width = 500 + "px";
+                img.style.height = 400 + "px";
+    
+                box.appendChild(img);
+            }
+
+            setInterval("move()", 10);
+        }
+        /* box div의 좌표를 설정 */
+        function setTarget(x){
+            targetX = x;
+        }
+        /* 수동 움직임 */
+        function move(){
+            /* 박스위치 = 현재위치 + 비율*남은거리(== 목표지점-현재위치) */
+            box.style.left = parseFloat(box.style.left) + a*(targetX - parseFloat(box.style.left)) + "px";
+        }
+        window.addEventListener("load", function(){
+            init(); // 초기화 함수 호출
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="mask">
+            <!-- 사진을 품고 있을 div, 단 넘치는 컨텐츠는 mask에 의해 가려진다. -->
+            <div id="box"></div>
+        </div>
+        <div id="navi">
+            <!--
+                자바스크립트를 작성할 수 있는 영역은 총 3가지
+                (1) <script> 태그 안
+                (2) onClick = "자바스크립트 영역"
+                (3) <a href = "javascript:자바스크립트 영역">
+             -->
+            <a href="javascript:setTarget(0)">●</a>
+            <a href="javascript:setTarget(-500)">●</a>
+            <a href="javascript:setTarget(-1000)">●</a>
+            <a href="javascript:setTarget(-1500)">●</a>
+            <a href="javascript:setTarget(-2000)">●</a>
+            <a href="javascript:setTarget(-2500)">●</a>
+            <a href="javascript:setTarget(-3000)">●</a>
+        </div>
+    </div>
+</body>
+</html>

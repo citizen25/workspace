@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            width: 100px;
+            height: 70px;
+            font-size: 20px;
+        }
+    </style>
+    <script src="../js/lib.js"></script>
+    <script>
+
+        var yy;
+        var mm;
+        var dd;
+
+        /* 각 함수마다 매번 getElementById하지 않기 위해 init()에서 최초에 한번 초기화 해놓자. 그래야 편하다. */
+        function init(){
+            yy = document.getElementById("yy");
+            mm = document.getElementById("mm");
+            dd = document.getElementById("dd");
+        }
+
+
+        function addZero(){
+            /*
+                텍스트박스에 입력한 월, 일의 경우엔 한자리 수인 경우, 입력한 숫자 앞에 0을 추가하자! -> 문자로 간주해야한다. 
+                (1) 텍스트 박스의 입력값은 원칙상 문자열로 간주하기 때문에 숫자로 바꿔야 한다.
+                (2) 한자리인 경우엔 0을 접두어로 부착.
+            */
+            // var month = parseInt(mm.value); // 월의 입력값을 정수로 변환    
+            // var date = parseInt(dd.value);  // 일의 입력값을 정수로 반환
+            // console.log("숫자가 아닙니다", isNaN(month));    // isNaN : is Not a Number
+
+            // if(month >= 10){
+            //     // alert("2자리");
+            // }else{
+            //     month = "0" + month;   // +연산자의 연산 대상 중 하나라도 문자가 껴있으면 전체를 문자열로 취급하여 +연산자는 이 시점부터 연결자로 역할한다.
+            // }
+
+            // if(date < 10){
+            //     date = "0" + date;
+            // }
+
+
+            /* 결과 출력 */
+            var h = document.querySelector("h1");
+            h.innerText = yy.value + "년" + getZeroDate(mm.value) + "월" + getZeroDate(dd.value) + "일";
+        }
+        /* 사용자가 0 접두어를 붙였을 때는, 0을 떼자 */
+        function removeZero(){
+            // alert(parseInt("05"));  // 숫자를 표현한 문자열을 대상으로 parseInt() 하면, 정수화 되므로 앞의 0이 떨어져 나간다.
+            var h = document.querySelector("h1");
+            h.innerText = yy.value + "년" + parseInt(mm.value) + "월" + parseInt(dd.value) + "일";
+        }
+    </script>
+</head>
+<body onLoad="init()">
+    <input type="text" id="yy">년
+    <input type="text" id="mm">월
+    <input type="text" id="dd">일
+    <button onClick="addZero()">접두어 0 추가</button>
+    <button onClick="removeZero()">접두어 0 제거</button>
+    <h1>검증 및 데이터 정제 결과 나올 곳</h1>
+</body>
+</html>

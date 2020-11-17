@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+        }
+        #box1{
+            background: red;
+        }
+        #box2{
+            background: blue;
+            position: relative;
+            top: 50px; /* 현재 자기 자신의 본연의 위치에서 y축으로 50 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        html의 모든 요소는 별도로 포지션을 지정하지 않으면, default 포지션은 relative 이다
+        relative : 다른 요소에 의해 영향을  요소의 위치
+     -->
+    <div id="box1"></div>
+    <div id="box2"></div>
+</body>
+</html>

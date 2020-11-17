@@ -1,0 +1,24 @@
+<script>
+    /*
+        배열명.splice(시작지점, 몇개 지울지);
+    */
+    var fruit = ["apple", "banana", "orange", "mango"];
+
+    fruit.splice(fruit.length-1, 1);
+
+    console.log(fruit);
+
+    /*
+        console창에 뜨는 undefined란?
+            개발자가 변수 선언지 만약 초기화를 하지 않았다면??
+            모든 프로그래밍 언어에서 광장히 싫어하는 상황이다.
+            특히 아이폰. swift언어에서는 에러사항으로 본다.
+            자바스크립트에서는 아무런 값도 없다는 undefined로 처리한다.
+            
+        변수 선언시 아무런 값도 할당하지 않는 것(==초기화하지 않는 습관)은
+        좋지 못하다. 특히 기본자료형(숫자, 문자, 논리값)은 반드시 선언시에 초기화해야한다.
+    */
+    var x;
+    console.log(x);
+
+</script>

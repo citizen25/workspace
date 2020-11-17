@@ -1,0 +1,10 @@
+CREATE TABLE notice(
+	notice_id INT PRIMARY KEY AUTO_INCREMENT
+	, title VARCHAR(200)
+	, writer varchar(20)
+	, content TEXT
+	, regdate TIMESTAMP DEFAULT NOW()
+	, hit INT DEFAULT 0
+);
+
+

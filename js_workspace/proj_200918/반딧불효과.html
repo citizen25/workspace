@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1200px;
+            height: 800px;
+            margin: auto;
+            position: relative; /* 자식이 absolute라서.. */
+        }
+        #wrapper img{
+            width: 1200px;
+            height: 800px;
+        }
+    </style>
+    <script src="../js/lib.js"></script>
+    <script>
+        var wrapper;
+        var bg;
+        var sx = 1;     // 이미지의 x스케일을 결정하는 전역변수
+        var sy = 1;     // 이미지의 y스케일을 결정하는 전역변수
+        var light;
+        let a = 0.1;    // 로직 내에서 변경사항 없음 : 상수
+        var targetX = 0;    // 반딧불이 도달할 x 목표지점
+        var targetY = 0;    // 반딧불이 도달할 y 목표지점
+        var count = 0;      // 현재 호출되고 있는 함수의 횟수를 알기 위한 변수
+
+        window.addEventListener("load", function(){
+            wrapper = document.getElementById("wrapper");
+            bg = document.getElementById("bg");
+
+            setInterval("moveBg()", 10);
+            setInterval("move()", 20);   // 1/1000 반딧불의 움직임을 위한 자동 함수
+
+            createLight();  // 반딧불 생성
+        });
+
+        /* 배경 이미지를 조금씩 조금씩 크게하면, 마치 다가가는 것처럼 느껴질 수 있다. */
+        function moveBg(){
+            /* 스케일은 비율로 커지므로, 정수를 이용하면 너무 빨리 커진다. -> 소수점으로 키워나가자. */
+            sx += 0.0001;
+            sy += 0.0001;
+            bg.style.transform = "scale(" + sx + ", " + sy + ")";
+        }
+
+        /* 반딧불 생성 */
+        function createLight(){
+            light = document.createElement("div");
+            light.style.width = 30 + "px";
+            light.style.height = 30 + "px";
+            light.style.backgroundColor = "yellow"
+            light.style.position = "absolute";  // 위치를 absolute로 해야, div 내에서 좌표가 지정되고, img 태그와 자리싸움을 벌이지 않는다.
+            light.style.left = 100 + "px";
+            light.style.top = 100 + "px";
+            light.style.borderRadius = 50 + "%";    // 사각 모서리를 다듬자
+            light.style.opacity = 0.6;  // 투명효과
+
+
+            /* wrapper에 추가하기 */
+            wrapper.appendChild(light);
+        }
+        /* 반딧불의 감속도 운동 */
+        function move(){
+            /* 반디 위치 = 현대 반디 위치 + 비율계수*거리(==(목표지점-현재반디위치)) */
+            light.style.left = parseInt(light.style.left) + a*(targetX - parseInt(light.style.left)) + "px";
+            light.style.top = parseInt(light.style.top) + a*(targetY - parseInt(light.style.top)) + "px";
+            // console.log("x목표지점 : ", targetX);
+            // console.log("y목표지점 : ", targetY);
+            console.log("count = ", count++);
+
+            /* 400마다 random한 값으로 대체하자 -> 예전에 만들어 놓은 함수를 사용 */
+            if(count%100 == 0){     // 400의 배수, 400마다!!
+                targetX = getRandom(1200);
+                targetY = getRandom(800);
+            }
+        }
+        
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <img id="bg" src="../images/bandi/dark_forest.svg" onMouseMove="moveBg()"/>
+    </div>
+</body>
+</html>

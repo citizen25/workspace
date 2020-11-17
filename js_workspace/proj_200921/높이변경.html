@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var box;
+        let a = 0.1;
+        var targetH = 35;   // 메뉴가 도달할 높이
+
+        function init(){
+            /* 메뉴를 표현한 사각형 생성 */
+            createMenu();
+
+            /* 마우스를 올려놓으면, 높이가 500px이 되도록 처리 */
+            box.addEventListener("mouseover", function(){
+                /* 목표지점 설정 */
+                // box.style.height = 500 + "px";
+                targetH = 500;
+            });
+            
+            /* 마우스를 올려놓으면, 높이가 다시 35px이 되도록 처리 */
+            box.addEventListener("mouseout", function(){
+                /* 목표지점 설정 */
+                // box.style.height = 35 + "px";
+                targetH = 35;
+            });
+        }
+        function createMenu(){
+            box = document.createElement("div");
+            box.style.width = 200 + "px";
+            box.style.height = 35 + "px";
+            box.style.backgroundColor = "red";
+            box.style.borderRadius = "6px";
+            box.style.position = "relative";
+            box.style.top = 0 + "px";
+            
+            document.body.appendChild(box);
+        }
+        /* 감속도를 적용하여 높이를 조절 */
+        function move(){
+            /* 메뉴의 높이 = 현재높이 + 비율계수*(목표지점 - 현재높이) */
+            box.style.height = parseFloat(box.style.height) + a*(targetH - parseFloat(box.style.height)) + "px";
+        }
+
+        window.addEventListener("load", function(){
+            init();
+            setInterval("move()", 25);
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

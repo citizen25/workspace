@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src = "./Arrow.js"></script>
+    <script>
+
+        /* 클래스는 사물 자체가 아닌, 틀에 불과하다. 반드시 쇳물을 부어서 물건을 만드는 과정이 필요.
+            클래스로부터 생성되는 물체 한 단위를 가리켜 인스턴스라 한다. */
+
+        var arr = new Array(5);
+
+        function init(){
+            for(var i=0; i<10; i++){
+                /* 인스턴스 생성하기 */
+                arrow = new Arrow(100, i*70);    // 클래스로부터 인스턴스 생성하는 문법
+                /* new 연산자는 클래스로부터 객체의 인스턴스를 생성할 때 사용하는 연산자이며,
+                    new 연산자 뒤에 오는 클래스명()메서드를 가리켜, 생성자 메서드라 한다.
+                    위 코드에서 new Arrow()라는 것은 사실 new constructor()메서드를 호출한 것이다.
+                    또, constructor()라는 명칭은 이미 정해진 것이지 때문에 다른 명칭을 사용하면 에러난다.
+                    이렇게 객체의 인스턴스 생성시 호출되는 메서드를 생성자라 하고,
+                    생성자의 역할은 객체가 태어날 때(메모리에서 생성), 각 객체마다 개성을 부여할 수 있는 기회를 작성할 수 있는 코드영역이다.
+                    화살을 생성하면서 각 화살마다 서로 다른 개성을 부여하고 싶다면 (ex. 색상, 크기, 위치 등등..)
+                    이 생성자 메서드를 적극 활용하면 된다. */
+                arr[i] = arrow;
+                // arrow.createArrow(100, (i*70)); // 함수는 반드시 호출해야 동작한다.
+            }
+
+                setInterval(function(){
+                    for(var i=0; i<arr.length; i++){
+                        arr[i].move();
+                    }
+                }, 10);
+            }
+
+        window.addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

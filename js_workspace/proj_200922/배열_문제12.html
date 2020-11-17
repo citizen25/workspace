@@ -1,0 +1,17 @@
+<script>
+    /*
+        배열의 첫번째 공간부터 10번째 공간까지는 0을 대입하고, 11번째부터 20번째 까지는 1을 대입하여 출력하세요.
+    */
+
+    var arr = new Array(20);
+
+    for(var i=0; i<arr.length; i++){
+        if(i<arr.length/2){
+            arr[i] = 0;
+        }else{
+            arr[i] = 1;
+        }
+    }
+
+    document.write(arr);
+</script>

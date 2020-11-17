@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드래그 효과내기</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .wrapper{
+            width: 100%;
+            height: 700px;
+            background-color: aquamarine;
+            position: relative; /* 자식때문에 명시 */
+        }
+        #hero{
+            border: 10px dotted red;
+            height: 100px;
+            width: 100px;
+            position: absolute; /* 부모(wrapper)를 기준으로 한 위치속성 */
+            left: 0px;
+            top: 0px;
+        }
+    </style>
+    <script>
+        var flag = true;
+        /*
+            마우스를 따라오게 할지 여부를 결정짓는 논리값 변수
+            왜 변수의 값에 숫자, 문자, 논리값 중 논리값을 이용해야 하는지
+            단 두가지 경우만 처리할 경우 논리값이 유리하다. 즉, 흑백논리 처리에는 논리값이 유리
+            논리값은 부정. 연산자를 이용할 경우 그 값을 뒤집을 수 있다
+        */
+        var hero = document.getElementById("hero");
+        /*
+            여러 함수들에서 앞으로 두고두고 사용하기위해, 참조하기 위해, 전역변수로 선언해 놓자.
+            이 경우, 이 전역변수는 프로그램(브라우저)이 끝날때까지 그 값이 계속 살아있다.
+        */
+
+        /*
+            hard 코딩이란? (고정된 코드)
+                유지보수에 좋지 않다.
+        */
+        /* 
+            마우스의 좌표 얻기 
+            사용자가 브라우저 상에서 일으키는 행동, 사건을 event라 하고
+            모든 event 정보는 자바스크립트의 event 객체가 보유하고 있다.
+        */
+        function init(){
+            // 프로그램이 가동되는 시점에 이미지의 너비와 높이 부여하기
+            // alert("문서가 모두 로드되었네요!");
+            hero = document.getElementById("hero");
+            hero.style.width = 200+"px";
+            hero.style.height = 200+"px";
+        }
+        function getPos(){
+            var x = event.clientX;
+            var y = event.clientY;
+
+            // console.log(x, ",", y);
+
+            // 추출된 정보를 이용하여 hero의 left, top과 일치시키자!
+            // hero는 객체다
+            // var hero = document.getElementById("hero");
+
+            var w = hero.style.width;
+            var h = hero.style.height;
+            // 주의 : style.width는 숫자가 아니다. px가 붙어있기 때문에 문자열이다.
+            // 따라서 계산할 때는 px를 제거해야한다.
+            w = parseInt(w);    // px 제거
+            h = parseInt(w);    // px 제거
+
+            hero.style.left = (x-(w/2))+"px";
+            hero.style.top = (y-(h/2))+"px";
+
+            // console.log("w=",w," h=",h);
+        }
+        function follow(){
+            // console.log("follow 함수 호출 중...");;
+            if(flag){
+                getPos();
+            }
+        }
+        /* 전역변수로 선언된 flag의 값을 뒤집기 위한 함수 */
+        function setFlag(){
+            flag = !flag;   // 뒤집기!!
+            /*
+                시각적 직관성을 부여하기 위해, 경계선으로 상태를 구분해보자.
+                점선 : 들고다닐 수 있다는 의미
+                점선 없을 때 : 못들고 다님.
+            */
+            
+            if(flag){
+                hero.style.border = "10px dotted red";  // 들고 다닐수 있을 때
+            }
+            else{
+                hero.style.border = "0";    // 없을 때
+            }
+        }
+    </script>
+</head>
+<!--
+    onLoad란?
+        시작하는 body부터 끝나는 body까지 실행부가 tag를 다 읽었을 때 발생하는 이벤트를 감지하는 핸들러
+-->
+<body onLoad="init()" onMouseMove="follow()">
+    <!-- 물체를 대상으로 마우스를 누르고 있을 때만 옮길 수 있는 효과내기(드래그 drag) -->
+    <div class="wrapper">
+        <img src="../images/hero/image1.png" id="hero" onClick="setFlag()"/>
+    </div>
+</body>
+</html>

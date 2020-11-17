@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #box{
+        width: 100px;
+        height: 100px;
+        background-color: darkblue;
+        position: absolute;
+        left: 0px;
+        top: 200px;
+    }
+</style>
+<script>
+
+    /*
+    
+        x == 0 || x == 400
+            flag = true
+        0 < x < 400
+            flag == false
+        --> flag = (x==0 || x==400) ? true : false
+            끝에 도달했을 때, flag는 true가 됨
+
+
+        flag == true
+            v = -v
+        flag == false
+            v = v
+        --> v = flag ? v=(-v) : v=v
+    */
+
+    var x = 0;  // 박스의 x 좌표값을 결정짓는 변수
+    var flag = true;
+    var v = 5;
+
+    function move(){
+
+        flag = (x==0 || x==400) ? true : false;
+        v = flag ? -v : v;
+
+        console.log(flag);
+        console.log(v);
+
+        x = x + v;
+
+        // 문서내.box라는요소.스타일.포지션의left값 을 변경하자
+        document.getElementById("box").style.left = x + "px";
+
+        // 정보를 출력하면서 개발하기 위해 textBox에 출력
+        document.getElementById("info").value = x;
+        
+    }
+</script>
+<body>
+    <button onClick="move()">움직이기</button>
+    <input type="text" id="info"/>
+    <div id="box"></div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+[Node.js]
+
+JavaScript - html을 동적으로 제어할 수 있는 스크립트 언어
+JQuery - javacript를 간소화 시켜놓은 라이브러리
+Node.js - javascript로 서버측 기술을 구현해놓은 것
+
+서버 컴퓨터
+	1. 공인 IP를 할당받은 컴퓨터
+	2. 인터넷 속도가 빨라야 한다.
+	3. 컴퓨터 성능이 좋아야 한다.
+
+클라이언트: 서버에 들어오는 쪽
+
+서버 : 클라이언트에게 소스를 보내주는 법
+	JSP - java						
+	PHP - c
+	ASP - c#
+
+
+Node.js란?
+	- javascript이다.
+	- 단, HTML을 제어하기 위함이 아니라, 서버측에서 기술을 구현하기 위한 javascript이다.
+		즉, 웹 서버 구축이나, 채팅서버 구축에 사용됨.
+
+기존 js  vs  Node.js
+	기존 js
+		기본문법(변수, 연산자, 제어문, 함수, 배열, 객체정의)
+		내장객체
+		DOM
+	Node.js
+		기본문법
+		내장객체
+		*서버구축에 필요한 기술 (모듈, 전역객체, 전역변수..)
+
+
+
+
+HTTP
+	HyperText : 전자문서
+	Transfer : 전송
+	Protocall : 약속
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

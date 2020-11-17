@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+body{
+    background-color: black;
+}    
+#wrapper{
+    width:400px;
+    height:75px;
+    background-color: white;
+    margin: auto;
+    position: relative; /*자식 때문에...*/
+    overflow: hidden;
+}    
+</style>
+<script>
+var arr=new Array(5); //반복문으로 채워넣기 위해
+
+function init(){
+
+    //이미지 5개를 동적으로 생성하여 wrapper 추가!!
+    for(var i=0;i<5;i++){
+        img=document.createElement("img"); //<img/>
+        arr[i]=img; // arr[0] = 0div, arr[1]=100div, arr[2] 200div
+        img.src="../images/travel/"+(i+1)+".jpg"; // <img src="" />
+        img.style.width=100+"px";
+        img.style.height=75+"px";
+        img.style.position="absolute";
+        img.style.left=(i*100)+"px";
+        //테두리 
+        img.style.border="5px solid red";
+        img.style.boxSizing="border-box";
+        img.style.color="orange";
+
+        //wrapper에 부착!!
+        var wrapper = document.getElementById("wrapper");
+        wrapper.appendChild(img);
+    }
+}   
+
+//이미지들의 좌표를 좌측방향으로 ( x음수) 이동하다가, 
+function move(){
+    //첫번째 이미지도 가리킬수 없다..
+    //결론: 모든 이미지에 대해 반복문으로 움직이기 위해 배열로 담아둔것임
+    for(var i=0;i<arr.length;i++){
+        arr[i].style.left=parseInt(arr[i].style.left)-1+"px";
+        
+        //이동하다가, -100 좌표에 도달하면 제일 뒤로(400px) 이동시키자!!
+        if(parseInt(arr[i].style.left) <= -100){
+            arr[i].style.left=400+"px";
+        }
+    }
+}
+
+function auto(){
+    setInterval("move()", 10);
+}
+
+window.addEventListener("load", function(){
+    init();    
+});    
+</script>
+</head>
+<body>
+    <div id="wrapper"></div>
+    <button onClick="move()">수동움직임</button>
+    <button onClick="auto()">자동움직임</button>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 70%;
+            height: 200px;
+            border: 10px solid gray;
+            margin: auto;
+            font-size: 30px;
+        }
+        input[type='text']{
+            width: 20%;
+            height: 100px;
+            font-size: 80px;
+            text-align: right;
+        }
+        button{
+            width: 15%;
+            height: 40px;
+            border: 0px;
+            color: red;
+            font-weight: bold;
+            background-color: chartreuse;
+        }
+    </style>
+    <script>
+        /* 다른 함수들에서 접근할 수 있도록 미리 전역변수로 정의 */
+        var sec;    // 초의 텍스트박스
+        var min;    // 분의 텍스트박스
+        var hour;   // 시간의 텍스트박스
+        var bt_start;   // 시작 버튼
+        var bt_pause;   // 멈춤 버튼
+        var bt_reset;   // 초기화 버튼
+        
+        var ss = 0;  // 초를 누적시킬 전역변수
+        var mm = 0;  // 분을 누적시킬 전역변수
+        var hh = 0;  // 시간을 누적시킬 전역변수
+
+        var st;     // setInterval을 가리키기 위한 변수
+        var flag = true;
+
+        window.addEventListener("load", function(){
+            init();
+        });
+
+        /* 초기화: 프로그램 시작과 동시에 해야할 작업을 처리하는 함수 */
+        function init(){
+            /* 초 영역에 0을 초기값으로 부여 */
+            sec = document.getElementById("sec");
+            min = document.getElementById("min");
+            hour = document.getElementById("hour");
+            
+            sec.value = ss;  // 초기의 초 text 박스의 값을 지정
+            min.value = mm;  // 초기의 분 text 박스의 값을 지정
+            hour.value = hh;  // 초기의 시간 text 박스의 값을 지정
+
+            bt_start = document.getElementById("bt_start");
+            bt_pause = document.getElementById("bt_pause");
+            bt_reset = document.getElementById("bt_reset");
+
+            /* 문서 내의 bt_start 라는 요소에 동적 이벤트 처리 */
+            bt_start.addEventListener("click", function(){
+                /* 
+                    버튼을 제어하는 방법 2가지
+                    1) 제 3자의 입장에서 바라보는 관점의 제어
+                    2) 버튼의 입장에서 스스로를 제어
+                 */
+                // bt_start.style.background = "red";  // 1) 3자 입장
+                // this.style.background = "red";      // 2) 스스로 제어
+                
+                /* 여기서 코드를 짜면, 추후 자동화 함수가 호출할 수 있는 단위가 아니기 때문에 별도의 함수로 정의하자 */
+                // timer();
+
+                /* 자동화 함수한테 timer()호출을 맡기자 */
+                auto();
+            });
+
+            /* 문서 내의 bt_pause 라는 요소에 동적 이벤트 처리 */
+            bt_pause.addEventListener("click", function(){
+                flag = !flag;
+                /* this란? 객체가 자기 자신을 가리키기 위한 대명사. 여기서의 this는 클릭 이벤트를 일으킨 버튼이 자기 자신을 가리키는 것. */
+                if(flag){
+                    this.innerText = "Pause";   // 지금 작동중임(다시 멈출 수 있다는 의미)
+                }else{
+                    this.innerText = "▶";   // 지금 멈춤 상태(다시 재개 가능함)
+                }
+            });
+
+            /* 문서 내의 bt_reset 이라는 요소에 동적 이벤트 처리 */
+            bt_reset.addEventListener("click", function(){
+                /* 이미 실행중인 setInterval을 멈추기 + 모든 시, 분, 초를 0으로 초기화 */
+                /*
+                    clearTimeout(멈출대상의setInterval);
+                        인수(매개변수)로 전달한 자동화 함수를 멈춘다.
+                */
+                clearTimeout(st)
+
+                /* 모든 시, 분, 초를 0으로 초기화 */
+                ss = 0;
+                mm = 0;
+                hh = 0;
+                sec.value = ss;  // 초 text 박스의 값을 지정
+                min.value = mm;  // 분 text 박스의 값을 지정
+                hour.value = hh;  // 시간 text 박스의 값을 지정
+
+                flag = true;    // 처음 상태로 돌려놓자.
+            });
+
+        }
+
+        /* 초 단위를 1씩 증가 */
+        function timer(){
+            if(flag){       // 시계의 작동 여부를 결정하는 논리값 변수
+                ss++;
+    
+                /* ss값이 60이상일 떄는 mm의 값을 1증가시키고, 다시 ss값을 0으로 초기화 */
+                if(ss >= 60){
+                    ss = 0;
+                    mm++;
+                }
+                /* mm값이 60이상일 때, hh의 값을 1증가시키고, 다시 mm값을 0으로 초기화 */
+                if(mm >= 60){
+                    mm = 0;
+                    hh++;
+                }
+                hour.value = hh;
+                min.value = mm;
+                sec.value = ss;                
+            }
+        }
+
+        /* 지정한 시간 간격으로 함수를 호출해주는 자동화 함수 */
+        function auto(){
+            st = setInterval("timer()", 1);  // 자동화 함수 가동후, 함수를 가리킬 수 있는 변수로 대입
+        }
+
+
+
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <input type="text" id="hour"/>시간
+        <input type="text" id="min"/>분
+        <input type="text" id="sec"/>초
+        <button id="bt_start">Start</button>
+        <button id="bt_pause">Pause</button>
+        <button id="bt_reset">Reset</button>
+    </div>
+</body>
+</html>

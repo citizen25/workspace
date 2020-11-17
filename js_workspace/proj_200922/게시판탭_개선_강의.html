@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 600px;
+            height: 500px;
+            background-color: yellow;
+            margin: auto;
+        }
+        .tap{
+            width: 100%;
+            height: 50px;
+            background: greenyellow;
+        }
+        #box1, #box2, #box3{
+            width: 100%;
+            height: 450px;
+        }
+        #box1{
+            display: none;
+            background-color: red;
+        }
+        #box2{
+            display: none;
+            background-color: gold;
+        }
+        #box3{
+            display: none;
+            background-color: dodgerblue;
+        }
+        .tap a{
+            text-decoration: none;
+            display: inline-block;
+            width: 200px;
+            height: 50px;
+            text-align: center;
+            font-size: 25px;
+        }
+    </style>
+    <script>
+
+        var box1;
+        var box2;
+        var box3;
+
+        function init(){
+            box1 = document.getElementById("box1");
+            box2 = document.getElementById("box2");
+            box3 = document.getElementById("box3");
+        }
+
+        /* 지금 선택한 탭에 해당하는 div만 나오게 하고, 나머지는 안 나오게 하기 */
+        /* 매개변수 n에는 지금 유저가 선택한 탭의 정보가 넘어옴(notice=1, qna=2, board=3) */
+        function showHide(n) {
+            for(var i=1; i<=3; i++){
+                var box = document.getElementById("box"+i);
+                if(n == i){
+                    box.style.display = "block";    // 지금 선택한 탭이라면 보이게
+                }else{
+                    box.style.display = "none";    // 지금 선택한 탭이 아니라면 안 보이게
+
+                }
+            }
+        }
+        window.addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="tap">
+            <a href="javascript:showHide(1)" style="background-color: red">공지사항</a><a href="javascript:showHide(2)" style="background-color: gold">QnA</a><a href="javascript:showHide(3)" style="background-color: dodgerblue">자유게시판</a>
+        </div>
+        <div class="content">
+            <div id="box1"></div>
+            <div id="box2"></div>
+            <div id="box3"></div>
+        </div>
+    </div>
+</body>
+</html>

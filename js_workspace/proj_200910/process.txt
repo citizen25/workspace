@@ -1,0 +1,12 @@
+x == 0 || x == 400
+	flag = true
+0 < x < 400
+	flag == false
+--> flag = (x==0 || x==400) ? true : false		// 끝에 도달했을 때, flag는 true가 됨
+
+
+flag == true
+	v = -v
+flag == false
+	v = v
+--> v = flag ? v=(-v) : v=v;

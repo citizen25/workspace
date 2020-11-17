@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #000000;
+        }
+    </style>
+    <script>
+        // 버튼을 누를 때마다 현재 배경색상의 반대 색상으로 처리하자.
+        // 불 켜고, 끄는 효과를 낼 수 있다.
+        var bg;
+        var flag = true;   // 버튼을 누를 때마다 true or false값이 계속 전환되면서 채워넣어야 한다.
+        function turn(){
+            bg = (flag ? "white" : "black");
+            document.body.style.background = bg; // black or white
+            flag = !flag;   // 논리값을 대상으로 !:not을 붙이면 해당 논리값의 반대가 된다.
+            console.log("현재 flag값 : ", flag);
+        }
+    </script>
+</head>
+<body>
+    <button onClick="turn()">원터치 스위치</button>
+</body>
+</html>

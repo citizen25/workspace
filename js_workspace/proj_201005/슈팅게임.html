@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        #wrapper{
+            width: 100%;
+            height: 700px;
+            background-image: url(../images/shooting/bg.png);
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+    <script src="./Hero.js"></script>
+    <script src="./Enemy.js"></script>
+    <script src="./Bullet.js"></script>
+    <script>
+        var bgY = 0;    // 배경의 y축을 결정할 변수
+
+        var wrapper;
+        var hero;
+
+        var bulletArray = new Array();  // 내장 객체 중 Array() 객체는 배열을 제어할 수 있다.
+        var bumbArray = new Array();    // 폭탄을 담을 배열.
+        var enemyArray = new Array();   // 적군을 담을 배열
+        var enemyImg = ["e1.png", "e2.png", "e3.png", "e4.png", "e5.png"]
+
+        /* 배경처리 */
+        function bgEffect(){
+            /* y축의 양수 방향으로 배경을 움직이자 */
+            bgY++;
+            wrapper.style.backgroundPosition = "0px " + bgY + "px";
+        }
+
+        /* 사운드 효과 */
+        function bgSound(){
+            /* audio 태그 생성 */
+            var bgAudio = document.createElement("audio");  // <audio></audio>
+            bgAudio.src = "../sounds/shooting/bgm.mp3";
+            bgAudio.loop = "yes";   // 끝없이 루프로 실행.
+            bgAudio.play(); // 사운드 실행.
+
+            document.body.appendChild(bgAudio);
+        }
+
+        /* 주인공 생성 */
+        function createHero(){
+            hero = new Hero(screen.width/2-40, 550, 80, 65, 0, 0);  // screen.width : 모니터의 가로 사이즈
+        }
+
+        /* 적군 생성 */
+        function createEnemy(){
+            for(var a=0; a<2; a++){
+                for(var i=0; i<20; i++){
+                    var en = new Enemy("../images/shooting/" + enemyImg[a], 100+(i*90), 50+(a*70), 75, 65, 0, 0);   // src, x, y, width, height, velX, velY
+                    enemyArray.push(en);    // 배열에 담기.
+                }
+            }
+        }
+
+        /* 총알 생성 */
+        function createBullet(){
+            var bullet = new Bullet("../images/shooting/ball.png", hero.x+(hero.width/2)-12, hero.y, 25, 25, 0, -10);    // src, 주인공의.x, 주인공의.y, width, height, velX, velY
+
+            /* 무기 사운드 처리 */
+            var audio = document.createElement("audio");
+            audio.src = "../sounds/shooting/fire.wav";
+            audio.play();   // 사운드 재생
+
+            /* 생성된 총알을 배열에 추가 */
+            bulletArray.push(bullet);
+        }
+
+        /* 폭탄 생성 */
+        function createBumb(){
+            var bumb = new Bullet("../images/shooting/missile.png", hero.x+(hero.width/2)-40, hero.y, 80, 100, 0, -6);    // src, 주인공의.x, 주인공의.y, width, height, velX, velY
+            bumbArray.push(bumb);
+
+            /* 폭탄 사운드 처리 */
+            var audio = document.createElement("audio");
+            audio.src = "../sounds/shooting/bomb.wav";
+            audio.play();   // 사운드 재생
+        }
+        
+        /* 게임에서는 무조건 게임 루프가 존재해야 사물을 움직일 수 있다. */
+        function gameLoop(){
+            console.log("gameLoop() called");
+            hero.tick();
+            hero.render();
+            for(var i=0; i<20; i++){
+                enemyArray[i].tick();
+                enemyArray[i].render();
+            }
+            
+
+            /* 총알은 아직 생성된 적이 없기 때문에 bullet 변수에는 undefined 값이 들어있다.
+            따라서 존재하지 않는 객체의 메서드를 호출하게 되면 에러가 발생한다. */
+            // if(bullet != undefined){
+            //     bullet.tick();     
+            //     bullet.render();     
+            // }
+            for(var i=0; i<bulletArray.length; i++){
+                bulletArray[i].tick();
+                bulletArray[i].render();
+            }
+            for(var i=0; i<bumbArray.length; i++){
+                bumbArray[i].tick();
+                bumbArray[i].render();
+            }
+
+            bgEffect();
+        }
+
+        /* 초기 설정 */
+        window.addEventListener("load", function(){
+            wrapper = document.getElementById("wrapper");
+
+            /* 게임화면인 div에 키보드 이벤트 구현 */
+            document.body.addEventListener("keydown", function(e){
+                var key = e.keyCode;
+                switch(key){
+                    case 37: hero.velX = -5; break;     // velX = -5, velY = 0;
+                    case 39: hero.velX = 5; break;
+                    case 38: hero.velY = -5; break;
+                    case 40: hero.velY = 5; break;
+                    case 32: createBullet(); break;     // 총알 발사
+                    case 66: createBumb(); break;     // 폭탄 발사
+                    
+                }
+                
+            });
+            document.body.addEventListener("keyup", function(e){
+                var key = e.keyCode;
+                switch(key){
+                    case 37: hero.velX = 0; break;     // velX = -5, velY = 0;
+                    case 39: hero.velX = 0; break;
+                    case 38: hero.velY = 0; break;
+                    case 40: hero.velY = 0; break;
+                }
+                
+            });
+
+            // bgSound();
+            createHero();
+            createEnemy();
+            setInterval("gameLoop()", 1);
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

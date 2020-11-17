@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        /*
+            ★ 을 96개 출력하되, 10개씩 개행시켜서 출력하세요. 
+                ★★★★★★★★★★
+                ★★★★★★★★★★
+                중간 생략 …………
+                ★★★★★★
+            풀이법)
+                - 총 96번 반복 : 반복문의 횟수를 알 수 있다.
+                - 10개씩 개행 : 10번 째마다를 표현해야한다. %연산자 이용. 개행 <br/>
+        */
+        // document.write("안녕하세요 <br/> 개발자님");    // 문자열을 이용하여 태그를 출력
+
+        for(var i=1; i<=96; i++){
+            document.write("★");   // body에 출력
+            if(i%10 == 0){
+                document.write("<br/>");    // 줄바꿈
+            }
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

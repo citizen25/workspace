@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            /* 
+                body 태그에는 기본적으로 margin이 적용되어 있다.
+                따라서 body에 직접적으로 올려지는 태그는 약간 떨어져서 위치ㅏㅎㅁ
+             */
+            body{
+                margin: 0;
+            }
+            #wrapper{
+                width: 100%;
+                height: 700px;
+                background-color: gray;
+                position: relative; /* 자식때문에.. */
+            }
+            #pic{
+                width: 50px;
+                height: 50px;
+                border: 1px solid red;
+                position: absolute;
+                left: 0px;
+                top: 100px;
+            }        
+        </style>
+        <script>
+            function getPoint(){
+                /*
+                    마우스의 실시간 좌표를 텍스트박스에 출력해보자
+                    발생하는 이벤트에 대한 모든 정보는 event라는 객체가 보유하고 있다.
+                    아까 예제에서는 키보드 이벤트에 대한 아스키코드값을 가져왔었다.
+                    이번엔, 키보드가 아니라 마우스에 대한 이벤트.
+                */
+                console.log("x축: ", event.clientX);
+                console.log("y축: ", event.clientY);
+
+                document.getElementById("tx").value = event.clientX;
+                document.getElementById("ty").value = event.clientY;
+
+                /*
+                    조사된 마우스 위치 정보를 구했으니, 이 정보를 이미지에 적용해버리자
+                    그렇게 하면 이미지의 좌표과 마우스의 좌표가 일치하게 되어, 따라다니는 효과가 나게 된다.
+                */
+                document.getElementById("pic").style.left = event.clientX-25+"px";
+                document.getElementById("pic").style.top = event.clientY-25+"px";
+            }
+        </script>
+    </head>
+    <!-- onMouseMove : 마우스를 움직이는 동안 발생하는 이벤트를 처리하는 핸들러 -->
+    <body onMouseMove="getPoint()">
+        
+        <div id="wrapper">
+            마우스 x좌표 : <input type="text" id="tx"/>
+            마우스 y좌표 : <input type="text" id="ty"/>
+            <img onClick="alert('아야야');" src="../images/exercise.svg" id="pic"/>
+        </div>
+        
+    </body>
+</html>
