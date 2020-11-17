@@ -1,0 +1,16 @@
+class DataType3 {
+	public static void main(String[] args){
+		short s1 = 3;
+		short s2 = 4;
+
+		int a1 = 3;
+		int a2 = 4;
+
+
+		short sum = s1 + s2;
+		// 해결책1) int sum = s1 + s2
+		// 해결책2) short sum = (short)(s1+s2)
+		// 	(short)에서의 소괄호를 case 연산자라 한다. == 강제 형변환
+		int result = a1 + a2;
+	}
+}

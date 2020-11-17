@@ -1,0 +1,16 @@
+입출력에 따른 분류
+	입력스트림
+	출력스트림
+
+처리 방식에 따른 분류
+	바이트 단위
+	문자 단위
+	버퍼 단위
+
+OS
+	System.in : 표준 입력 스트림 InputStream
+	System.out : 표준 출력 스트림 PrintStream(문자)
+
+어제 과제
+	키보드 입력받은 데이터를 파일에 출력.
+		FileWriter

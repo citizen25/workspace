@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<movies>
+	<movie>
+		<title>Iron Man</title>
+		<url>https://images-na.ssl-images-amazon.com/images/I/91qvAndeVYL._RI_.jpg</url>
+	</movie>
+	<movie>
+		<title>The Incredible Hulk</title>
+		<url>https://images-na.ssl-images-amazon.com/images/I/516j96%2BpCOL._SY445_.jpg</url>
+	</movie>
+	<movie>
+		<title>Iron Man 2</title>
+		<url>https://images-na.ssl-images-amazon.com/images/I/51xEeVYLqrL._SX342_.jpg</url>
+	</movie>
+	<movie>
+		<title>Thor</title>
+		<url>https://images-na.ssl-images-amazon.com/images/I/91P1wWqX63L._SL1500_.jpg</url>
+	</movie>
+	<movie>
+		<title>Captain America</title>
+		<url>https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5981/5981104_sa.jpg</url>
+	</movie>
+	<movie>
+		<title>Avengers</title>
+		<url>https://terrigen-cdn-dev.marvel.com/content/prod/1x/theavengers_lob_crd_03.jpg</url>
+	</movie>
+	<movie>
+		<title>Iron Man 3</title>
+		<url>http://3.bp.blogspot.com/-PTW4W1OlYIw/Wn7idkhYXTI/AAAAAAAAfIY/PAyn3Q1OwZQZxDrmshICJckNCI93AD6_QCK4BGAYYCw/s1600/ironman-3.jpg</url>
+	</movie>
+	<movie>
+		<title>Thor: The Dark World</title>
+		<url>https://images.indianexpress.com/2018/04/thor-2-1-7591.jpg</url>
+	</movie>
+	<movie>
+		<title>Guardians of the Galaxy</title>
+		<url>https://m.media-amazon.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_.jpg</url>
+	</movie>
+</movies>

@@ -1,0 +1,57 @@
+Java Archive == jar
+	class 압축파일
+	여러 클래스를 모아놓는 용도로 사용한다.
+
+
+jar 만드는 법 (jar.exe 사용)
+
+	1. 압축하고자 하는 패키지의 bin으로 이동.
+	2. jar cvf test.jar food
+		c, v, f는 옵션이다.
+
+jar 사용하는 법
+	1. classpath 환경변수에 .jar의 파일명까지 포함해서 등록한다.
+	2. 사용하고자 하는 .java에서 import 패키지명.클래스명; 한다.
+
+
+
+-------------------------------------------------------
+
+
+create table dept(
+deptno number 
+,dname varchar2(14)
+,loc varchar2(13)
+,primary key(deptno)
+);
+
+create table emp(
+empno number 
+,ename varchar2(10)     
+,job varchar2(9)         
+,mgr number
+,hiredate date
+,sal number
+,comm number
+,deptno number
+,primary key(empno)
+);
+
+insert into dept(deptno,dname,loc) values(10,'ACCOUNTING','NEW YORK');
+insert into dept(deptno,dname,loc) values(20,'RESEARCH','DALLAS');
+insert into dept(deptno,dname,loc) values(30,'SALES','CHICAGO');
+insert into dept(deptno,dname,loc) values(40,'OPERATIONS','BOSTON');
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7369,'SMITH','CLERK',7902,'80/12/17',800,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7499,'ALLEN','SALESMAN',7698,'81/02/20',1600,300,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7521,'WARD','SALESMAN',7698,'81/02/22',1250,500,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7566,'JONES','MANAGER',7839,'81/04/02',2975,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7654,'MARTIN','SALESMAN',7698,'81/09/28',1250,1400,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7698,'BLAKE','MANAGER',7839,'81/05/01',2850,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7782,'CLARK','MANAGER',7839,'81/06/09',2450,10);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7788,'SCOTT','ANALYST',7566,'87/04/19',3000,20);
+insert into emp(empno,ename,job,hiredate,sal,deptno) values(7839,'KING','PRESIDENT','81/11/17',5000,10);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7844,'TURNER','SALESMAN',7698,'81/09/08',1500,0,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7876,'ADAMS','CLERK',7788,'87/05/23',1100,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7900,'JAMES','CLERK',7698,'81/12/03',950,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7902,'FORD','ANALYST',7566,'81/12/03',3000,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7934,'MILLER','CLERK',7782,'82/01/23',1300,10); 

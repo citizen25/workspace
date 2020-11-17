@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pets>
+	<pet>
+		<type>dog</type>
+		<name>bbomi</name>
+		<age>9</age>
+		<gender>female</gender>
+	</pet>
+	<pet>
+		<type>cat</type>
+		<name>navi</name>
+		<age>3</age>
+		<gender>male</gender>
+	</pet>
+</pets>

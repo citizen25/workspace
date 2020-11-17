@@ -1,0 +1,5 @@
+편집기 과제(메모장 만들어오기)
+	메뉴바 > 탭 > 열기 : 파일 여는 기능.
+		JFileChooser chooser = new JFileChooser();
+		chooser.showOpenDialog(this);
+	스크롤 추가

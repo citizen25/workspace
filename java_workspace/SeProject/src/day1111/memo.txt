@@ -1,0 +1,8 @@
+
+programming : database
+= class : entity(table)
+= instance : record(tuple)
+= property : attribute(column)
+
+
+

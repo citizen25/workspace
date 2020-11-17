@@ -1,0 +1,89 @@
+[ 복습 ]
+
+스트림 (흐름)
+
+    대상이 현실에서는 물
+    대상이 전산에서는 데이터
+
+    관 : 하나의 관으로 데이터가 들어오고, 나갈 수 있지만, 
+        전산에서의 관은 단방향이다. 즉, 스트림은 단방향이다.
+
+
+예외
+    정상 수행을 방해하는 요인, 상황.
+    예외가 발생하면 프로그램의 비정상 종료가 되어버린다.
+    sun사에서는 그래서 예외처리를 지원 : try catch finally
+    예외처리의 목적 : 비정상 종료의 방지
+    모든 상황에 대해 예외를 처리하는게 아니라, 컴파일러가 강요할 때마다 처리해주면 된다.
+        실력이 쌓이면, 개발자만의 예외를 정의할 수 있다.
+
+
+
+[ 수업 ]
+
+입출력 여부에 따라
+	입력 - input, reader
+	출력 - output, writer
+
+바이트와 문자 여부에 따라
+	바이트
+	문자 - ~~reader, ~~writer
+
+버퍼처리 여부에 따라
+	(none)~~
+	Buffered~~
+
+
+Classes
+BufferedInputStream
+BufferedOutputStream
+BufferedReader
+BufferedWriter
+ByteArrayInputStream
+ByteArrayOutputStream
+CharArrayReader
+CharArrayWriter
+Console
+DataInputStream
+DataOutputStream
+File
+FileDescriptor
+FileInputStream
+FileOutputStream
+FilePermission
+FileReader
+FileWriter
+FilterInputStream
+FilterOutputStream
+FilterReader
+FilterWriter
+InputStream
+InputStreamReader
+LineNumberInputStream
+LineNumberReader
+ObjectInputStream
+ObjectInputStream.GetField
+ObjectOutputStream
+ObjectOutputStream.PutField
+ObjectStreamClass
+ObjectStreamField
+OutputStream
+OutputStreamWriter
+PipedInputStream
+PipedOutputStream
+PipedReader
+PipedWriter
+PrintStream
+PrintWriter
+PushbackInputStream
+PushbackReader
+RandomAccessFile
+Reader
+SequenceInputStream
+SerializablePermission
+StreamTokenizer
+StringBufferInputStream
+StringReader
+StringWriter
+Writer
+

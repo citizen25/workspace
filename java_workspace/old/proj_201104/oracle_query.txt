@@ -1,0 +1,23 @@
+--테이블 스페이스 생성
+CREATE TABLESPACE space1104
+DATAFILE 'C:\oraclexe\app\oracle\oradata\XE\space1104.dbf'
+SIZE 10m
+;
+
+--유저 생성
+CREATE USER user1104
+IDENTIFIED BY user1104
+DEFAULT TABLESPACE space1104
+QUOTA UNLIMITED ON space1104
+;
+
+--필요한 권한 부여 DCL
+GRANT CREATE TABLE, CREATE SEQUENCE, CREATE SESSION TO user1104;
+
+--유저로 접속 시도하고, 테이블 생성하자.
+CREATE TABLE member(
+	member_id NUMBER PRIMARY KEY
+	, name VARCHAR(20)
+	, age NUMBER
+	, phone VARCHAR(20)
+);

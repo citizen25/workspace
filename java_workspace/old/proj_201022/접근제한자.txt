@@ -1,0 +1,162 @@
+[ 접근 제한자 ]
+	클래스 내에 작성되는 변수는 지금까지는 색상, 가격 이런 기본적인 연습용 데이터였지만, 
+	사실상 자바 개발자가 현업에서 다루는 업무는 주로 계좌, 고객정보 등 상당히 민감한 데이터를 다룬다.
+	따라서 클래스 내에 있는 변수는 데이터이므로 "보호"받아야 한다.
+	자바에서는 이렇게 데이터를 보호할 수 있는 보안 장치를 지원해주는데, 이를 가리켜
+	"접근 제한자"라고 한다.
+
+접근 제한자의 종류
+	약한 것 순으로 나열
+
+	public : 보안 X. 그냥 공개.
+	protected : 상속 관계에 있는 부모자식 클래스끼리만 접근 가능
+	default : 같은 패키지 안에 있는 클래스끼리만 접근 가능. 상속받았다 할지라도 같은 패키지가 아니라면 접근 X.
+	private : 같은 클래스 내의 멤버끼리만 접근 가능. ex) 멤버메서드가 멤버변수에 접근
+
+	보안 순서
+		public < protected < default < private
+
+마치 개발할 때, 개발자가 보안을 철저히 따져가면서 클래스를 만들것 같지만,
+사실 private을 많이 쓴다..
+
+-----------------------------------------------------------------------
+
+실습 GoGo!!!
+
+고객의 계좌
+
+-------------------------------------------------------------------------------
+
+
+1
+아래와 같은 계좌 클래스에 대한 설명 중 틀린 것은?
+public class Account {
+	int balance=200; //(가)
+	String bank="기업은행";
+	String accountNum="12-456-789-10";
+	
+	public int getBalance() { //(나)
+		return balance;
+	}
+	public void setBalance(int balance) { //(다)
+		this.balance=balance;
+	}
+}
+
+(1) (가)의 balance 를 외부의 어떤 클래스가 사용하려면 .점찍고 접근하면 된다.
+	( X ) 외부의 클래스가 접근하려고 할 때, default를 접근할 수 없으므로 X.
+(2) balance를 외부의 어떤 클래스가 참조하려면 (나)의 메서드를 호출하면 잔고값을 얻어갈 수 있다
+	( O )
+(3) 외부의 클래스가 점찍고 balance 변수에 접근하면 됨에도 불구하고, (나),(라)처럼 값을 반환받거나
+    변경하기 위한 메서드를 정의하는 것은 시간 낭비이다.
+	( X ) 은닉화, 캡슐화.
+(4) private 으로 멤버 변수를 제한해두면 외부의 클래스에서 변수에 대해 접근 자체가 불가능해지며, 
+   이렇게 변수 자체를 아예 사용 못하게 하는 것이 자바 보안의 목적이다.
+	( X ) 사용자체를 막아버리면 변수를 정의하는 것 자체가 무의미해진다.
+		쓸 수 있는 기회를 제공해주어야 개발의 의미가 있는 것.
+(5) 메서드를 통해 클래스가 가진 변수를 접근하는 방법은 좋은 방법이다.
+	( O )
+
+2
+다음 설명 중 틀린 것은?
+(1) 클래스의 멤버 변수는 결국 데이터 이므로 보안상 보호되어야 할 대상이다.
+	( O )
+(2) private 으로 선언된 멤버 변수는 같은 인스턴스내의 멤버 메서드라 할 지라도, 접근이 불가능하다.
+	( X ) 멤버 메서드가 접근 못하는 변수는 없다. 왜냐면 같은 주체 안에 있기 때문.
+(3) private 으로 멤버 변수를 제한해두면 외부의 클래스에서 변수에 대해 접근 자체가 불가능해지며, 
+   이렇게 변수 자체를 아예 사용 못하게 하는 것이 자바 보안의 목적이다.
+	( X )
+(4) (3)번의 경우처럼 변수 자체에 대한 사용을 금지시킬 경우, 클래스를 정의한 목적 자체가 무의미해 
+   지므로, 변수 사용에 대한 접근 허용을 개발자의 선택에 따라 임의로 조절 가능하도록 하기 위해,
+   메서드를 통해 간접 사용하게 하는 방식을 객체지향에서는 은닉화 또는 캡슐화(=encapsulation)
+   라고 한다.
+	( O )
+(5) private으로 접근을 제한한 변수에 대해 값을 변경할 수 있도록 제공되는 메서드를 setter라 하고
+   값을 접근하여 반환할 수 있도록 제공되는 메서드를 getter 라 한다.
+	( O )
+
+추가) 은닉화에 작성되는 메서드 정의 표기법은 규칙이 있다.
+	ex)
+	private String name;
+	private String price;
+	// getter와 setter 작성시 합성어는 뒷단어의 첫 철자를 대문자로 해야한다는 규칙이 있다.
+
+	// name에 대한 getter/setter
+	public void setName(String name){
+		this.name = name;
+	}
+	public String getName(){
+		return name;
+	}
+	// price에 대한 getter/setter
+	public void setPrice(int price){
+		this.price = price;
+	}
+	public int getPrice(){
+		return price;
+	}
+
+
+3
+아래의 클래스를 은닉화 하세요.
+class Customer{
+    private String name;
+    private int age;
+    private boolean isMarry;
+
+답)
+	public void setName(String name){
+		this.name = name;
+	}
+	public String getName(){
+		return name;
+	}
+	public void setAge(int age){
+		this.age = age;
+	}
+	public int getAge(){
+		return age;
+	}
+	public void setIsMarry(boolean isMarry){
+		this.isMarry = isMarry;
+	}
+	public boolean setIsMarry(){
+		return isMarry;
+	}
+
+
+}
+
+
+
+4
+아래의 클래스를 은닉화 하세요.
+class  Company{
+	private int  memberCount;
+	private String location;
+
+	public void setMemberCount(int memberCount){
+		this.memberCount = memberCount;
+	}
+	public int getMemberCount(){
+		return memberCount;
+	}
+
+	public void setLocation(String location){
+		this.location = location;
+	}
+	public String getLocation(){
+		return location;
+	}
+
+
+}
+
+
+
+
+
+
+
+
+

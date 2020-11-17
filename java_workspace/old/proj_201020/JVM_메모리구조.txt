@@ -1,0 +1,18 @@
+CPU
+
+
+MEMORY
+	Static
+		hard disk에 있는 .class(거푸집) 자체가 그대로 올라온다.
+	Stack
+		모든 지역변수가 온다.
+		밑이 막혀있고, 위가 뚫려있다. -> 차곡차곡 쌓인다.
+		문자, 숫자, 논리값만 들어온다. -> instance는 들어올 수 없다. -> heap 영역으로 go
+	Heap
+		instance가 올라온다. -> heap에 올라온 사실을 stack에 주소로 올린다.
+
+HARD DISK
+	.java, .class, .. 등등
+
+
+

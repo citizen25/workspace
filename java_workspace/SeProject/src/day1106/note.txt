@@ -1,0 +1,12 @@
+SQLPlus 불편하다.
+GUI가 지원되는 오라클 접속 클라이언트 프로그램을 설치
+	DBeaver
+
+
+
+
+MVC 패턴 : 유지보수성이 올라간다
+	디자인과 로직은 분리시키자!
+	Model
+	View
+	Controller
