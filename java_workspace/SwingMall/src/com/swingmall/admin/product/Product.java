@@ -2,6 +2,7 @@ package com.swingmall.admin.product;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,6 +32,7 @@ public class Product extends Page{
 	ArrayList<ArrayList> subList = new ArrayList<ArrayList>();  //모든 하위 카테고리
 	
 	ProductModel model;
+	RegistForm registForm;
 	
 	public Product(AdminMain adminMain){
 		super(adminMain);
@@ -56,6 +58,7 @@ public class Product extends Page{
 		s1 = new JScrollPane(tree);
 		s2 = new JScrollPane(table);
 		bt_regist = new JButton("Regist");
+		registForm = new RegistForm(this);
 		
 		//스타일
 		bt_regist.setPreferredSize(new Dimension(150, 20));
@@ -79,7 +82,15 @@ public class Product extends Page{
 		tree.addTreeSelectionListener((e)->{
 			DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
 			//System.out.println(selectedNode);
-			getProductList(selectedNode.toString());
+			if(selectedNode.toString().equals("Product List")) {
+				getProductList(null);
+			}else {				
+				getProductList(selectedNode.toString());
+			} 
+		});
+		
+		bt_regist.addActionListener((e)->{
+			addRemoveContent(p_center, registForm);
 		});
 	}
 	//상위 카테고리 가져오기
@@ -173,6 +184,7 @@ public class Product extends Page{
 			while(rs.next()) {
 				ProductVO vo = new ProductVO();  //비어있는 vo를 생성해서 rs의 값들을 채워넣기 위해
 				
+				vo.setProduct_id(rs.getInt("product_id"));
 				vo.setSubcategory_id(rs.getInt("subcategory_id"));
 				vo.setProduct_name(rs.getString("product_name"));
 				vo.setBrand(rs.getString("brand"));
@@ -192,7 +204,13 @@ public class Product extends Page{
 		} finally {
 			getAdminMain().getDbManager().close(pstmt, rs);
 		}
-		
-		
 	}
+	
+	//보여질 컨텐트와 가려질 컨텐트를 제어하는 메서드
+	public void addRemoveContent(Component removeObj, Component addObj) {
+		this.remove(removeObj);  //제거될 자
+		this.add(addObj);  //부착될 자
+		((JPanel)addObj).updateUI();
+	}
+	
 }

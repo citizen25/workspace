@@ -1,0 +1,14 @@
+DROP TABLE shop_member;
+
+CREATE TABLE shop_member(
+	member_id number primary key
+	, mid varchar(20)
+	, pass varchar(20)
+	, name varchar(20)
+	, phone varchar(20)
+	, email varchar(20)
+);
+
+CREATE SEQUENCE seq_shop_member
+INCREMENT BY 1
+START WITH 1;
