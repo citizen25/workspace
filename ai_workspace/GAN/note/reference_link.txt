@@ -8,5 +8,6 @@ vanilla gan pytorch code
 https://debuggercafe.com/generating-mnist-digit-images-using-vanilla-gan-with-pytorch/
 
 
-이미지 데이터셋 넣는 방법
-https://ndb796.tistory.com/373
+
+Activation function 이론
+https://m.blog.naver.com/PostView.nhn?blogId=sw4r&logNo=221231763731&proxyReferer=https:%2F%2Fwww.google.com%2F
