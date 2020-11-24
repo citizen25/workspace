@@ -3,11 +3,17 @@ GAN의 개념 정리
 https://ratsgo.github.io/generative%20model/2017/12/21/gans/
 
 
-
 vanilla gan pytorch code
 https://debuggercafe.com/generating-mnist-digit-images-using-vanilla-gan-with-pytorch/
 
 
-
 Activation function 이론
 https://m.blog.naver.com/PostView.nhn?blogId=sw4r&logNo=221231763731&proxyReferer=https:%2F%2Fwww.google.com%2F
+
+
+성능 향상
+https://medium.com/curg/%EB%94%A5%EB%9F%AC%EB%8B%9D-%EC%84%B1%EB%8A%A5%EC%9D%84-%EB%86%92%EC%9D%B4%EA%B8%B0-%EC%9C%84%ED%95%9C-%EB%8B%A4%EC%96%91%ED%95%9C-%EA%BF%80%ED%8C%81%EB%93%A4-1910c6c7094a
+
+
+learning rate 줄이기 vs batch size 키우기
+https://honeyjamtech.tistory.com/43
