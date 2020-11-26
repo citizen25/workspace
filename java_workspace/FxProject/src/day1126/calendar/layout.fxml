@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.TilePane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+		<FlowPane id="flow" stylesheets="@base.css" alignment="CENTER" prefHeight="35" hgap="10">
+			<children>
+				<ChoiceBox fx:id="ch_yy"></ChoiceBox>
+				<ChoiceBox fx:id="ch_mm"></ChoiceBox>
+				<Button fx:id="bt" text="ok"></Button>
+			</children>
+		</FlowPane>
+	</top>
+	<center>
+		<TilePane fx:id="tilePane"></TilePane>
+	</center>
+</BorderPane>
+
