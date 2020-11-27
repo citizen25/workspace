@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.TilePane?>
+
+<BorderPane stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="day1127.youtube.MainUIController">
+	<left>
+		<VBox>
+			<TextField fx:id="t_url" promptText="Youtube URL..."></TextField>
+			<TextField fx:id="t_title" promptText="Your title..."></TextField>
+			<Button fx:id="bt" text="등록"></Button>
+		</VBox>
+	</left>
+	<center>
+		<TilePane fx:id="tilePane"></TilePane>
+	</center>
+</BorderPane>
+

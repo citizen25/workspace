@@ -39,6 +39,7 @@ public class CalendarApp extends Application{
 		getStartDayOfWeek();  //시작 요일 구하기
 		getLastDate();
 		
+		printData();
 		bt.setOnAction((e)->{
 			getStartDayOfWeek();  //시작 요일 구하기
 			getLastDate();  //마지막 일 구하기
@@ -111,6 +112,18 @@ public class CalendarApp extends Application{
 	public void printData() {
 		for(int i=0; i<box.length; i++) {
 			box[i].erase();
+		}
+		
+		//주의) 출력하기 전에 유저가 선택한 년, 월을 이용하여 startDyOfWeek, lastDate를 다시 구해야함
+		getStartDayOfWeek();
+		getLastDate();
+		
+		//각 월에 알맞은 데이터 출력
+		//반복문에서의 i의 역할은 날짜 출력이 아니라 단지 반복문의 횟수를 결정하기 위함이다
+		int n=1;  //1일부터 1씩 증가하며 출력될 날짜 출력용 변수
+		for(int i=startDayOfWeek-1; i<(startDayOfWeek-1)+lastDate; i++) {
+			box[i].renderText(Integer.toString(n));
+			n++;
 		}
 	}
 	

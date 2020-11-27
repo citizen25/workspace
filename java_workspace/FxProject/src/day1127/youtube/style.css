@@ -1,0 +1,9 @@
+VBox{
+	-fx-background-color:#ff0000;
+	-fx-alignment:top-center;
+	-fx-spacing:5;
+}
+
+VBox TextField{
+	-fx-pref-width:200;
+}
