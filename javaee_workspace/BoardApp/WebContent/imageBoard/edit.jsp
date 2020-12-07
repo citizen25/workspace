@@ -25,37 +25,49 @@
 	ServletFileUpload upload=new ServletFileUpload(itemFactory);
 	
 	//업로드된 정보 분석!!! 각각의 컴포넌트들을  FileItem 단위로 쪼갠다..
+	request.setCharacterEncoding("utf-8"); //다국어 인코딩
 	List<FileItem> items=upload.parseRequest(request);
 	
-	
 	ImageBoard board = new ImageBoard();//Empty상태의 VO 생성 
+	String filename="";
 	
 	for(FileItem item : items){
 		if(item.isFormField()){ //textfield 라면...db에 넣어야지
 			//vo 에 텍스트필드들의 값을 담자!!
-			if(item.getFieldName().equals("author")){//필드명이 author 라면...
+			if(item.getFieldName().equals("board_id")){//필드명이 board_id 라면...
+				board.setBoard_id(Integer.parseInt(item.getString()));
+			}if(item.getFieldName().equals("author")){//필드명이 author 라면...
 				board.setAuthor(item.getString());
 			}else if(item.getFieldName().equals("title")){//필드명이 title 라면...
 				board.setTitle(item.getString());
 			}else if(item.getFieldName().equals("content")){//필드명이 content 라면...
 				board.setContent(item.getString());
+			}else if(item.getFieldName().equals("filename")){//필드명이 filename 라면...
+				board.setFilename(item.getString());
+				filename=item.getString();//업로드 하지 않았을때도 기존 파일명을 유지하려고..
 			}
-		}else{ // textfield가 아니라면..업로드 처리
-			String newName=System.currentTimeMillis()+"."+FileManager.getExtend(item.getName());
-			String destFile = saveDir+"/"+newName;
-			File file = new File(destFile);
-			item.write(file);//물리적 저장 시점!!!	
-			
-			out.print("업로드 완료");
-			board.setFilename(newName);//vo 에 파일명 값을 담자!!
-			
+		}else{// textfield가 아니라면..업로드 처리
+			//out.println("업로드한 파일명:"+item.getName().length());
+			//사용자가 파일을 업로드 했다면..
+			if(item.getName().length()>0){ //파일을 교체한다면, 즉 업로드 하길 원한다면...
+				String newName=System.currentTimeMillis()+"."+FileManager.getExtend(item.getName());
+				String destFile = saveDir+"/"+newName;
+				File file = new File(destFile);
+				item.write(file);//물리적 저장 시점!!!	
+				//filename=newName;
+				board.setFilename(newName);//vo 에 파일명 값을 담자!!
+			}else{
+				break;
+			}
 		}
 	}
-	//반복문을 지나친 이 시점에는 VO에 데이터가 이미 채워진 상태일것이다!!
-	int result = dao.insert(board); //이 시점에는 채워진 VO를 원함!!
+
+
+	int result = dao.update(board); //이 시점에는 채워진 VO를 원함!!
 	if(result==0){
-		out.print(getMsgBack("등록실패"));
+		out.print(getMsgBack("수정실패"));
 	}else{
-		out.print(getMsgURL("등록성공", "/imageBoard/list.jsp"));
+		out.print(getMsgURL("수정성공", "/imageBoard/list.jsp"));
 	}
+	
 %>

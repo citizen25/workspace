@@ -1,13 +1,12 @@
-<%@page import="board.model.ImageBoard"%>
-<%@page import="board.model.ImageBoardDAO"%>
-<%@page import="board.model.Notice"%>
+<%@page import="board.model.QnA"%>
+<%@page import="board.model.QnADAO"%>
 <%@ page import="board.model.NoticeDAO"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ page import="java.sql.*"%>
 <%
-  String board_id = request.getParameter("board_id");
-  ImageBoardDAO boardDAO = new ImageBoardDAO();
-  ImageBoard board = boardDAO.select(Integer.parseInt(board_id));
+  String qna_id = request.getParameter("qna_id");
+  QnADAO qnaDAO = new QnADAO();
+  QnA qna = qnaDAO.select(Integer.parseInt(qna_id));
 %>
 <!DOCTYPE html>
 <html>
@@ -61,14 +60,14 @@ input[type=button]:hover {
 */
 $(function(){
 	$($("input[type='button']")[0]).click(function(){ //목록으로
-		location.href="/imageBoard/list.jsp";
+		location.href="/qna/list.jsp";
 	});
 	$($("input[type='button']")[1]).click(function(){//수정요청
 		if(confirm("수정하시겠습니까?")){			
 			$("form").attr({
 				method:"post"
 				, enctype: "multipart/form-data"
-				, action:"/imageBoard/edit.jsp"
+				, action:"/na/edit.jsp"
 			});
 			$("form").submit(); //전송행위!!!
 		}
@@ -90,20 +89,16 @@ $(function(){
 <body>
 <div class="container">
   <form>
-    <input type="hidden" value="<%=board.getBoard_id()%>" name="board_id">
+    <input type="hidden" value="<%=qna.getQna_id()%>" name="qna_id">
+    
     <label for="fname">Name</label>
-    <input type="text" id="fname" name="author" value="<%=board.getAuthor()%>">
+    <input type="text" id="fname" name="writer" value="<%=qna.getWriter()%>">
 
     <label for="lname">title</label>
-    <input type="text" id="lname" name="title" value="<%=board.getTitle()%>">
+    <input type="text" id="lname" name="title" value="<%=qna.getTitle()%>">
 
     <label for="subject">Content</label>
-    <textarea id="subject" name="content"  style="height:200px"><%=board.getContent()%></textarea>
-
-    <img src = "/data/<%=board.getFilename() %>" width="100px">
-    
-    <input type="hidden" name="filename" value="<%=board.getFilename() %>">
-    <input type="file" name="photo"> <!-- 이미지를 선택하면 이미지를 교체해야한다 -->
+    <textarea id="subject" name="content" style="height:200px"><%=qna.getContent()%></textarea>
     
 	<p>
     <input type="button" value="목록으로">

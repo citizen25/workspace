@@ -1,0 +1,66 @@
+--------------------------------------------------
+오라클 일경우
+--------------------------------------------------
+create table animal(
+idx number
+,category varchar(30)
+,name varchar(30)
+,rank number
+,primary key(idx)
+);
+
+create sequence seq_animal
+increment by 1
+start with 1;
+
+
+--------------------------------------------------
+MySQL 일 경우
+--------------------------------------------------
+create database db1202 default character set utf8;
+
+create table animal(
+idx int auto_increment
+,category varchar(30)
+,name varchar(30)
+,rank int
+,primary key(idx)
+) default character set utf8;
+
+
+
+--------------------------------------------------
+MySQL 용
+--------------------------------------------------
+insert into animal(category,name,rank) values('조류','참새',5);
+insert into animal(category,name,rank) values('포유류','고양이',3);
+insert into animal(category,name,rank) values('파충류','뱀',9);
+insert into animal(category,name,rank) values('어류','상어',12);
+insert into animal(category,name,rank) values('포유류','치타',2);
+insert into animal(category,name,rank) values('양서류','개구리',8);
+insert into animal(category,name,rank) values('파충류','도마뱀',4);
+insert into animal(category,name,rank) values('곤충','메뚜기',6);
+insert into animal(category,name,rank) values('양서류','맹꽁이',10);
+insert into animal(category,name,rank) values('조류','독수리',1);
+insert into animal(category,name,rank) values('어류','참치',11);
+insert into animal(category,name,rank) values('포유류','고래',7);
+
+
+--------------------------------------------------
+오라클 용
+--------------------------------------------------
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'조류','참새',5);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'포유류','고양이',3);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'파충류','뱀',9);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'어류','상어',12);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'포유류','치타',2);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'양서류','개구리',8);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'파충류','도마뱀',4);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'곤충','메뚜기',6);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'양서류','맹꽁이',10);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'조류','독수리',1);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'어류','참치',11);
+insert into animal(idx,category,name,rank) values(seq_animal.nextval,'포유류','고래',7);
+
+
+

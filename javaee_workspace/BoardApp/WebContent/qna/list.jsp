@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="board.model.QnA"%>
+<%@page import="board.model.QnADAO"%>
 <%@page import="board.model.ImageBoard"%>
 <%@page import="board.model.ImageBoardDAO"%>
 <%@page import="board.model.Notice"%>
@@ -9,8 +12,8 @@
 <%@ page import="java.sql.PreparedStatement"%>
 <%@ page import="java.sql.ResultSet"%>
 <%
-	ImageBoardDAO boardDAO = new ImageBoardDAO();
-	ArrayList<ImageBoard> list = boardDAO.selectAll();
+	QnADAO qnaDAO = new QnADAO();
+	List<QnA> list = qnaDAO.selectAll();
 %>
 <!DOCTYPE html>
 <html>
@@ -38,7 +41,7 @@ tr:nth-child(even) {
 $(function(){
   $("button").on("click", function(){
 	//자바스크립트에서 링크 구현은?
-	location.href = "/imageBoard/regist_form.jsp";
+	location.href = "/qna/regist_form.jsp";
   });
 });  //onload
 </script>
@@ -48,34 +51,32 @@ $(function(){
 <table>
   <tr>
     <th>No</th>
-    <th>이미지</th>
     <th>제목</th>
     <th>작성자</th>
     <th>등록일</th>
     <th>조회수</th>
   </tr>
   <%for(int i=0; i<list.size(); i++){%>
-  <%ImageBoard board = list.get(i);  //각 칸에 들어간 vo 끄집어내기 %>
+  <%QnA qna= list.get(i);  //각 칸에 들어간 vo 끄집어내기 %>
   <tr>
     <td>26</td>
-    <td><img src="/data/<%=board.getFilename() %>" width="50"></td>
     <td>
-	  <a href="/imageBoard/detail.jsp?board_id=<%=board.getBoard_id()%>">
-	    <%=board.getTitle()%>
+	  <a href="/qna/detail.jsp?qna_id=<%=qna.getQna_id()%>">
+	    <%=qna.getTitle()%>
 	  </a>
 	</td>
-    <td><%=board.getAuthor()%></td>
-    <td><%=board.getRegdate()%></td>
-    <td><%=board.getHit()%></td>
+    <td><%=qna.getWriter()%></td>
+    <td><%=qna.getRegdate()%></td>
+    <td><%=qna.getHit()%></td>
   </tr>
   <%}%>
   <tr>
-    <td colspan="6">
+    <td colspan="5">
 	  <button>글 등록</button>
     </td>
   </tr>
     <tr>
-    <td colspan="6" style="text-align:center">
+    <td colspan="5" style="text-align:center">
 	  <%@ include file="/inc/footer.jsp"%>
     </td>
   </tr>

@@ -1,9 +1,24 @@
+drop table imageboard;
+
 create table imageboard(
 	board_id int primary key auto_increment
 	, author varchar(20)
 	, title varchar(100)
 	, content text
+	, filename varchar(30)
 	, regdate timestamp default now()
 	, hit int default 0
-	, filename varchar(30)
+) default character set utf8;
+
+
+create table qna(
+	qna_id int primary key auto_increment
+	, writer varchar(20)
+	, title varchar(100)
+	, content text
+	, regdate timestamp default now()
+	, hit int default 0
+	, team int
+	, rank int default 0
+	, depth int default 0
 ) default character set utf8;
