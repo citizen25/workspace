@@ -25,12 +25,10 @@
 	QnADAO dao = new QnADAO();
 	int result = dao.insert(qna);  //1건 넣기
 	
-	/*
 	if(result == 0){
 		out.print(getMsgBack("등록 실패"));
 	}else{
 		out.print(getMsgURL("등록 성공", "/qna/list.jsp"));
 	}
-	*/
 	
 %>
