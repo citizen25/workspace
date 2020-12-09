@@ -22,3 +22,128 @@ create table qna(
 	, rank int default 0
 	, depth int default 0
 ) default character set utf8;
+
+
+
+
+----부모 테이블----
+create table news(
+	news_id int primary key auto_increment
+	, title varchar(100)
+	, writer varchar(20)
+	, content text
+	, regdate timestamp default now()
+	, hit int default 0
+) default character set utf8;
+
+----자식 테이블----
+create  table comments(
+   comments_id  int  primary key auto_increment 
+ , news_id int 
+ , author  varchar(20)
+ , cdate timestamp default now() 
+ , msg varchar(1000)
+ , constraint  fk_newscomments foreign key(news_id)  references  news(news_id)
+) default  character set utf8;
+
+
+
+
+조인의 종류는 크게 2가지가 있다
+1) inner join (부, 자 간 공통 컬럼을 통해 엮는다)
+	우리가 그동안 사용했던 조인이 inner join
+select t.topcategory_id, t.name, count(s.name) from topcategory t, subcategory s
+where t.topcategory_id = s.topcategory_id
+group by t.topcategory_id, t.name;
+--> 단점) 공통되지 않은 레코드는 누락됨
+
+
+2) outer join (부, 자간 공통컬럼 + 공통되지 않은 것까지 몽땅 가져옴)
+select 
+from news n left outer join comments c 
+on n.news_id = c.news_id;
+
+
+
+--뉴스와 댓글 게시판을 조인하여, 그룹화 시켜보자--
+select n.news_id, title, count(c.comments_id) 
+from news n, comments c
+where n.news_id=c.news_id
+group by n.news_id, n.title;
+
+
+select n.news_id, title, count(c.comments_id) 
+from news n left outer join comments c
+where n.news_id=c.news_id
+group by n.news_id, n.title;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------
+-- 기존 테이블 삭제
+--------------------------------------------------------------
+drop table dept;
+drop table emp;
+
+--------------------------------------------------------------
+-- 부서 테이블 생성/레코드 넣기
+--------------------------------------------------------------
+create table dept(
+deptno int primary key auto_increment
+,dname varchar(14)
+,loc varchar(13)
+);
+ 
+insert into dept(deptno,dname,loc) values(10,'ACCOUNTING','NEW YORK');
+insert into dept(deptno,dname,loc) values(20,'RESEARCH','DALLAS');
+insert into dept(deptno,dname,loc) values(30,'SALES','CHICAGO');
+insert into dept(deptno,dname,loc) values(40,'OPERATIONS','BOSTON');
+
+--------------------------------------------------------------
+-- 사원 테이블 생성/레코드 넣기
+--------------------------------------------------------------
+ 
+create table emp(
+empno int primary key auto_increment
+,ename varchar(10)     
+,job varchar(9)         
+,mgr int
+,hiredate timestamp
+,sal int
+,comm int
+,deptno int
+);
+
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7369,'SMITH','CLERK',7902,'80/12/17',800,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7499,'ALLEN','SALESMAN',7698,'81/02/20',1600,300,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7521,'WARD','SALESMAN',7698,'81/02/22',1250,500,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7566,'JONES','MANAGER',7839,'81/04/02',2975,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7654,'MARTIN','SALESMAN',7698,'81/09/28',1250,1400,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7698,'BLAKE','MANAGER',7839,'81/05/01',2850,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7782,'CLARK','MANAGER',7839,'81/06/09',2450,10);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7788,'SCOTT','ANALYST',7566,'87/04/19',3000,20);
+insert into emp(empno,ename,job,hiredate,sal,deptno) values(7839,'KING','PRESIDENT','81/11/17',5000,10);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7844,'TURNER','SALESMAN',7698,'81/09/08',1500,0,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7876,'ADAMS','CLERK',7788,'87/05/23',1100,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7900,'JAMES','CLERK',7698,'81/12/03',950,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7902,'FORD','ANALYST',7566,'81/12/03',3000,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7934,'MILLER','CLERK',7782,'82/01/23',1300,10);
+
+
+
+
+
