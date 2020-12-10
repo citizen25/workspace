@@ -1,0 +1,13 @@
+비동기 통신 : without reloading
+
+AJAX(Asynchronous Javacript And XML)
+	js와 xml(, json)을 활용한 비동기 통신
+
+
+1. 순수 js로 비동기 통신
+2. jquery로 비동기 통신
+
+동기 vs 비동기?
+	통신 방법에서
+	동기 : 순서가 있는 실행 방식
+	비동기 : 순서가 없는 실행 방식

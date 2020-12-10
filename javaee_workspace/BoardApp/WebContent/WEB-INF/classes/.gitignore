@@ -1,4 +1,4 @@
 /board/
-/mysql_query.txt
-/동물올림픽.txt
-/쇼핑쿼리스크립트.sql
+/common/
+/mybatis/
+/emp/
