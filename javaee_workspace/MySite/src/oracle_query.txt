@@ -1,0 +1,60 @@
+
+create table board(
+	board_id number primary key
+	, title varchar(100)
+	, writer varchar(20)
+	, content clob
+	, regdate date default sysdate
+	, hit number default 0
+	, filename varchar(50)
+);
+
+create sequence seq_board
+increment by 1
+start with 1;
+
+
+create table comments(
+	comments_id number primary key
+	, board_id number
+	, msg varchar(1000)
+	, author varchar(20)
+	, cdate date default sysdate
+	, constraint fk_boardcomments foreign key(board_id) references board(board_id)
+);
+
+create sequence seq_comments
+increment by 1
+start with 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create tablespace lastspace
+datafile 'C:\oraclexe\app\oracle\oradata\XE\lastspace.dbf'
+size 10M;
+
+create user lastuser
+identified by lastuser
+default tablespace lastspace
+quota unlimited on lastspace;
+
+grant create session, create table, create sequence to lastuser;
+
+
+
+
+
+
+
+

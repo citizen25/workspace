@@ -32,7 +32,7 @@ table{
 td{
 	border:1px solid #cccccc; 
 }
-a{text-decoration:none;}
+
 .pageNum{
 	font-size:20pt;
 	color:blue;

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.config.Dept">
+	<!-- namespace는 mapper를 구분하기 위한 것. 명명은 패키지명.매퍼명 으로 한다 -->
+	
+	<!--
+	개발자는 mybatis를 이용할 경우, java 코드에서 쿼리문을 작성하지 않으며
+	수많은 jdbc관련 코드 또한 작성할 필요가 없고, 오직 쿼리문에만 집중하면 된다
+	sql과 vo와의 자동 매칭 시켜주는 것 == mapper
+	질문) mapper 뭐 쓰셧어요? -> mybatis 썻어요
+	-->
+	
+	<!--모든글 가져오기-->
+	 <select id="selectAll" resultType="emp.model.Dept">
+	 	select * from dept order by deptno asc
+	 </select>
+	
+	<!--한건 가져오기-->
+	<select id="select" parameterType="int" resultType="emp.model.Dept">
+		select * from dept where deptno=#{deptno}
+	</select>
+	
+	<!-- 글등록 -->
+	<insert id="insert" parameterType="emp.model.Dept">
+		insert into dept(dname, loc) values(#{dname}, #{loc})
+	</insert>
+	
+	<!-- 한건 수정 --> 
+	<update id="update" parameterType="emp.model.Dept">
+		update  dept set dname=#{dname} , loc=#{loc} where deptno=#{deptno}
+	</update>
+			
+	<!-- 삭제하기 -->
+	<delete id="delete" parameterType="int">
+		delete from dept where deptno=#{deptno}
+	</delete>			
+</mapper>
