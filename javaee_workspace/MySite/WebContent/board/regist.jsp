@@ -1,3 +1,4 @@
+<%@page import="board.model.MybatisBoardDAO"%>
 <%@page import="board.model.BoardDAO"%>
 <%@page import="common.file.FileManager"%>
 <%@page import="board.model.Board"%>
@@ -32,7 +33,7 @@
 	
 	Board board = new Board();
 	boolean flag = false;  //upload가 완료되었는지 여부를 알려주는 flag
-	BoardDAO dao = new BoardDAO();
+	MybatisBoardDAO dao = new MybatisBoardDAO();
 	
 	for(FileItem item : items){
 		if(item.isFormField()){  //text 입력 기반의 component라면..

@@ -1,4 +1,13 @@
+<%@page import="board.model.Board"%>
+<%@page import="board.model.BoardDAO"%>
 <%@ page contentType="text/html;charset=utf-8"%>
+<%
+	//유저가 선택한 글의 pk 넘겨받기
+	int board_id = Integer.parseInt(request.getParameter("board_id"));
+	String filename = request.getParameter("filename");
+	BoardDAO dao = new BoardDAO();
+	Board board = dao.select(board_id);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,17 +54,29 @@ input[type=button]:hover {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(function(){
-		var bt_regist = $("input[type='button']")[0];
+		var bt_edit = $("input[type='button']")[0];  //수정
+		var bt_del = $("input[type='button']")[1];  //삭제
 		
-		$(bt_regist).click(function(){
-			regist();
+		$(bt_edit).click(function(){
+			edit();
+		});
+		$(bt_del).click(function(){
+			del();
 		});
 	});
 	
-	function regist(){
+	function edit(){
 		$("form").attr({
 			enctype:"multipart/form-data"
-			, action:"regist.jsp"
+			, action:"edit.jsp"
+			, method:"post"
+		});
+		$("form").submit();
+	}
+	
+	function del(){
+		$("form").attr({
+			action:"delete.jsp"
 			, method:"post"
 		});
 		$("form").submit();
@@ -66,15 +87,20 @@ input[type=button]:hover {
 </head>
 <body>
 
-	<h3>글 등록 폼</h3>
+	<h3>글 상세보기</h3>
 
 	<div class="container">
 		<form>
-			<input type="text" name="title" placeholder="Title..">
-			<input type="text" name="writer" placeholder="Writer..">
-			<textarea name="content" placeholder="Write something.." style="height: 200px"></textarea>
+			<input type="hidden" name="board_id" value="<%=board.getBoard_id() %>">
+			<input type="hidden" name="filename" value="<%=board.getFilename() %>">
+			
+			<input type="text" name="title" value="<%=board.getTitle()%>">
+			<input type="text" name="writer" value="<%=board.getWriter()%>">
+			<textarea name="content" style="height: 200px"><%=board.getContent()%></textarea>
+			
 			<input type="file" name="photo"><p>
-			<input type="button" value="글 등록">
+			<input type="button" value="수정">
+			<input type="button" value="삭제">
 			<input type="button" value="목록" onClick="location.href='list.jsp'">
 		</form>
 	</div>

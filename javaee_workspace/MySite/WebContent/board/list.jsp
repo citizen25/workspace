@@ -1,25 +1,17 @@
+<%@page import="board.model.MybatisBoardDAO"%>
+<%@page import="java.util.List"%>
+<%@page import="common.board.Pager"%>
 <%@page import="board.model.BoardDAO"%>
 <%@page import="board.model.Board"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%
-	BoardDAO boardDAO = new BoardDAO();
-	ArrayList<Board> list = new ArrayList<Board>();
-	list = (ArrayList<Board>)boardDAO.selectAll();
-	
-	int totalRecord = list.size();
-	int pageSize = 10;
-	int totalPage = (int)Math.ceil((float)totalRecord/pageSize);
-	int blockSize = 10; 	
-	int currentPage = 1;
-	if(request.getParameter("currentPage") != null){
-		currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	}
-	int firstPage = currentPage - (currentPage-1)%blockSize;
-	int lastPage = firstPage+(blockSize-1);
-	int curPos = (currentPage-1)*pageSize;
-	int num=totalRecord -  curPos;//
-	
+	MybatisBoardDAO dao = new MybatisBoardDAO();
+	Pager pager = new Pager();
+
+	List<Board> list = dao.selectAll();
+
+	pager.init(request, list);  //페이징 처리에 대한 계산
 %>
 
 <!DOCTYPE html>
@@ -70,14 +62,17 @@ tr:nth-child(even) {
 			<th>등록일</th>
 			<th>조회수</th>
 		</tr>
-		
-		<%for(int i=0; i<pageSize; i++){ %>
-		<%if(num<1)break; %>
+		<%
+			int num = pager.getNum(); 
+			int curPos = pager.getCurPos();
+		%>
+		<%for(int i=0; i<pager.getPageSize(); i++){ %>
+		<%if(num < 1) break; %>
 		<%Board board = list.get(curPos++); %>
 		<tr>
 			<td><%=num-- %></td>
-			<td><img src="<%=board.getFilename()%>"></td>
-			<td><%=board.getTitle() %></td>
+			<td><img src="/data/<%=board.getFilename()%>" width="50px"></td>
+			<td><a href="/board/detail.jsp?board_id=<%=board.getBoard_id()%>"><%=board.getTitle() %></a></td>
 			<td><%=board.getWriter() %></td>
 			<td><%=board.getRegdate().substring(0,10) %></td>
 			<td><%=board.getHit() %></td>
@@ -85,18 +80,20 @@ tr:nth-child(even) {
 		<%} %>
 		
 		<tr>
-			<td colspan="6" style="text-align:center">
-				<%for(int i=firstPage; i<=lastPage; i++){ %>
-				<%if(i>totalPage)break;%>
-				<a href="list.jsp?currentPage=<%=firstPage-1%>">◀</a>
-				<a href="list.jsp?currentPage=<%=i%>">[<%=i %>]</a>
-				<a href="list.jsp?currentPage=<%=lastPage+1%>">▶</a>
-				<%} %>
-			</td>
-		</tr>
-		<tr>
 			<td colspan="6">
 				<button onClick="location.href='regist_form.jsp'">글 등록</button>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td colspan="6" style="text-align:center">
+				<a href="list.jsp?currentPage=<%=pager.getFirstPage()-1%>">◀</a>
+				<%for(int i=pager.getFirstPage(); i<=pager.getLastPage(); i++){ %>
+				<%if(i > pager.getTotalPage()) break;%>
+				<a href="list.jsp?currentPage=<%=i%>">[<%=i %>]</a>
+				<%} %>
+				<a href="list.jsp?currentPage=<%=pager.getLastPage()+1%>">▶</a>
 			</td>
 		</tr>
 	</table>
