@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Notice">
+
+	<!-- 글쓰기, 모든글보기, 한건가져오기, 수정, 삭제 -->
+
+	<insert id="insert" parameterType="Notice">
+		insert into notice(title, writer, content)
+		values(#{title}, #{writer}, #{content})
+	</insert>
+	
+	
+	<!-- 한 건의 데이터를 Notice에 담고, Notice 여러개를 모아서 List로 자동으로 변환 -->
+	<select id="selectAll" resultType="Notice">
+		select * from notice order by notice_id desc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Notice">
+		select * from notice where notice_id=#{notice_id}
+	</select>
+
+
+	<update id="update" parameterType="Notice">
+		update notice set title=#{title}, writer=#{writer}, content=#{content}
+		where notice_id=#{notice_id}
+	</update>
+
+
+	<delete id="delete" parameterType="int">
+		delete from notice where notice_id=#{notice_id}
+	</delete>
+
+</mapper>

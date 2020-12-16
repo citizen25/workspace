@@ -1,0 +1,15 @@
+create database db1216;
+
+use db1216
+
+create table notice(
+	notice_id int primary key auto_increment
+	, title varchar(100)
+	, writer varchar(20)
+	, content text
+	, regdate timestamp default now()
+	, hit int default 0
+) default character set utf8;
+
+--테이블을 만들고나면 반드시 vo, dao를 만든다 (짝꿍)
+

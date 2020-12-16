@@ -1,0 +1,126 @@
+서블릿의 생명주기
+	개발자는 WEB-INF 밑의 classes folder에 servlet class 파일을 넣어둔다
+		이 때, 인스턴스가 생성된 것은 아니다
+		.class를 넣어놔도 메모리에 올라간 것이 아니다 == 생명주기 시작도 안했다
+	servlet의 가동은 브라우저로만 가능하다
+		localhost:9999/test하면 servlet이 생성되면서 request, response 객체가 고양이한테 붙는다
+
+	servlet이 태어나는 시점
+		최초의 요청이 있을 때, 고양이(Web container)에 의해 인스턴스가 메모리에 올라옴
+		인스턴스가 생성될 때, servlet으로써 가져야할 정보를 고양이에게 넘겨받을 수 있는데,
+		이때 사용되는 메서드가 init()이다.
+		즉, servlet은 태어날 때, 초기화 메서드에 의해 많은 정보를 가지게 됨
+
+	순서
+		개발자가 sevlet 코드를 server에 배포
+		웹브라우저에서 사용자(client)가 서버에 요청하면
+		처리를 위한 request, response 객체 생성
+			그리고 request와 response를 가지는 thread를 생성
+		고양이가 확인해서 servlet객체가 없으면 servlet객체를 생성하고 tomcat이 init() 호출
+		service()에서 tomcat이 생성한 무언가(?)가 로직 수행
+			get/post를 구분
+			doGet()/doPost()에서 처리하고 response를 고양이한테 반납
+		고양이는 sevlet이 준 response를 토대로 html content를 정리하고 client에게 보낸다
+		처리를 위해 쓰던 thread, request, response 객체는 자살
+		그리고 나서야 client에서는 응답을 받는다
+
+		다음 사람이 접속하면 이미 servlet이 생성되어있기 때문에 바로 service()부터 시작
+
+		서버를 끌 때, dist()가 호출
+
+
+	정리
+		server, client 존재
+		-> 개발자가 .class파일을 올려놓는다(이때는 인스턴스 없음)
+		-> 웹 브라우저에서 요청 들어오면 서버에는 request, response 객체가 만들어지고
+			동시에 thread1도 하나 생성된다 (여러사람이 써야하기 때문에 thread 생성)
+		-> 고양이는 .class파일을 new해서 Servlet을 태어나게 한다
+			(클라이언트의 수많은 요청을 받는 역할을 주기 위해)
+		-> new한 애한테 고양이는 init()으로써 자격을 주며 thread2로 만든다
+		-> new한 애가 service() 메서드를 가지고 있는데,
+			이 service()는 request, response 객체를 기다리는 중이다
+		-> 그래서 thread1은 request, response 객체를 가지고 service()로 간다
+		-> service()는 get인지, post인지, put인지, delete인지 확인하고
+			doXXX한테 전가한다
+		-> doXXX()는 열심히 요청을 처리해서 최종적으로 정리된 response 객체를 고양이한테 준다
+			(service 메서드의 역할이 끝난 것. 그러나 Servlet은 죽지 않는다)
+		-> 고양이는 응답을 바탕으로 html형식의 content를 생성해서 client한테 뿌리고 
+			응답, 요청, thread는 죽인다 and 네트워크 끊음
+		-> client는 고양이한테 받은 response를 사용자에게 보여준다
+
+-------------------------------------------------------------------------------------------------------------
+
+서블릿(Servlet)?
+	정의 : 오직 웹서버에서만 해석 및 실행될 수 있는 javaEE기반의 클래스
+	생명주기 : init(), service, destroy()
+		init() : 생성자 호출 후, 서블릿의 초기봐 작업 때문에 톰캣에 의해 호출
+		service() : 동시에 많은 클라이언트의 요청을 처리하는 메서드이고, 
+			동시에 호출되려면, 쓰레드에 의해 호출됨
+		destroy() : 서블릿 소멸시점에 호출
+			주로 서블릿이 보유했던 자원 등을 반납하는 용도에 사용
+
+
+-------------------------------------------------------------------------------------------------------------
+
+
+서블릿의 계보
+	HttpServlet(추상클래스) -> GenericServlet(추상클래스) -> Servlet(인터페이스)
+
+
+DD (Deployment Desciptor) : 배포 성명자, 서술자
+	한번 만들어진 웹 어플리케이션은 서버의 종류에 상관없이
+	javaEE 스펙을 준수한 서버라면 어디서건 실행된다
+	이때 해당 어플리케이션의 배포정보를 담고있는 설정파일을 DD라고 한다
+	반드시 두어야 한다
+
+
+jar (Java Archive) : 본의아니게 항아리가 되어버림. 자바 압출 파일
+war(Webapplication Archive)
+
+
+-------------------------------------------------------------------------------------------------------------
+
+
+서블릿 이용한 게시판
+
+최종목표 : MVC 패턴으로 어플리케이션을 개발하는 것임
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
