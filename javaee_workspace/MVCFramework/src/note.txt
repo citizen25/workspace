@@ -1,0 +1,38 @@
+Spring 만들어보기
+	개발 방법이론에 근거한 개발을 할 수 있어야 함
+		어떤 분야이건 개발 방법은 아래와 같이 크게 3가지 유형으로 분류된다
+			1. 막개발 (만드는게 목표) : 스크립트 기반의 개발 방식 (아기돼지 삼형제 - 지푸라기 집)
+				빠르게 만들 수 있다 (php, asp의 경우)
+				php, asp(웹에이전시) : 중, 소규모 홈페이지(소호몰, 음식점, 기업홍보)
+					디자인 중심, 웹마케팅, 온라인 홍보, 광고
+				jsp(SI) : 대규모.
+			2. model1 방식 : design(JSP), logic(DAO)이 분리. 그러나 jsp가 DAO를 handling하는 형태
+				controller와 view가 합쳐저 있다 (아기돼지 삼형제 - 나무 집)
+      3. model2 방식 : MVC. (아기돼지 삼형제 - 벽돌 집, 롯데리아, 맥도날드, 버거킹) 
+        controller가 design영역과 model을 중재한다				
+
+	우리만의 mvc framework을 제작
+    막개발(지푸라기) -> 모델1(나무) -> 모델2(벽돌) 순으로 만들어본다
+
+    최종
+      View - jsp  /  Model - class(DAO, VO)  /  Controller - class 중에서 Servlet
+
+
+    개발방법1) design, logic, controller가 합쳐진 상태로 개발하는 방법
+      장점 : 개발시간 단축
+      단점 : logic이 분리되어있지 않기 때문에 재사용성이 없다
+
+    개발방법2) logic을 분리시켜 개발하는 방법 (javaEE에서 Model1 방식이라 한다)
+      장점 : 공통 logic을 분리시켜, 다른 플렛폼에서도 사용할 수 있다
+      단점 : 여전히 jsp가 컨트롤러로서의 역할을 부담하고 있음
+        따라서 jsp 교체 시, 컨트롤러도 함께 교체되어버린다
+      결론) 완벽한 분리가 되지 않음
+
+    개발방법3) design, logic, controller를 완벽히 구분하는 방법
+      == M, V, C를 완벽히 구분하는 것 (MVC 패턴)
+      -> javaEE에서 mvc패턴을 적용한 개발방법을 Model2라 한다
+
+      로드 존슨이라는 사람이 model2를 기반으로 정리하고 만든 것이 Spring Framework
+
+
+
