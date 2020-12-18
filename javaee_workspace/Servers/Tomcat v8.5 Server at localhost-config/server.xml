@@ -110,7 +110,7 @@
 				<Context docBase="MySite" path="/MySite" reloadable="true" source="org.eclipse.jst.jee.server:MySite"/>
 				<Context docBase="ServletApp" path="/ServletApp" reloadable="true" source="org.eclipse.jst.jee.server:ServletApp"/>
 				<Context docBase="webapp1216" path="/webapp1216" reloadable="true" source="org.eclipse.jst.jee.server:webapp1216"/>
-			<Context docBase="MVCFramework" path="/" reloadable="true" source="org.eclipse.jst.jee.server:MVCFramework"/></Host>
+			<Context docBase="MVCFramework" path="/MVCFramework" reloadable="true" source="org.eclipse.jst.jee.server:MVCFramework"/><Context docBase="Model2App" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Model2App"/></Host>
 		</Engine>
 	</Service>
 </Server>
