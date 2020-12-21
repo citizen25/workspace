@@ -1,9 +1,11 @@
-<%@page import="com.model2.notice.domain.Notice"%>
+<%@page import="com.model2.domain.Notice"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%
 	//유저가 선택한 글의 pk 넘겨받기
 	//Notice notice = (Notice)session.getAttribute("notice");
 	Notice notice = (Notice)request.getAttribute("notice");
+
+	System.out.println(notice.getNotice_id());
 %>
 <!DOCTYPE html>
 <html>
@@ -66,15 +68,19 @@ input[type=button]:hover {
 		if(confirm("수정하시겠어요?")){
 			$("form").attr({
 				method:"post"
-				, action:"/board/edit"
+				, action:"/notice/edit.do"
 			});
-			$("form").submit();			
+			$("form").submit();
 		}
 	}
 	
 	function del(){
 		if(confirm("삭제하시겠어요?")){
-			location.href = "/board/delete?notice_id=<%=notice.getNotice_id()%>";		
+			$("form").attr({
+				method:"get"
+				, action:"/notice/delete.do"
+			});
+			$("form").submit();		
 		}
 	}
 

@@ -29,4 +29,10 @@ public class TestController implements Controller {
 			//파일명이 하드코딩되어있다
 	}
 
+	@Override
+	public boolean isForward() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -23,7 +23,7 @@ public class ListController implements Controller {
 		
 		//4단계: client가 봐야할 결과가 있다면, 결과 저장
 		//그래야 DispatcherServlet controller가 사용할 수 있다
-		HttpSession session = request.getSession();
+		//HttpSession session = request.getSession();
 		//session.setAttribute("noticeList", list);
 		request.setAttribute("noticeList", list);
 	}

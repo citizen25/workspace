@@ -15,4 +15,13 @@
 		select * from notice where notice_id=#{notice_id}
 	</select>
 	
+	<update id="update" parameterType="Notice">
+		update notice set title=#{title}, writer=#{writer}, content=#{content}
+		where notice_id=#{notice_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from notice where notice_id=#{notice_id}
+	</delete>
+	
 </mapper>

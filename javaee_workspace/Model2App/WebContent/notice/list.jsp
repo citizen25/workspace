@@ -1,4 +1,4 @@
-<%@page import="com.model2.notice.domain.Notice"%>
+<%@page import="com.model2.domain.Notice"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@page import="common.board.Pager"%>
 <%@page import="java.util.List"%>
@@ -79,14 +79,14 @@ tr:nth-child(even) {
 		<%} %>
 		
 		<tr>
-			<td colspan="6">
+			<td colspan="5">
 				<button onClick="location.href='regist_form.jsp'">글 등록</button>
 			</td>
 		</tr>
 		
 		
 		<tr>
-			<td colspan="6" style="text-align:center">
+			<td colspan="5" style="text-align:center">
 				<a href="list.do?currentPage=<%=pager.getFirstPage()-1%>">◀</a>
 				<%for(int i=pager.getFirstPage(); i<=pager.getLastPage(); i++){ %>
 				<%if(i > pager.getTotalPage()) break;%>

@@ -1,0 +1,19 @@
+create table board(
+	board_id int primary key auto_increment
+	, title varchar(100)
+	, writer varchar(20)
+	, content text
+	, regdate timestamp default now()
+	, hit int default 0
+) default character set utf8;
+
+create table comment(
+	comment_id int primary key auto_increment
+	, board_id int
+	, msg varchar(1000)
+	, author varchar(20)
+	, cdate timestamp default now()
+	, constraint fk_boardcomment foreign key(board_id) references board(board_id)
+) default character set utf8;
+
+

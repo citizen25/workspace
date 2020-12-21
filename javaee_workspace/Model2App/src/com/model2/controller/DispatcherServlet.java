@@ -39,7 +39,6 @@ public class DispatcherServlet extends HttpServlet {
 			controllerMap = (JSONObject)json.get("controller");
 			viewMap = (JSONObject)json.get("view");
 			
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -64,6 +63,7 @@ public class DispatcherServlet extends HttpServlet {
 		
 		//----2단계 : 요청을 분석한다----
 		String uri = request.getRequestURI();  //client가 요청 시 사용한 uri자체가 요청의 구분값으로 사용될 수 있다
+		System.out.println("uri : " + uri);
 		
 		//if문을 대신할 "구조화"된 데이터를 선택하자(xml, json, properties) -> 오늘은 json으로
 		String controllerName = (String)controllerMap.get(uri);
@@ -87,7 +87,20 @@ public class DispatcherServlet extends HttpServlet {
 		controller.execute(request, response);
 		//하위 controller로부터 넘겨받은 view에 대한 정보를 이용하여 client에 알맞는 view를 보여주자
 		String resultKey = controller.getResultView();
+		String resultParameter = "";
 		System.out.println("동생 controller에게 넘겨받은 키 값은 " + resultKey);
+		
+		System.out.println("indexOf : " + resultKey.indexOf("?"));
+		System.out.println("length : " + resultKey.length());
+ 		
+		if(resultKey.indexOf("?") != -1) {			
+			String convertedKey = resultKey.substring(0, resultKey.indexOf("?"));
+			resultParameter = resultKey.substring(resultKey.indexOf("?"), resultKey.length());
+			System.out.println(resultKey);
+			System.out.println(resultParameter);
+			resultKey = convertedKey;
+		}
+		
 		
 		//동생 controller로부터 넘겨받은 key값을 이용하여 실제 페이지를 검색하고,
 		//그 결과를 이용하여 client가 보게될 페이지를 보여주자
@@ -97,11 +110,11 @@ public class DispatcherServlet extends HttpServlet {
 		//때로는 forwarding 처리해야할 경우가 있다 (데이터를 유지하고 싶을 때)
 		if(controller.isForward()) {  //데이터 유지할 때
 			RequestDispatcher dis = request.getRequestDispatcher(viewPage);
-			dis.forward(request, response);  //응답 없이, 서버 상의 또 다른 자원으로 요청을 전달			
+			dis.forward(request, response);  //응답 없이, 서버 상의 또 다른 자원으로 요청을 전달
 		} else {  //client로 하여금 새롭게 접속을 시도하게할 경우
-			response.sendRedirect(viewPage);			
+			System.out.println(viewPage + resultParameter);
+			response.sendRedirect(viewPage + resultParameter);
 		}
-		
 
 	}
 
