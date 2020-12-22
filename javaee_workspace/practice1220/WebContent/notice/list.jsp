@@ -1,4 +1,4 @@
-<%@page import="com.model2.domain.Notice"%>
+<%@page import="com.model2.notice.domain.Notice"%>
 <%@page import="common.board.Pager"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>

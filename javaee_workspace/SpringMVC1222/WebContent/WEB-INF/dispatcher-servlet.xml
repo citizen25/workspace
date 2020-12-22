@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 어떤 controller가 request를 처리할지에 대한 정보를 작성하지 않아도 된다!! 
+		가능한 이유? 개발자가 controller에 대한 정보를 아무것도 작성하지 않으면,
+		DefaultAnnotationHandlerMapping 객체가 적용됨 
+	-->
+	
+	<!-- 지정한 url에 어떤 controller가 일하게 될지를 결정하는 mapping 방식 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="alwaysUseFullPath" value="true"></property>
+		<property name="mappings">
+			<props>
+				<prop key="/hello">testController</prop>
+				<prop key="/board/list">listController</prop>
+				<prop key="/board/regist">registController</prop>
+				<prop key="/board/detail">detailController</prop>
+				<prop key="/board/edit">editController</prop>
+				<prop key="/board/delete">deleteController</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="testController" class="com.springmvc.test.controller.TestController"/>
+	<bean id="listController" class="com.springmvc.board.controller.ListController"/>
+	<bean id="registController" class="com.springmvc.board.controller.RegistController"/>
+	<bean id="detailController" class="com.springmvc.board.controller.DetailController"/>
+	<bean id="editController" class="com.springmvc.board.controller.EditController"/>
+	<bean id="deleteController" class="com.springmvc.board.controller.DeleteController"/>
+	
+	<!-- 뷰매핑 : view mapping -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+</beans>

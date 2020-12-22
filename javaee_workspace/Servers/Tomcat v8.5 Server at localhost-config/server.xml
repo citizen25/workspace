@@ -108,9 +108,7 @@
 
 				
 				
-				
-				
-			<Context docBase="Model2App" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Model2App"/><Context docBase="practice1220" path="/a" reloadable="true" source="org.eclipse.jst.jee.server:practice1220"/></Host>
+			<Context docBase="Model2App" path="/Model2App" reloadable="true" source="org.eclipse.jst.jee.server:Model2App"/><Context docBase="SpringMVC1222" path="/" reloadable="true" source="org.eclipse.jst.jee.server:SpringMVC1222"/></Host>
 		</Engine>
 	</Service>
 </Server>
