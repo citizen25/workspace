@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ViewResolver 등록 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/" p:suffix=".jsp"/>
+	
+	<!-- 	<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean> -->
+
+	<!-- 하위 controller를 선택하기 위한 HandlerMapping 등록 (SimpleUrlHandlerMapping) -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<!-- alwaysUseFullPath이란? /notice/board 같은 전체 경로 -->
+		<property name="alwaysUseFullPath" value="true"/>
+		<property name="mappings">
+			<props>
+				<prop key="/board/list">listController</prop>
+				<prop key="/board/regist">registController</prop>
+				<prop key="/board/detail">detailController</prop>
+				<prop key="/board/delete">deleteController</prop>
+				<prop key="/board/edit">editController</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- MybatisConfigManager 등록 -->
+	<bean id="mybatisConfigManager" class="com.model2.mybatis.config.MybatisConfigManager" factory-method="getInstance"/>
+	
+	
+	<!-- DAO 등록 -->
+	<bean id="boardDAO" class="com.model2.board.model.BoardDAO">
+		<property name="manager" ref="mybatisConfigManager"></property>
+	</bean>
+	
+	
+	<!-- controller 등록 -->
+	<bean id="listController" class="com.springmvc.board.controller.ListController">
+		<!-- sts에서는 setter를 정의한 경우, 자동으로 변수가 뜬다 -->
+		<property name="boardDAO" ref="boardDAO"/>
+	</bean>
+	<bean id="registController" class="com.springmvc.board.controller.RegistController" p:boardDAO-ref="boardDAO"/>
+	<bean id="detailController" class="com.springmvc.board.controller.DetailController" p:boardDAO-ref="boardDAO"/>
+	<bean id="deleteController" class="com.springmvc.board.controller.DeleteController" p:boardDAO-ref="boardDAO"/>
+	<bean id="editController" class="com.springmvc.board.controller.EditController" p:boardDAO-ref="boardDAO"/>	
+
+</beans>

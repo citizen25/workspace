@@ -1,0 +1,41 @@
+Spring의 탄생 배경
+	javaEE 개발 시 사용해왔던 EJB의 복잡성 때문에
+	EJB와 다른 점?
+		순수한 java class와 각종 개발 패턴을 적용하면 EJB와 동일한 기능을 구현할 수 있다
+		로드 존슨이 자신만의 framework을 만들어 증명함
+
+Spring의 특징
+	Spring을 지배하는 두 가지 개발 원리
+		DI (Dependency InjectIon)
+			의존성 있는 객체는 외부에서 주입한다
+		AOP (Aspect Oriented Programming) - 관점 지향 프로그래밍
+
+전자 정부 Framework
+	대한민국 정부에서 공식 framework으로 Spring을 선택
+		현재 version4 --> version5 슬슬 넘어가는 중
+
+Spring MVC
+------------------------------------------------------------------------------------------------------------
+
+최종적인 eclipse 설정
+	STS 사용 X
+	
+	1) Spring 가장 최신 12월 버전 (Spring 상관 없음) javaEE 다운로드
+	2) STS4 설치
+	3) STS3 Add on for STS4
+
+	marketplace
+`		sts 검색
+		Spring Tools 4  설치
+		Spring Tools 3 Add-On for Spring Tools 4 설치
+
+
+----------------------------------------------------------------------------------------------------------
+
+처음 환경 만들 때
+	pom.xml에 필요한 것들 maven에서 가져오기
+	project facet에서 runtime에 tomcat 추가
+	server.xml, context.xml에서 jndi 관련 세팅
+	WEB-INF/dispatcher-servlet.xml 만들기
+	
+
