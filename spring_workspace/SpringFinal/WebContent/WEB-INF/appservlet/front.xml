@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 
+		1) SimpleUrlHandlerMapping
+		2) BeanNameUrlHandlerMapping
+		3) DefaultAnnotationHanderMapping (상위 버전으로 갈 수록 이 방식이 주로 사용됨)
+			스프링 설정 파일의 간소화를 목표로 하기 때문 -> 따라서 Spring Boot가 나온 것이다
+			특히, 개발자가 HandlerMapping을 지정하지 않으면 기본이 DefaultAnnotationHanderMapping이다
+			특징) 설정파일을 간소화시키기 위해 주로 jdk5부터 사용가능한 @annotation을 이용한다
+	 -->
+	 
+	 <bean id="handlerMapping" 
+	 	class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+
+	<!-- 등록 -->
+	<!-- <bean id="testController"
+		class="com.study.springfinal.test.controller.TestController"></bean>
+	<bean id="galleryController"
+		class="com.study.springfinal.gallery.controller.GalleryController"></bean>
+ 	-->
+
+ 	<!-- @어노테이션이 붙은 클래스를 모두 검색해서, spring에서 instance를 자동으로 올리자 -->
+ 	<context:component-scan base-package="com.study.springfinal.*">
+ 	</context:component-scan>
+ 	
+ 	<!-- 설정 파일을 간소화시키기 위해, 컴포넌트를 자동으로 생성하기위한 scan을 시도하고 있다
+ 		하지만, bean태그를 작성하지 않으면, bean과 bean 간의 weaving(엮는 작업)이 불가능해진다
+ 		해결책) java code 안의 annotation을 적극 활용하면 된다 -->
+
+	<!-- 파일 업로드 처리 bean 등록 -->
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+
+	<!-- ViewResolver 등록 -->
+	<bean id="viewResolver" 
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/"
+		p:suffix=".jsp"/>
+
+
+</beans>

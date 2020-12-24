@@ -1,0 +1,166 @@
+오라클 연동
+SpringMVC mapping을 Annotation 기반으로
+mybatis join
+	1) collection 방식 : 부모 객체가 자식 객체를 집합형으로 보유한 형태
+	2) association 방식 : 자식 객체가 부모 객체를 1:1 관계로 참조하는 형태
+	
+Spring 파일 업로드
+
+SpringFinal -> 쇼핑몰
+
+[SpringFinal Project]
+1) Dynamic Web Project 생성
+	- 반드시 DD를 생성해야한다
+
+2) Spring 설치
+	- Maven project로 convert
+	- 알맞는 버전 Spring Maven 링크를 pom.xml Dependencies 태그에 넣기
+
+3) 드라이버 설치 : Oracle은 오픈소스가 아니기때문에 pom.xml로 해결 불가 -> 
+	- C:\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib\ojdbc6.jar 복사
+	- WEB-INF\lib에 붙여넣기
+		WEB-INF/lib의 의미?
+			Tomcat이 jar의 위치를 알고 있어서, jsp, servlet 실행 시 위치를 알 수 있다
+			But, 컴파일러는 위치를 모르므로, 혹여 자바코드에서 jdbc를 제어할 때, 위치에러가 발생한다면,
+			컴파일러도 알 수 있도록 classpath에 등록
+
+4) mybatis 설치 (pom.xml)
+	- Maven Repository에서 Spring4.x에 맞는 mybatis 설치 (v3.4.6)
+
+5) Tomcat에 배포 (server에 추가)
+	- 맨날 하던거 (add하고 /로 edit)
+
+6) Spring Context 관련 설정 (web.xml)
+	- web.xml에 servlet관련 tag 작성
+		servlet(servlet-name, servlet-class), servlet-mapping(servlet-name, servlet)
+	- servlet 설정 파일 위치 명시하기 (contextConfigLocation)
+		init-param(param-name, param-value)
+
+7) 해당 경로에 Spring Bean Configuration File 추가
+	- HandelerMapping bean으로 생성하는 tag 작성 (이번에는 DefaultAnnotationHanderMapping로 한다)
+
+8) Controller를 생성하고 작성
+	- package 명명법 : 회사도메인.회사이름.프로젝트명.컨텐츠.종류
+	- DefaultAnnotationHanderMapping이기 때문에 @annotation을 작성한다
+		ex) @Controller, @RequestMapping(value="/hi", method=RequestMothod.GET), ...
+	- ModelAndView 만들어서 setViewName하고 mav 반환 (상황따라 다름)
+
+9) ViewResolver 등록 (bean 설정 파일에)
+	- key값을 재조합, 해독해줄 ViewResolver bean으로 생성
+	- InternalResourceViewResolver 사용한다
+		property로 prefix, suffix를 준다
+
+10) database 설정 (context.xml, server.xml)
+	- context.xml : ResourceLink 태그
+		태그 안 속성 중, name, global 설정 (혹시 모르니, 사용 중인 ResourceLink를 위로 올리자)
+	- server.xml : Resource 태그
+		name, driverClassName, url, username, password를 알맞게 변경
+
+11) 테이블 생성하고 VO 만들기
+
+12) mybatis를 사용하기 위한 mapper 만들기
+	- mybatis 전용 xml을 만들어야 하는데, plugin이 없다면, mybatise, mybais generator 설치한다
+	- Mybatis XML Mapper 만들기 : mapper라는 package에 (ex. com.study.springfinal.mabatis.mapper)
+		Mapper는 table의 수대로 만드는 것
+	- Mybatis Generator Configuration File
+		mapper 태그 : resource로 해당 mapper 명시
+		typeAlias태그 : 보통 VO의 이름으로 줌. mapper의 namespace를 간단하게 바꿔줌
+	
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+sqlplus system/1234
+
+create tablespace shopspace
+datafile 'C:\oraclexe\app\oracle\oradata\XE\shopspace.dbf' size 5M;
+
+create user shop
+identified by shop
+default tablespace shopspace
+quota unlimited on shopspace;
+
+grant create table, create sequence, create session to shop;
+
+conn shop/shop
+
+create table dept(
+deptno number 
+,dname varchar2(14)
+,loc varchar2(13)
+,primary key(deptno)
+);
+
+create table emp(
+empno number 
+,ename varchar2(10)     
+,job varchar2(9)         
+,mgr number
+,hiredate date
+,sal number
+,comm number
+,deptno number
+,primary key(empno)
+);
+
+insert into dept(deptno,dname,loc) values(10,'ACCOUNTING','NEW YORK');
+insert into dept(deptno,dname,loc) values(20,'RESEARCH','DALLAS');
+insert into dept(deptno,dname,loc) values(30,'SALES','CHICAGO');
+insert into dept(deptno,dname,loc) values(40,'OPERATIONS','BOSTON');
+
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7369,'SMITH','CLERK',7902,'80/12/17',800,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7499,'ALLEN','SALESMAN',7698,'81/02/20',1600,300,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7521,'WARD','SALESMAN',7698,'81/02/22',1250,500,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7566,'JONES','MANAGER',7839,'81/04/02',2975,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7654,'MARTIN','SALESMAN',7698,'81/09/28',1250,1400,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7698,'BLAKE','MANAGER',7839,'81/05/01',2850,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7782,'CLARK','MANAGER',7839,'81/06/09',2450,10);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7788,'SCOTT','ANALYST',7566,'87/04/19',3000,20);
+insert into emp(empno,ename,job,hiredate,sal,deptno) values(7839,'KING','PRESIDENT','81/11/17',5000,10);
+insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7844,'TURNER','SALESMAN',7698,'81/09/08',1500,0,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7876,'ADAMS','CLERK',7788,'87/05/23',1100,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7900,'JAMES','CLERK',7698,'81/12/03',950,30);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7902,'FORD','ANALYST',7566,'81/12/03',3000,20);
+insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7934,'MILLER','CLERK',7782,'82/01/23',1300,10); 
+
+
+set line 200
+set pagesize 100
+
+
+select *
+from dept d, emp e
+where d.deptno=e.deptno;
+
+
+
+create table gallery(
+	gallery_id number primary key
+	, title varchar(100)
+	, writer varchar(20)
+	, content clob
+	, regdate date default sysdate
+	, hit number default 0
+);
+
+alter table gallery
+ad filename varchar(50);
+
+create sequence seq_gallery
+increment by 1
+start with 1;
+
+
+
+
+
+
+
+
+
+
