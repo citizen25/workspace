@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.koreait.mylegacy.exception.RegistException;
 import com.koreait.mylegacy.mabatis.config.MybatisConfigManager;
 import com.koreait.mylegacy.model.dao.MybatisDeptDAO;
 import com.koreait.mylegacy.model.dao.MybatisEmpDAO;
@@ -38,12 +39,18 @@ public class MybatisEmpService {
 		int result = 0;
 		//일 시키지 전에 SqlSession 배분
 		SqlSession sqlSession = manager.getSqlSession();  //commit default가 false
-
 		mybatisEmpDAO.setSqlSession(sqlSession);
 		mybatisDeptDAO.setSqlSession(sqlSession);
-		
-		result = mybatisEmpDAO.insert(emp);  //트랜잭션 대상
-		result = mybatisDeptDAO.insert(emp.getDept());  //트랜잭션 대상
+
+		//아래의 두 DML 메서드를 트랜잭션 대상으로 commit/rollback
+		try {
+			result = mybatisEmpDAO.insert(emp);  //트랜잭션 대상
+			result = mybatisDeptDAO.insert(emp.getDept());  //트랜잭션 대상
+			sqlSession.commit();
+		} catch (RegistException e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
 		
 		manager.close(sqlSession);
 		return result;

@@ -1,0 +1,47 @@
+[legacy project 만들기]
+	ctrl n -> spring의 legacy project 생성 -> spring mvc 선택 후, default 패키지 명 설정
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+web.xml에 dispatcher servlet을 두개 이상 둘 수 있다.
+	ex) 관리자용 dispatcher 하나, client용 dispatcher 하나 등으로 사용할 수 있다
+		/admin/*, /client/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

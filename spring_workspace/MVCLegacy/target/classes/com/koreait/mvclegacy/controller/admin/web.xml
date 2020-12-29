@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>TomcatApp</display-name>
+	<!-- servlet이 client의 요청을 밭기 이전 시점에, 개발자가 무언가 할 일이 있다면? tomcat이 가동되는 타이밍에 
+		동작할수 있는 javaEE에서 지원하는 interface가 있다 ServletContextListener -->
+	<!-- 개발자는 application이 시작도리 때 사용하고픈 listener를 등록하면 됨 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>MemberService</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>test.MyContextListener</listener-class>
+	</listener>
+</web-app>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		
+	<!-- Spring이 지원하는 데이터 연동 기술에서의 핵심은 transaction에 있다
+		따라서 jndi나 데이터 소스의 취득은 다른 어떤 기술보다도 Spring이 주도해야한다 -->	
+	<jee:jndi-lookup 
+		id="dataSource" 
+		jndi-name="jdbc/oracle" 
+		resource-ref="true"/>
+	
+	<!-- 개발자가 사용하고자 하는 DB연동 기술에 알맞는 트랜잭션 매니저 등록 -->
+	<bean id="dataSourceTransactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 기존 순수 Mybatis에서 사용하던 객체들과 크게 달라지지는 않았음
+		기존 Mybatis와 동일하에 Factory로부터 쿼리 수행 객체를 얻어와야 하므로, 
+		SqlSessionFactoryBean을 먼저 spring에 등록하자 -->
+	<bean id="sqlSessionFactoryBean" 
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:com/koreait/mvclegacy/mybatis/config/config.xml"/>
+	</bean>
+	
+	<!-- 실제 쿼리문을 수행하는 SqlSessionTemplate 등록 -->
+	<!-- 이 객체를 우리가 정의한 DAO가 주입받으면 된다. Spring이 알아서 주입시켜준다 -->
+	<bean id="sqlSessionTemplate" 
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean"/>
+	</bean>
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:component-scan base-package="com.koreait.mvclegacy">
+		<!-- 모든 것을 올리되, controller라 불리는 자료형을 모두 제외 -->
+		<context:exclude-filter type="annotation" expression="com.koreait.mvclegacy.controller"/>
+		<!-- 모든 컨트롤러 제외시키는 tip -->
+		<!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> -->
+	</context:component-scan>
+
+</beans>

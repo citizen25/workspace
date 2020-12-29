@@ -57,7 +57,7 @@ public class EmpController {
 		//service에게 사원 등록 요청
 		emp.setDept(dept);  //emp와 dept를 합체
 
-		int result = empService.regist(emp);
+		int result = mybatisEmpService.regist(emp);
 		logger.debug("등록 결과 : " + result);
 
 		return "redirect:/emp/list";  //재접
@@ -71,7 +71,7 @@ public class EmpController {
 
 		//3단계 : 일 시킨다
 		List empList = mybatisEmpService.selectAll();
-		logger.debug("empList : "  + empList);
+		//logger.debug("empList : "  + empList);
 		
 		//4단꼐 : 저장
 		mav.addObject("empList", empList);
