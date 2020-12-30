@@ -46,7 +46,7 @@
 			and responses are returned. Documentation at : Java HTTP Connector: /docs/config/http.html 
 			Java AJP Connector: /docs/config/ajp.html APR (HTTP/AJP) Connector: /docs/apr.html 
 			Define a non-SSL/TLS HTTP/1.1 Connector on port 9090 -->
-		<Connector connectionTimeout="20000" port="7777" protocol="HTTP/1.1" redirectPort="8443"/>
+		<Connector connectionTimeout="20000" port="8888" protocol="HTTP/1.1" redirectPort="8443"/>
 		<!-- A "Connector" using the shared thread pool -->
 		<!-- <Connector executor="tomcatThreadPool" port="9090" protocol="HTTP/1.1" 
 			connectionTimeout="20000" redirectPort="8443" /> -->
@@ -98,7 +98,7 @@
 
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-			<Context docBase="SpringApp1223" path="/SpringApp1223" reloadable="true" source="org.eclipse.jst.jee.server:SpringApp1223"/><Context docBase="AOPProject" path="/AOPProject" reloadable="true" source="org.eclipse.jst.jee.server:AOPProject"/><Context docBase="SpringFinal" path="/SpringFinal" reloadable="true" source="org.eclipse.jst.jee.server:SpringFinal"/><Context docBase="MyLegacy" path="/MyLegacy" reloadable="true" source="org.eclipse.jst.jee.server:MyLegacy"/><Context docBase="MVCLegacy" path="/" reloadable="true" source="org.eclipse.jst.jee.server:MVCLegacy"/><Context docBase="TomcatApp" path="/TomcatApp" reloadable="true" source="org.eclipse.jst.jee.server:TomcatApp"/></Host>
+			<Context docBase="FashionShop" path="/" reloadable="true" source="org.eclipse.jst.jee.server:FashionShop"/></Host>
 		</Engine>
 	</Service>
 </Server>

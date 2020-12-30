@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +32,7 @@ public class NoticeController {
 	//글 등록 요청 처리
 	@RequestMapping(value="/notice/regist", method=RequestMethod.POST)
 	public String regist(Notice notice) {  //Spring에서는 vo의 멤버변수와 html의 파라미터명이 같으면 자동으로 데이터값이 vo에 채워진다
-		noticeService.insert(notice);
+		noticeService.insert(notice);  //여기서 예외가 발생하면, 실행부는 아래 명시한 예외 핸들러 메서드를 호출
 		return "redirect:/client/notice/list";
 	}
 
@@ -78,6 +80,22 @@ public class NoticeController {
 		return "redirect:/client/notice/list";
 	}
 	
+	//Spring controller의 요청 처리 메서드 중, 어느 하나라도 예외가 발생하면
+	//그 예외를 처리할 수 있는 별도의 메서드가 지원된다
+	//에러가 발생하면 event를 잡아낸다 -> 에러를 모아서 처리할 수 있따
+	//Annotation에 명시한 예외만 감지하여 처리한다
+	@ExceptionHandler(DMLException.class)
+	public ModelAndView handlerException(DMLException e) {
+		ModelAndView mav = new ModelAndView();
+		
+		//어떤 내용을 담을지? 에러 메세지를 담자
+		mav.addObject("msg", e.getMessage());
+		
+		//어느 페이지를 보여줄지? message/result.jsp
+		mav.setViewName("message/result");
+		
+		return mav;
+	}
 	
 
 }
