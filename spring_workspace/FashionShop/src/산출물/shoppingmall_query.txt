@@ -99,3 +99,32 @@ start with 1;
 
 
 
+insert into topcategory(topcategory_id, name, rank) values(seq_topcategory.nextval, 'topwear', 1);
+insert into topcategory(topcategory_id, name, rank) values(seq_topcategory.nextval, 'down wear', 2);
+insert into topcategory(topcategory_id, name, rank) values(seq_topcategory.nextval, 'accessory', 3);
+insert into topcategory(topcategory_id, name, rank) values(seq_topcategory.nextval, 'shoes', 4);
+
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 1, '가디건');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 1, '티셔츠');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 1, '점퍼');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 1, '니트');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 2, '청바지');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 2, '반바지');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 2, '면바지');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 2, '정장바지');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 3, '귀걸이');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 3, '목걸이');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 3, '팔찌');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 3, '반지');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 4, '운동화');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 4, '구두');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 4, '샌들');
+insert into subcategory(subcategory_id, topcategory_id, name) values(seq_subcategory.nextval, 4, '슬리퍼');
+
+
+
+
+
+
+
+
