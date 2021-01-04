@@ -1,8 +1,11 @@
 package com.koreait.fashionshop.controller.admin;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.common.FileManager;
@@ -22,7 +26,7 @@ import com.koreait.fashionshop.model.product.service.TopCategoryService;
 
 //관리자 모드에서의 상품에 대한 요청 처리
 @Controller
-public class ProductController {
+public class ProductController implements ServletContextAware {
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
 	@Autowired
@@ -36,6 +40,20 @@ public class ProductController {
 	
 	@Autowired
 	private FileManager fileManager;
+	
+	//우리가 ServletContext써야하는가? getRealPath()를 사용하려고
+	private ServletContext servletContext;
+	
+	
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
+		//이 타이밍에서 실제 물리적 경로를 FileManager에 대입해놓자
+		fileManager.setSaveBasicDir(servletContext.getRealPath(fileManager.getSaveBasicDir()));
+		fileManager.setSaveAddonDir(servletContext.getRealPath(fileManager.getSaveAddonDir()));
+		
+		logger.debug(fileManager.getSaveBasicDir());
+	}
 
 	//상위 카테고리 가져오기
 	@RequestMapping(value="/admin/product/registform", method=RequestMethod.GET)
@@ -113,40 +131,33 @@ public class ProductController {
 	
 	//상품 등록
 	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST)
+	@ResponseBody
 	public String registProduct(Product product) {
 		logger.debug("하위 카테고리 : " + product.getSubcategory_id());
 		logger.debug("상품명 : " + product.getProduct_name());
 		logger.debug("가격 : " + product.getPrice());
 		logger.debug("브랜드 : " + product.getBrand());
 		logger.debug("상세내용 : " + product.getDetail());
-		logger.debug("업로드 이미지명 : " + product.getRepImg().getOriginalFilename());
+		/*
+		logger.debug("업로드 대표 이미지명 : " + product.getRepImg().getOriginalFilename());
+		for(int i=0; i<product.getAddImg().length; i++) {
+			logger.debug("업로드 추가 이미지명 : " + product.getAddImg()[i].getOriginalFilename());
+		}
+		*/
 		
+		//logger.debug("insert하기 전 상품의 product_id : " + product.getProduct_id());
+		productService.regist(fileManager, product);  //상품 등록 서비스에게 요청
+		//logger.debug("방금 insert된 상품의 product_id : " + product.getProduct_id());
+		
+		/*
 		for(int i=0; i<product.getFit().length; i++) {
 			String fit = product.getFit()[i];
 			logger.debug("지원 사이즈 : " + fit);
 		}
-		
-		//대표 이미지 업로드 (파일명: 현재 날짜) -> 어떤 파일명으로, 어디에 저장할지 결정
-		long time = System.currentTimeMillis();
-		String ext = fileManager.getExtend(product.getRepImg().getOriginalFilename());  //확장자 얻기
-		String filename = time + "." + ext;  //시간, 확장자 이용해서 파일명 만들기
-		try {
-			product.getRepImg().transferTo(new File(fileManager.getSaveDir() + "/" + filename));
-			logger.debug("저장 경로 : " + fileManager.getSaveDir());
-			logger.debug("파일 이름 : " + filename);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-		//DB에 넣기
-		productService.regist(product);	
-
-		return "redirect:/admin/product/list";
+		*/
+		return "hahaahhahahaha";
 	}
-	
+
 	
 	
 	//상품 수정
@@ -154,5 +165,8 @@ public class ProductController {
 	
 	//상품 삭제
 
+	
+	//예외 처리
+	//위의
 
 }

@@ -19,9 +19,8 @@ public class Product {
 	private MultipartFile repImg;  //대표 이미지
 	private MultipartFile[] addImg;  //추가 이미지는 선택 사항이며, 동시에 배열이다
 	
-	//색상값들
-	String[] color;
-	String[] fit;
+	private Color[] color;  //색상값들
+	private Psize[] psize;  //사이즈
 
 }
 
