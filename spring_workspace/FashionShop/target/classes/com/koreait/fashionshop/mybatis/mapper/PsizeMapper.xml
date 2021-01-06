@@ -6,6 +6,11 @@
 		insert into psize(psize_id, product_id, fit)
 		values(seq_psize.nextval, #{product_id}, #{fit})
 	</insert>
+	
+	
+	<select id="selecttByProductId" parameterType="int" resultType="Psize">
+		select * from psize where product_id=#{product_id}
+	</select>
 
 
 </mapper>

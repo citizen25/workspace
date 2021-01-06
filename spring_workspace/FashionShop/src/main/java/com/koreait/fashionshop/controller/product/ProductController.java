@@ -1,8 +1,6 @@
-package com.koreait.fashionshop.controller.admin;
+package com.koreait.fashionshop.controller.product;
 
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -11,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +17,9 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.common.FileManager;
+import com.koreait.fashionshop.exception.ProductRegistException;
 import com.koreait.fashionshop.model.domain.Product;
+import com.koreait.fashionshop.model.domain.Psize;
 import com.koreait.fashionshop.model.domain.SubCategory;
 import com.koreait.fashionshop.model.product.service.ProductService;
 import com.koreait.fashionshop.model.product.service.SubCategoryService;
@@ -114,6 +115,9 @@ public class ProductController implements ServletContextAware {
 	@RequestMapping(value="/admin/product/list", method=RequestMethod.GET)
 	public ModelAndView getProductList() {
 		ModelAndView mav = new ModelAndView("admin/product/product_list");
+		
+		List productList = productService.selectAll();
+		mav.addObject("productList", productList);
 
 		return mav;
 	}
@@ -130,14 +134,20 @@ public class ProductController implements ServletContextAware {
 	
 	
 	//상품 등록
-	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST, produces="text/html;charset=utf8")
 	@ResponseBody
-	public String registProduct(Product product) {
-		logger.debug("하위 카테고리 : " + product.getSubcategory_id());
+	public String registProduct(Product product, String[] test) {
+		logger.debug("하위 카테고리 : " + product.getSubCategory().getSubcategory_id());
 		logger.debug("상품명 : " + product.getProduct_name());
 		logger.debug("가격 : " + product.getPrice());
 		logger.debug("브랜드 : " + product.getBrand());
 		logger.debug("상세내용 : " + product.getDetail());
+		//logger.debug("test : " + test.length);
+		for(Psize psize : product.getPsize()) {
+			logger.debug(psize.getFit());
+		}
+		
+		
 		/*
 		logger.debug("업로드 대표 이미지명 : " + product.getRepImg().getOriginalFilename());
 		for(int i=0; i<product.getAddImg().length; i++) {
@@ -149,13 +159,13 @@ public class ProductController implements ServletContextAware {
 		productService.regist(fileManager, product);  //상품 등록 서비스에게 요청
 		//logger.debug("방금 insert된 상품의 product_id : " + product.getProduct_id());
 		
-		/*
-		for(int i=0; i<product.getFit().length; i++) {
-			String fit = product.getFit()[i];
-			logger.debug("지원 사이즈 : " + fit);
-		}
-		*/
-		return "hahaahhahahaha";
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"result\":1,");
+		sb.append("\"msg\":\"상품등록 성공\"");
+		sb.append("}");
+		
+		return sb.toString();
 	}
 
 	
@@ -167,6 +177,58 @@ public class ProductController implements ServletContextAware {
 
 	
 	//예외 처리
-	//위의
+	//위의 메서드 중에서 하나라도 예외가 발생하면, 아래의 핸들러가 동작
+	@ExceptionHandler(ProductRegistException.class)
+	@ResponseBody
+	public String handleException(ProductRegistException e) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"result\":0,");
+		sb.append("\"msg\":\"" + e.getMessage() + "\"");
+		sb.append("}");
 
+		return sb.toString();
+	}
+	
+	
+	
+	//-----------------------
+	//쇼핑몰 프론트 요청 처리
+	//-----------------------
+
+	//상품 목록 요청 처리
+	@RequestMapping(value="/shop/product/list", method=RequestMethod.GET)
+	public ModelAndView getShopProductList(int subcategory_id) {  //하위 카테고리의 id
+		List topList = topCategoryService.selectAll();  //상품 카테고리 목록
+		List productList = productService.selectById(subcategory_id);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("productList", productList);
+		mav.addObject("topList", topList);
+
+		mav.setViewName("shop/product/list");
+		return mav;
+	}
+	
+	//상품 상세 보기 요청
+	@RequestMapping(value="/shop/product/detail", method=RequestMethod.GET)
+	public ModelAndView getShopProductDetail(int product_id) {
+		List topList = topCategoryService.selectAll();  //상품 카테고리 목록
+		Product product = productService.select(product_id);  //상품 1건 가져오기
+
+		ModelAndView mav = new ModelAndView("shop/product/detail");
+		mav.addObject("topList", topList);
+		mav.addObject("product", product);
+
+		return mav;
+	}
+	
 }
+
+
+
+
+
+
+
+

@@ -67,7 +67,7 @@ input[type=button]:hover {
 </style>
 <script type="text/javascript">
 	var uploadFiles = [];  //미리보기 이미지 목록
-	var psizeArray = [];  //유저가 선택한 사이즈를 담는 배열
+	var psize = [];  //유저가 선택한 사이즈를 담는 배열
 
 	$(function(){
 		CKEDITOR.replace("detail");
@@ -128,8 +128,19 @@ input[type=button]:hover {
 		//체크박스 이벤트 구현 
 		$("input[type='checkbox']").on("click", function(e){
 			var ch = e.target;//이벤트 일으킨 주체컴포넌트 즉 체크박스
-			alert($(ch).val());
+			var ch = $("input[name='size']");
+			var len = $("input[name='size']").length;  //체크박스의 길이를 얻어 반복문에 이용
 			
+			psize = [];  //배열 초기화
+
+			for(var i=0; i<len; i++) {
+				//만일 체크가 되어있다면, 기존 배열을 모두 자우고, 체크된 체크박스 값만 배열에 넣자
+				if($($(ch)[i]).is(":checked")) {
+					psize.push($($(ch)[i]).val());
+				}
+				//console.log(i, "번째 체크박스 상태는", $($(ch)[i]).is(":checked"));
+			}
+			console.log("서버에 전송할 사이즈 배뎔의 구성은 ", psize);
 		});	
 			
 	});
@@ -200,9 +211,16 @@ input[type=button]:hover {
 			console.log(file.name);
 		});
 		
-		
-		//폶데이터에 에디터의 값 추가하기
-		formData.append("detail", CKEDITOR.instances["detail"].getData());
+		formData.append("detail", CKEDITOR.instances["detail"].getData());  //폶데이터에 에디터의 값 추가하기
+
+		for(var i=0; i<psize.length; i++) {
+			formData.append("psize[" + i + "].fit", psize);
+		}
+
+		//formData.append("test", new Array("banana", "apple", "orange"));
+		//== input type="ckeckbox" name="test" value="banana"
+		//== input type="ckeckbox" name="test" value="apple"
+		//== input type="ckeckbox" name="test" value="orange"
 
 		//비동기 업로드
 		$.ajax({
@@ -211,8 +229,14 @@ input[type=button]:hover {
 			contentType: false,  //false일 경우, multipart/form-data로 간주 -> 이미지이기 때문에 get방식 말고 post방식으로 날려야 한다
 			processData: false,  //false일 경우, query-string으로 전송되지 않음(get방식이 아니게 된다)
 			type: "post",
-			success: function(result){
-				alert(result);
+			success: function(responseData) {
+				var json = JSON.parse(responseData);  //String --> json 으로 parsing
+				if(json.result == 1) {
+					alert(json.msg);
+					location.href = "/admin/product/list";
+				} else {
+					alert(json.msg);
+				}
 			}
 		});
 		
@@ -238,7 +262,7 @@ input[type=button]:hover {
 				<option value="<%=topCategory.getTopcategory_id()%>"><%=topCategory.getName() %></option>
 				<%} %>
 			</select>
-			<select name="subcategory_id">
+			<select name="subCategory.subcategory_id">
 				<option>하위 카테고리 선택</option>
 			</select>
 			<input type="text" name="product_name" placeholder="상품명"> 
@@ -251,14 +275,14 @@ input[type=button]:hover {
 			<div id="dragArea">
 			</div>
 
-			<!-- 지원 사이즈 선택 -->
+			<!-- 지원 사이즈 선택 : size를 배열로 만들어서 서버에 보내기 위한 배열을 체크된 psize로 다시 만든다 -->
 			<p>
-				XS<input type="checkbox" name="psize[0].fit" value="XS">
-				S<input type="checkbox" name="psize[1].fit" value="S">
-				M<input type="checkbox" name="psize[2].fit" value="M">
-				L<input type="checkbox" name="psize[3].fit" value="L">
-				XL<input type="checkbox" name="psize[4].fit" value="XL">
-				XXL<input type="checkbox" name="psize[5].fit" value="XXL">
+				XS<input type="checkbox" name="size" value="XS">
+				S<input type="checkbox" name="size" value="S">
+				M<input type="checkbox" name="size" value="M">
+				L<input type="checkbox" name="size" value="L">
+				XL<input type="checkbox" name="size" value="XL">
+				XXL<input type="checkbox" name="size" value="XXL">
 			</p>
 			
 			<!-- color picker -->
