@@ -29,6 +29,7 @@
 	<!-- ****** Top Discount Area End ****** -->
 
 	<div class="container">
+		<h1>이용에 불편드려 죄송합니다.</h1>
 		<%=request.getAttribute("msg") %>
 	</div>
 

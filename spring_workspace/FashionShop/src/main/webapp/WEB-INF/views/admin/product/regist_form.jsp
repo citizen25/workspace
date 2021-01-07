@@ -214,7 +214,7 @@ input[type=button]:hover {
 		formData.append("detail", CKEDITOR.instances["detail"].getData());  //폶데이터에 에디터의 값 추가하기
 
 		for(var i=0; i<psize.length; i++) {
-			formData.append("psize[" + i + "].fit", psize);
+			formData.append("psize[" + i + "].fit", psize[i]);
 		}
 
 		//formData.append("test", new Array("banana", "apple", "orange"));
@@ -263,7 +263,7 @@ input[type=button]:hover {
 				<%} %>
 			</select>
 			<select name="subCategory.subcategory_id">
-				<option>하위 카테고리 선택</option>
+				<option>하위카테고리 선택</option>
 			</select>
 			<input type="text" name="product_name" placeholder="상품명"> 
 			<input type="text" name="price" placeholder="가격"> 

@@ -127,21 +127,29 @@
 								<div class="collapse navbar-collapse align-items-start collapse"
 									id="karl-navbar">
 									<ul class="navbar-nav animated" id="nav">
-										<li class="nav-item active"><a class="nav-link"
-											href="index.html">Home</a></li>
-										<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+										<li class="nav-item active">
+											<a class="nav-link" href="/">Home</a>
+										</li>
+										<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
 											<div class="dropdown-menu" aria-labelledby="karlDropdown">
-												<a class="dropdown-item" href="/">Home</a> 
-												<a class="dropdown-item" href="/shop/product/list?subcategory_id=1">Shop</a> 
-												<a class="dropdown-item" href="/shop/product/detail">Product Details</a> 
-												<a class="dropdown-item" href="/shop/cart/list">Cart</a>
-												<a class="dropdown-item" href="/shop/checkout/form">Checkout</a>
-											</div></li>
-										<li class="nav-item"><a class="nav-link" href="#">Dresses</a></li>
-										<li class="nav-item"><a class="nav-link" href="#"><span class="karl-level">hot</span> Shoes</a></li>
+												<%for(TopCategory topCategory : topList){ %>
+												<a class="dropdown-item" href="/"><%=topCategory.getName() %></a> 
+												<%} %>
+											</div>
+										</li>
+										<li class="nav-item"><a class="nav-link" href="/shop/product/list?subcategory_id=1">Shopping</a></li>
+										<li class="nav-item">
+											<a class="nav-link" href="/shop/cart/list"><span class="karl-level">3</span>Cart</a>
+										</li>
 										<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
 										<li class="nav-item"><a class="nav-link" href="/shop/member/registForm">SignUp</a></li>
-										<li class="nav-item"><a class="nav-link" href="#">SignIn</a></li>
+										<li class="nav-item">
+											<%if(session.getAttribute("member")==null){ //세션에 담겨진 데이터가 없다면%>
+												<a class="nav-link" href="/shop/member/loginForm">SignIn</a>
+											<%}else{ %>
+												<a class="nav-link" href="/shop/member/logout">SignOut</a>
+											<%} %>
+										</li>
 									</ul>
 								</div>
 							</nav>

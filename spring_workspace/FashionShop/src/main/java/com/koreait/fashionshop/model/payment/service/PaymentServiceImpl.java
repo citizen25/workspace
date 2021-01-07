@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.koreait.fashionshop.exception.CartException;
 import com.koreait.fashionshop.model.domain.Cart;
+import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.payment.repository.CartDAO;
 
 @Service
@@ -22,8 +23,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Override
 	public List selectCartList(int member_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartDAO.selectAll(member_id);
 	}
 
 	@Override
@@ -33,13 +33,17 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public void update(Cart cart) {
-		// TODO Auto-generated method stub
-		
+	public void update(List<Cart> cartList) throws CartException {
+		//상품 갯수만큼 수정 요청
+		for(Cart cart :  cartList) {
+			cartDAO.update(cart);
+		}
+
 	}
 
 	@Override
 	public void insert(Cart cart) throws CartException {
+		cartDAO.duplicateCheck(cart);
 		cartDAO.insert(cart);
 	}
 
@@ -47,6 +51,11 @@ public class PaymentServiceImpl implements PaymentService {
 	public void delete(Cart cart) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void delete(Member member) throws CartException {
+		cartDAO.delete(member);
 	}
 
 }
