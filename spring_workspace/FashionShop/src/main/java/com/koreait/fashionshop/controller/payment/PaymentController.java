@@ -3,24 +3,30 @@ package com.koreait.fashionshop.controller.payment;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.koreait.fashionshop.common.MessageData;
 import com.koreait.fashionshop.exception.CartException;
 import com.koreait.fashionshop.exception.LoginRequiredException;
+import com.koreait.fashionshop.model.common.MessageData;
 import com.koreait.fashionshop.model.domain.Cart;
 import com.koreait.fashionshop.model.domain.Member;
+import com.koreait.fashionshop.model.domain.OrderSummary;
+import com.koreait.fashionshop.model.domain.Receiver;
 import com.koreait.fashionshop.model.payment.service.PaymentService;
 import com.koreait.fashionshop.model.product.service.TopCategoryService;
 
@@ -117,6 +123,45 @@ public class PaymentController {
 		
 		return mav;
 	}
+	
+	//체크아웃 페이지 요청
+	@GetMapping("/shop/payment/form")
+	public String payForm(Model model, HttpSession session) {
+		List topList = topCategoryService.selectAll();
+		model.addAttribute("topList", topList);  //ModelAndView에서의 Model만 사용
+		
+		//결제 수단 가져오기
+		List paymethodList = paymentService.selectPaymethodList();
+		model.addAttribute("paymethodList", paymethodList);
+		
+		//장바구니 정보도 가져오기
+		Member member = (Member)session.getAttribute("member");
+		List cartList = paymentService.selectCartList(member.getMember_id());
+		model.addAttribute("cartList", cartList);
+		
+		return "shop/payment/checkout";
+	}
+	
+	//결제 요청 처리
+	@PostMapping("/shop/payment/regist")
+	public String pay(HttpSession session, OrderSummary orderSummary, Receiver receiver) {
+		logger.debug("받을 사람 이름 : " + receiver.getReceiver_name());
+		logger.debug("받을 사람 연락처 : " + receiver.getReceiver_phone());
+		logger.debug("받을 사람 주소 : " + receiver.getReceiver_addr());
+		logger.debug("결제 방법 : " + orderSummary.getPaymethod_id());
+		logger.debug("total_price : " + orderSummary.getTotal_price());
+		logger.debug("total_pay : " + orderSummary.getTotal_pay());
+		
+		Member member = (Member)session.getAttribute("member");
+		orderSummary.setMember_id(member.getMember_id());  //회원 pk
+		
+		paymentService.registOrder(orderSummary, receiver);
+
+		return "";
+	}
+	
+	
+	
 	
 	//장바구니와 관련된 예외처리 핸들러
 	@ExceptionHandler(CartException.class)

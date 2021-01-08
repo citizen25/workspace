@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.koreait.fashionshop.model.domain.Cart;
 import com.koreait.fashionshop.model.domain.Member;
+import com.koreait.fashionshop.model.domain.OrderDetail;
+import com.koreait.fashionshop.model.domain.OrderSummary;
+import com.koreait.fashionshop.model.domain.Receiver;
 
 public interface PaymentService {
 	//장바구니 관련 업무
@@ -16,6 +19,8 @@ public interface PaymentService {
 	public void delete(Member member);  //회원에 속한 데이터 삭제할 예정	
 
 	//결제 업무
+	public List selectPaymethodList();
+	public void registOrder(OrderSummary orderSummary, Receiver receiver);  //여기서 많은 트랜잭션 처리가 요구됨 (주문, 주문상세, 배송정보)
 	
 	
 }
