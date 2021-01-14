@@ -263,7 +263,20 @@ increment by 1
 start with 1;
 
 
+----테이블 복사----
+create table qna
+as
+select * from notice;
 
+alter table qna
+drop column notice_id;
+
+alter table qna
+add qna_id number primary key;
+
+create sequence seq_qna
+increment by 1
+start with 1;
 
 
 

@@ -1,0 +1,6 @@
+[공통]
+아래의 모든 요청에 공통으로 사용되는 context : root-context.xml
+
+REST한 요청 uri : /rest/*로 시작 rest-context.xml
+관리자 모드의 접근 : /admin/*로 시작 admin-context.xml
+일반 사용자 접근 : /shop/*로 시작 shop-context.xml

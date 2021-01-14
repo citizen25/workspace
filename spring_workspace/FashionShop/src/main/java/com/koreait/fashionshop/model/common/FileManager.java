@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.koreait.fashionshop.exception.UploadFailException;
+
 import lombok.Data;
 
 @Data
@@ -30,7 +32,7 @@ public class FileManager {
 	}
 	
 	//파일 저장하기 
-	public void saveFile(String realDir, MultipartFile multi) {
+	public void saveFile(String realDir, MultipartFile multi) throws UploadFailException {
 		try {
 			multi.transferTo(new File(realDir));
 		} catch (IllegalStateException e) {

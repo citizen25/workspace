@@ -21,6 +21,7 @@
 		<typeAlias type="com.koreait.fashionshop.model.domain.OrderSummary" alias="OrderSummary"/>
 		<typeAlias type="com.koreait.fashionshop.model.domain.OrderDetail" alias="OrderDetail"/>
 		<typeAlias type="com.koreait.fashionshop.model.domain.Receiver" alias="Receiver"/>
+		<typeAlias type="com.koreait.fashionshop.model.domain.Qna" alias="Qna"/>
 	</typeAliases>
 
 	<mappers>
@@ -38,6 +39,7 @@
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/OrderSummaryMapper.xml"/>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/OrderDetailMapper.xml"/>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/ReceiverMapper.xml"/>
+		<mapper resource="com/koreait/fashionshop/mybatis/mapper/QnaMapper.xml"/>
 	</mappers>
 	
 </configuration>

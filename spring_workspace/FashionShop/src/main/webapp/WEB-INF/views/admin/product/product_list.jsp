@@ -15,8 +15,11 @@
 <script>
 
 	$(function(){
-		$("button").click(function(){
+		$("#bt_regist").click(function(){
 			location.href = "/admin/product/registform";  //글쓰기 폼 요청
+		});
+		$("#bt_excel").click(function(){
+			location.href = "/admin/product/excel/registform";  //대량 등록폼 요청
 		});
 	});
 
@@ -49,7 +52,8 @@
 		<%} %>
 		<tr>
 			<td colspan="6">
-				<button>상품 등록</button>
+				<button id="bt_regist">상품 등록</button>
+				<button id="bt_excel">엑셀 등록</button> *(대량의 상품을 등록할 수 있습니다)
 			</td>
 		</tr>
 

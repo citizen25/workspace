@@ -62,13 +62,13 @@
 	<!-- <bean id="bell" class="com.koreait.fashionshop.common.Bell"/> -->
 	
 	<!-- 어느 시점에, 어떤 메서드 호출시 공통코드를 동작시킬지 xml로 서술하자 -->
-	<aop:config>
+	<!-- <aop:config>
 		<aop:aspect id="bellAspect" ref="bell">
-			<!-- 어떤 메서드 실행시 관여할지 서술 -->
+			어떤 메서드 실행시 관여할지 서술
 			<aop:pointcut expression="execution(public * com.koreait.fashionshop.model.bank.repository..*(**))" id="bellPointcut"/>
 			<aop:after method="sound" pointcut-ref="bellPointcut"/>
 		</aop:aspect>			
-	</aop:config>
+	</aop:config> -->
 	
 	
 	<!-- AOP에 transaction 처리에 응용해보자 -->
