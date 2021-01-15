@@ -1,0 +1,32 @@
+
+로그인이 필요한 controller
+	com.tsycsm.agileoffice.client.controller.customer
+	com.tsycsm.agileoffice.client.controller.inventory
+	com.tsycsm.agileoffice.client.controller.main
+		/main/customerCredential --> OwnerController로
+	com.tsycsm.agileoffice.client.controller.order
+	com.tsycsm.agileoffice.client.controller.owner
+		나머지
+	com.tsycsm.agileoffice.client.controller.report
+	com.tsycsm.agileoffice.client.controller.review
+
+
+
+
+--------------MainControllelr로--------------------
+
+로그인이 되어있으면 안되는 controller
+	com.tsycsm.agileoffice.client.controller.owner
+		/main/ownerRegist
+		/main/checkid
+		/main/ownerLogin
+
+상관없는 controller
+	com.tsycsm.agileoffice.client.controller.main
+		나머지
+
+
+
+
+
+

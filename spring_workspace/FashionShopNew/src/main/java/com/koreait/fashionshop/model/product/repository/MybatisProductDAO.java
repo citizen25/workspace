@@ -39,8 +39,10 @@ public class MybatisProductDAO implements ProductDAO{
 
 	@Override
 	public void update(Product product) throws ProductRegistException{
-
-		
+		int result = sqlSessionTemplate.update("Product.update", product);
+		if(result == 0) {
+			throw new ProductRegistException("상품 수정 실패");
+		}
 	}
 
 	@Override

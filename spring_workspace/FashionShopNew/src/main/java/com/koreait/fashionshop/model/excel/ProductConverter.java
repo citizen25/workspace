@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.koreait.fashionshop.model.domain.Color;
 import com.koreait.fashionshop.model.domain.Product;
+import com.koreait.fashionshop.model.domain.Psize;
 import com.koreait.fashionshop.model.domain.SubCategory;
 
 // 엑셀을 읽어들여, 자바의 POJO 형태로 변환하는 용도
@@ -55,7 +55,7 @@ public class ProductConverter {
 					} else if(a == 3) {    // brand
 						product.setBrand(cell.getStringCellValue());
 					} else if(a == 4) {    // 색상
-						String[] colors = cell.getStringCellValue().split(",");    // 점을 기준으로 나누면 스트링 배열이 반환된다						
+						String[] colors = cell.getStringCellValue().trim().split(",");    // 점을 기준으로 나누면 스트링 배열이 반환된다						
 						List colorList = new ArrayList();
 						for(String color : colors) {
 							Color obj = new Color();
@@ -63,15 +63,21 @@ public class ProductConverter {
 							colorList.add(obj);
 						}
 						product.setColorList(colorList);
-					} else if(a == 5) {
-						
+					} else if(a == 5) {    // psize
+						String[] psizes = cell.getStringCellValue().trim().split(",");
+						List psizeList = new ArrayList();
+						for(String psize : psizes) {
+							Psize obj = new Psize();    // empty vo
+							obj.setFit(psize);    // 사이즈 정보 넣기
+							psizeList.add(obj);    // 리스트에 담기
+						}
+						product.setPsizeList(psizeList);
 					} else if(a == 6) {    // detail
 						product.setDetail(cell.getStringCellValue());
 					} else if(a == 7) {    // filename
-						product.setFilename(cell.getStringCellValue());
+						product.setFilename(cell.getStringCellValue());    // 엑셀에 들어있는 원본 파일명 (ex: tshirts.jpg)
 					}
 				}
-				
 				productList.add(product);    // 완성된 상품 담기
 			}
 

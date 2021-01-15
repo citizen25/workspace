@@ -59,8 +59,10 @@ public class AdminProductController implements ServletContextAware{
 	public void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 		//이 타이밍을 놓치지말고, 실제 물리적 경로를 FileManager 에 대입해놓자!!!
-		fileManager.setSaveBasicDir(servletContext.getRealPath(fileManager.getSaveBasicDir()));
-		fileManager.setSaveAddonDir(servletContext.getRealPath(fileManager.getSaveAddonDir()));
+		//fileManager.setSaveBasicDir(servletContext.getRealPath(fileManager.getSaveBasicDir()));
+		//fileManager.setSaveAddonDir(servletContext.getRealPath(fileManager.getSaveAddonDir()));
+		fileManager.setSaveBasicDir(fileManager.getSaveBasicDir());
+		fileManager.setSaveAddonDir(fileManager.getSaveAddonDir());
 		
 		logger.debug(fileManager.getSaveBasicDir());
 		
