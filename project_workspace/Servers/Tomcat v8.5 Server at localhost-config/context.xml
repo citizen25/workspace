@@ -21,8 +21,10 @@
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 
+	<!-- <ResourceLink type="javax.sql.DataSource"
+		name="jdbc/myoracle" global="jdbc/myoracle" /> -->
 	<ResourceLink type="javax.sql.DataSource"
-		name="jdbc/myoracle" global="jdbc/myoracle" />
+		name="jdbc/mysql" global="jdbc/mysql" />
     <!-- Uncomment this to disable session persistence across Tomcat restarts -->
     <!--
     <Manager pathname="" />

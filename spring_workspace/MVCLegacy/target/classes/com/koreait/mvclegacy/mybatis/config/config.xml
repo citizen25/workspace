@@ -5,9 +5,11 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.koreait.mvclegacy.model.domain.Notice" alias="Notice"/>
+		<typeAlias type="com.koreait.mvclegacy.model.domain.Hardware" alias="Hardware"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="com/koreait/mvclegacy/mybatis/mapper/NoticeMapper.xml" />
+		<mapper resource="com/koreait/mvclegacy/mybatis/mapper/HardwareMapper.xml" />
 	</mappers>
 </configuration>

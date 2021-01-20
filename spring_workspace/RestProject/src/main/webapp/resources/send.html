@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	// 폼 자테를 전송해도, 기존의 controller가 VO로 매핑시켜 받을 수 있다
+	// 하지만, 오늘 시점부터는 클라이언트가 html에 국한된 것이 아니라, 안드로이드, 스마트카 등..
+	// 인터넷이 가능한 단말기라면 누구나 서버에 요청을 시도한다는 전제 하에
+	// 보다 범용적이고 중립적인 형태로 통신을 시도해보자
+	function regist() {
+		//json 객체 선언
+		var obj = {};    // define empty json object
+		obj["m_id"] = $("#m_id").val();
+		obj["m_pass"] = $("#m_pass").val();
+		obj["m_name"] = $("#m_name").val();
+
+		console.log(obj);
+		
+		$.ajax({
+			url:"/rest/member",
+			type:"POST",
+			contentType:"application/json",    // http 통신 시 header 정보 구성
+			data:JSON.stringify(obj),
+			success:function(response){
+				console.log(response);
+			}
+		});
+	}
+</script>
+</head>
+<body>
+	<form>
+		<input type="text" id="m_id" placeholder="아이디 입력">
+		<input type="text" id="m_pass" placeholder="패스워드 입력">
+		<input type="text" id="m_name" placeholder="이름 입력">
+		
+		<button type="button" onClick="regist()">전송</button>
+	</form>
+</body>
+</html>

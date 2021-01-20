@@ -1,7 +1,6 @@
 package com.koreait.fashionshop.admin.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
