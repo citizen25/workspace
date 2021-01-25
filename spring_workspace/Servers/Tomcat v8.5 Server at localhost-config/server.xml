@@ -42,7 +42,7 @@
     	username="root"
     	password="1234" 
     	driverClassName="com.mysql.jdbc.Driver" 
-    	url="jdbc:mysql://localhost/android" 
+    	url="jdbc:mysql://localhost/android?characterEncoding=utf8" 
     	auth="Container" 
     	maxActive="20" 
     	maxIdle="10" 

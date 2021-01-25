@@ -1,6 +1,9 @@
-package com.koreait.restproject.rest.controller.member;
+package com.koreait.restproject.rest.controller;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,10 +20,14 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	// jsp 페이지를 반환하지 말고, 데이터 전송
 	@GetMapping("/member")
-	public String getList() {
-		log.debug("리스트 요청했어?");
-		return "ha ha ah";
+	public ResponseEntity<List<Member>> getList() {
+		log.debug("Rest 리스트 요청했어?");
+		List<Member> memberList = memberService.selectAll();
+		
+		ResponseEntity entity = ResponseEntity.ok().body(memberList);
+		return entity;
 	}
 	
 	@PostMapping("/member")

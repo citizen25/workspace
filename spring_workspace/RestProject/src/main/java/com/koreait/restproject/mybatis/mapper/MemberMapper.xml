@@ -6,5 +6,19 @@
 		insert into member(m_id, m_pass, m_name)
 		values(#{m_id}, #{m_pass}, #{m_name})
 	</insert>
+	
+	<sql id="select_common">
+		select * from member
+	</sql>
+	
+	<select id="selectAll" resultType="Member">
+		<include refid="select_common"/>
+		order by member_id asc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Member">
+		<include refid="select_common"/>
+		where member_id=#{member_id}
+	</select>
 
 </mapper>
