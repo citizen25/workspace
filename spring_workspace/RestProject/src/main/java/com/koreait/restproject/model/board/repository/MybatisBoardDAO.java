@@ -10,13 +10,13 @@ import com.koreait.restproject.exception.BoardUpdateException;
 import com.koreait.restproject.model.domain.Board;
 
 @Repository
-public class MybatisBoardDAO implements BoardDAO {
+public class MybatisBoardDAO implements BoardDAO{
 	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-
+	
 	@Override
-	public List<Board> selectAll() {
+	public List selectAll() {
 		return sqlSessionTemplate.selectList("Board.selectAll");
 	}
 
@@ -26,28 +26,28 @@ public class MybatisBoardDAO implements BoardDAO {
 	}
 
 	@Override
-	public void insert(Board board) throws BoardUpdateException {
+	public void insert(Board board) throws BoardUpdateException{
 		int result = sqlSessionTemplate.insert("Board.insert", board);
-		if(result == 0) {
-			throw new BoardUpdateException("등록 실패");
+
+		if(result==0) {
+			throw new BoardUpdateException("등록실패");
 		}
 	}
 
 	@Override
-	public void update(Board baord) throws BoardUpdateException {
-		int result = sqlSessionTemplate.update("Board.update", baord);
-		if(result == 0) {
-			throw new BoardUpdateException("수정 실패");
+	public void update(Board board) throws BoardUpdateException{
+		int result = sqlSessionTemplate.insert("Board.update", board);
+		if(result==0) {
+			throw new BoardUpdateException("수정실패");
 		}
 	}
 
 	@Override
-	public void delete(int board_id) throws BoardUpdateException {
+	public void delete(int board_id) throws BoardUpdateException{
 		int result = sqlSessionTemplate.delete("Board.delete", board_id);
-		if(result == 0) {
-			throw new BoardUpdateException("삭제 실패");
+		if(result==0) {
+			throw new BoardUpdateException("삭제실패");
 		}
 	}
 	
-
 }

@@ -10,12 +10,12 @@ import com.koreait.restproject.exception.MemberUpdateException;
 import com.koreait.restproject.model.domain.Member;
 
 @Repository
-public class MybatisMemberDAO implements MemberDAO {
+public class MybatisMemberDAO implements MemberDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-
+	
 	@Override
-	public List<Member> selectAll() {
+	public List selectAll() {
 		return sqlSessionTemplate.selectList("Member.selectAll");
 	}
 
@@ -26,9 +26,9 @@ public class MybatisMemberDAO implements MemberDAO {
 	}
 
 	@Override
-	public void insert(Member member) throws MemberUpdateException {
+	public void insert(Member member) throws MemberUpdateException{
 		int result = sqlSessionTemplate.insert("Member.insert", member);
-		if(result == 0) {
+		if(result==0) {
 			throw new MemberUpdateException("등록 에러");
 		}
 	}
@@ -44,5 +44,5 @@ public class MybatisMemberDAO implements MemberDAO {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }

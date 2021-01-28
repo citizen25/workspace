@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(function(){
+    $($("button")[0]).click(function(){
+        getList();        
+    });
+    $($("button")[1]).click(function(){
+        regist();        
+    });
+});    
+
+function getList(){
+    $.ajax({
+        url:"/member",
+        type:"GET",
+        success:function(responseData){
+            console.log("성공",responseData);
+        },
+        error:function(xhr, status, error){
+            console.log("에러",xhr);
+        }
+    });
+}
+function regist(){
+    var obj={};
+    obj["id"]="batman";
+    obj["name"]="뱃맨";
+
+    $.ajax({
+        url:"/member",
+        type:"post",
+        data:JSON.stringify(obj),
+        contentType:"application/json;charset=utf-8",
+        success:function(responseData){
+            console.log(responseData);
+            alert(responseData.msg);
+        }, 
+        error:function(xhr, status, error){
+            console.log("에러남",xhr);
+        }
+
+    });
+
+}
+</script>
+</head>
+<body>
+    <button>목록요청</button>
+
+    <button>등록요청</button>
+    
+</body>
+</html>

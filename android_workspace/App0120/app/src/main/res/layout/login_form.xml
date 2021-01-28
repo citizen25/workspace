@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:background="#FFFFDD00"
     android:orientation="vertical">
-
-    <!--선형 레이아웃 : 방향성을 가지는 레이아웃
-        수평 방향 : horizontal
-        수직 방향 : vertical-->
-
+    <!--
+    선형레이아웃, 방향성을 가지는 레이아웃
+    수평방향  :horizontal
+    수직방향 :vertical
+    -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,7 +25,7 @@
                 style="@style/login_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="아이디 입력" />
+                android:hint="아이디 입력  " />
 
             <EditText
                 style="@style/login_form"
@@ -37,25 +37,30 @@
                 style="@style/login_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="이름 입력" />
-
+                android:hint="이름 입력 " />
         </LinearLayout>
 
         <Button
+            android:layout_alignLeft="@id/form"
+            android:layout_below="@id/form"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/form"
-            android:layout_alignLeft="@id/form"
             android:text="가입하기"
             android:onClick="regist"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignRight="@id/form"
             android:layout_below="@id/form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="로그인" />
-
     </RelativeLayout>
-
 </LinearLayout>
+
+
+
+
+
+
+
+

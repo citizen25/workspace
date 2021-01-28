@@ -4,24 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
-    <!--gravity : 자신이 보유한 자식을 대상으호 한 정렬-->
+    <!-- 자신이 보유한 자식을 대상으로 한 정렬 -->
 
     <Button
-        android:text="버트1"
+        android:text="버튼1"
         android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"/>
 
-    <!--layout_gravity : 자신을 배치하고 있는 부모 컨테이너를 기준-->
+    <!-- 자신을 배치하고 있는 부모 컨테이너를 기준으로 한 정렬 -->
     <Button
         android:layout_gravity="left"
-        android:text="버트2"
+        android:text="버튼2"
         android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"/>
 
     <Button
         android:layout_gravity="right"
-        android:text="버트3"
+        android:text="버튼3"
         android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"/>
 
 </LinearLayout>

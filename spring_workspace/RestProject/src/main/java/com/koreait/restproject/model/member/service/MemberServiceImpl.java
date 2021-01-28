@@ -11,12 +11,13 @@ import com.koreait.restproject.model.domain.Member;
 import com.koreait.restproject.model.member.repository.MemberDAO;
 
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDAO memberDAO;
-
+	
 	@Override
-	public List<Member> selectAll() {
+	public List selectAll() {
+		//테스트 목적으로 일부러 예외 발생시키자
 		return memberDAO.selectAll();
 	}
 
@@ -27,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void regist(Member member) throws MemberUpdateException {
+	public void regist(Member member) throws MemberUpdateException{
 		memberDAO.insert(member);
 	}
 

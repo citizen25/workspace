@@ -3,31 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFCCCCCC">
+    android:background="#E1DEDE">
 
     <LinearLayout
+        android:layout_margin="50dp"
+        android:background="#FBC7D8"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FF4F4F"
-        android:layout_margin="50dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_margin="50dp"
+            android:background="#FFFFdd00"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#3F51B5"
-            android:layout_margin="50dp">
-
+            android:layout_height="match_parent">
             <View
+                android:layout_margin="50dp"
+                android:background="#00BCD4"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#FFEB3B"
-                android:layout_margin="50dp">
-
-
-            </View>
-
+                android:layout_height="match_parent"/>
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

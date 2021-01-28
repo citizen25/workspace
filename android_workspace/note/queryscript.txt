@@ -1,8 +1,0 @@
-create database android;
-
-create table member(
-	member_id int primary key auto_increment
-	, m_id varchar(20)
-	, m_pass varchar(20)
-	, m_name varchar(20)
-) default character set utf8;

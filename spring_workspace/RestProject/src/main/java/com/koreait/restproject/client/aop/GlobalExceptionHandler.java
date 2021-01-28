@@ -4,18 +4,19 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.koreait.restproject.exception.MemberListException;
+import com.koreait.restproject.client.aop.GlobalExceptionHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
-// 일반 요청에 대한 글로벌 예외 처리
+//일반요청에 대한 글로벌 예외처리
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-	// 회원 목록을 가져올 때 발생하는 예외 처리
+	
+	//회원목록을 가져올때 발생하는예외처리 
 	@ExceptionHandler(MemberListException.class)
 	public String handle(MemberListException e) {
-		log.debug("일반 요청시 발생하는 예외 처리");
+		log.debug("일반 요청시 발생하는 예외처리");
 		return null;
 	}
 }
-

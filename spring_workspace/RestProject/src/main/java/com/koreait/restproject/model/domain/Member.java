@@ -9,3 +9,4 @@ public class Member {
 	private String m_pass;
 	private String m_name;
 }
+

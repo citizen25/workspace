@@ -11,19 +11,19 @@ import com.koreait.restproject.model.member.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
-// 일반적인 요청을 처리하는 Controller
+//일반적인 요청을 처리하는 컨트롤러
 @Controller
 @Slf4j
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
-
+	
+	//jsp페이지를 반환하지 말고, 데이터 전송
 	@GetMapping("/member")
 	public List<Member> getList() {
 		log.debug("일반 리스트 요청했어?");
-		List<Member> memberList = memberService.selectAll();
+		List memberList = memberService.selectAll();
 		return memberList;
-	}
-
+	}	
 }

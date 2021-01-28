@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.App0120">
-        <!--usesCleartextTraffic를 true로 주면, http 통신이 가능하다-->
+        <!--usesCleartextTraffic 를 true주면,  http 통신이 가능하다!! -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

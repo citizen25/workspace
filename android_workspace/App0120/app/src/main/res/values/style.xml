@@ -5,5 +5,4 @@
         <item name="android:background">#FFFFFFFF</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
-
 </resources>

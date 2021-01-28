@@ -1,83 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-	// 폼 자테를 전송해도, 기존의 controller가 VO로 매핑시켜 받을 수 있다
-	// 하지만, 오늘 시점부터는 클라이언트가 html에 국한된 것이 아니라, 안드로이드, 스마트카 등..
-	// 인터넷이 가능한 단말기라면 누구나 서버에 요청을 시도한다는 전제 하에
-	// 보다 범용적이고 중립적인 형태로 통신을 시도해보자
-	function regist() {
-		//json 객체 선언
-		var obj = {};    // define empty json object
-		obj["m_id"] = $("#m_id").val();
-		obj["m_pass"] = $("#m_pass").val();
-		obj["m_name"] = $("#m_name").val();
-
-		console.log(obj);
-
-		$.ajax({
-			url:"/rest/member",
-			type:"POST",
-			contentType:"application/json",    // http 통신 시 header 정보 구성
-			data:JSON.stringify(obj),
-			success:function(responseData){
-				console.log(responseData);
-			}
-		});
-	}
+/*
+ 폼 자체를 전송해도, 기존의 컨트롤러가 VO로 매핑시켜 받을 수 있다..
+ 하지만, 오늘 시점부터는 클라인트가 HTML에 국한된 것이 아니라, 안드로이스, 스마트카등..인터넷이 가능한
+ 단말기라면 누구나 서버에 요청을 시도한다는 전제하에 보다 범용적이고 중립적인 형태(xml, json...)로 
+ 통신을 시도해보자!!
+ */
+function regist(){
+	//제이슨 객체 선언 
+	var obj={};//define empty json object
+	obj["m_id"] = $("#m_id").val();
+	obj["m_pass"] = $("#m_pass").val();
+	obj["m_name"] = $("#m_name").val();
 	
-	// 목록 가져오기 (페이지가 아니라 데이터만 가져와야 하므로, 비동기로 요청한다)
-	function getList() {
-		$.ajax({
-			url:"/rest/member",
-			type:"GET",
-			success:function(responseData){
-				console.log("성공 응답 데이터 받음 : ", responseData.statusCode);
-				printData(responseData);
-			},
-			error: function(xhr, status, error) {
-				console.log("에러 응답 데이터 받음 : xhr = ", xhr);
-				alert(xhr.responseJSON.msg);
-			}
-		});
-	}
+	console.log(obj);
 	
-	// list-area에 서버로부터 넘겨받은 json 데이터 출력
-	function printData(responseData) {
-		var tag="<table border=\"1px\">";
-		tag+="<tr>";
-		tag+="<td>ID</td>";
-		tag+="<td>Pass</td>";
-		tag+="<td>Name</td>";
-		tag+="</tr>";
-		for(var i=0; i<responseData.length; i++) {
-			var json = responseData[i];
-			tag+="<tr>";
-			tag+="<td>" + json.m_id + "</td>";
-			tag+="<td>" + json.m_pass + "</td>";
-			tag+="<td>" + json.m_name + "</td>";
-			tag+="</tr>";
+	
+	$.ajax({
+		url:"/rest/member",
+		type:"post",
+		contentType:"application/json", //http통신의 헤더에 들어가는 정보
+		data:JSON.stringify(obj),
+		success:function(response){
+			console.log(response);
 		}
-		tag+="</table>";
+		
+	});
+}
 
-		$("#list-area").html(tag);
+//목록가져오기 ( 페이지가 아니라, 데이터만 가져와야 하므로 비동기로 요청한다!!)
+function getList(){
+	$.ajax({
+		url:"/rest/member",
+		type:"GET",
+		success:function(responseData){ //서버의 응답처리
+			console.log("성공 응답데이터 받음 ", responseData);
+			//요청에 대한 성공실패를 어떻게 판단할까?
+			printData(responseData);
+		},
+		error:function(xhr, status, error){
+			console.log("에러 응답 데이터 받음 : xhr = ",xhr);
+			alert(xhr.responseJSON.msg);
+		}
+		
+	});	
+}
+
+//list-area에 서버로 부터 넘겨받은 제이슨 데이터 출력
+function printData(responseData){
+	var tag="<table border=\"1px\">";
+	tag+="<tr>";
+	tag+="<td>ID</td>";
+	tag+="<td>Pass</td>";
+	tag+="<td>Name</td>";
+	tag+="</tr>";
+	for(var i=0;i<responseData.length;i++){
+		var json = responseData[i];
+		tag+="<tr>";
+		tag+="<td>"+json.m_id+"</td>";
+		tag+="<td>"+json.m_pass+"</td>";
+		tag+="<td>"+json.m_name+"</td>";
+		tag+="</tr>";
 	}
+	tag+="</table>";	
 	
+	$("#list-area").html(tag);
+}
 </script>
 </head>
 <body>
 	<form>
-		<input type="text" id="m_id" placeholder="아이디 입력">
-		<input type="text" id="m_pass" placeholder="패스워드 입력">
-		<input type="text" id="m_name" placeholder="이름 입력">
+		<input type="text" id="m_id" 		placeholder="아이디 입력">
+		<input type="text" id="m_pass" 	placeholder="패스워드 입력">
+		<input type="text" id="m_name" 	placeholder="이름 입력">
 	</form>
-	<button type="button" onClick="regist()">등록</button>
-	<button type="button" onClick="getList()">목록</button>
-	<div id="list-area">
-		<table border="1px"></table>
+	<button type="button" onClick="regist()">등록하기</button>
+	<button type="button" onClick="getList()">목록가져오기</button>
+	<div id="list-area"> 
 	</div>
+	
 </body>
 </html>
+
+
+
+
+
+
+
