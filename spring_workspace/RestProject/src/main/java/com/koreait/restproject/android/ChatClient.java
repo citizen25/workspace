@@ -1,8 +1,15 @@
 package com.koreait.restproject.android;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +26,8 @@ public class ChatClient extends JFrame{
 	JTextArea area;
 	JScrollPane scroll;
 	JTextField t_input;
+	Socket socket;
+	ClientThread clientThread;
 	
 	public ChatClient() {
 		p_north = new JPanel();
@@ -41,8 +50,39 @@ public class ChatClient extends JFrame{
 				stopClient();
 			}
 		});
+		
+		bt_con.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				connectServer();
+			}
+		});
+		
+		t_input.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) { //엔터치면 전송
+					clientThread.send(t_input.getText());
+					t_input.setText("");//값 다시 비우기
+				}
+			}
+		});
+		
 		setSize(300, 400);
 		setVisible(true);
+	}
+	public void connectServer() {
+		try {
+			socket =new Socket(t_ip.getText(), Integer.parseInt(t_port.getText())); //접속 시도!!
+			//대화용 클라이언트 측 쓰레드 새엇ㅇ 
+			clientThread = new ClientThread(socket, this);
+			clientThread.start();//청취 시작
+				
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void stopClient() {

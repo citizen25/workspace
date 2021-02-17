@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> <!-- include socket.io client side script -->    
+<style>
+.container{
+    width:300px;
+    height:400px;
+    background:yellow;
+}
+#t_ip{
+    width:80%;
+    height:25px;
+}
+button{
+    width:15%;
+    height:30px;
+    background:blue;
+    color:#ffffff;
+}
+#area{
+    width:98%;
+    height:300px;
+    background:skyblue;
+    color:#ffffff;
+    font-size:15pt;
+}
+#t_input{
+    width:98%;
+    height:25px;
+}
+</style>  
+<script>
+var webSocket; //웹소켓 객체
+window.addEventListener("load", function(){
+    var bt = document.querySelector("button");
+
+    bt.addEventListener("click", function(){
+        connectServer();
+    });
+    
+    //키보드 이벤트 구현 
+    var t_input = document.getElementById("t_input");
+    t_input.addEventListener("keyup", function(e){
+        if(e.keyCode == 13){//엔터를 치면...
+            send();
+        }
+    });
+});    
+
+//웹소켓 서버에 접속한다!!!
+function connectServer(){
+    webSocket = new WebSocket("ws://127.0.0.1:7575");
+
+    webSocket.onopen= function(e){
+        document.getElementById("area").append("접속성공\n");
+    };
+    webSocket.onclose = function(e){
+        document.getElementById("area").append("접속해제\n");
+    }
+    webSocket.onerror = function(err){
+        document.getElementById("area").append("에러발생\n");
+        console.log(err);
+    }
+    //데이터가 전송되어오면..
+    webSocket.onmessage = function(e){
+        var msg = e.data; //전송된 데이터!!
+        area.append(msg+"\n");
+    }
+}
+//서버에 메시지 전송 !!
+function send(){
+    var msg = t_input.value;
+    webSocket.send(msg);//전송
+    t_input.value="";
+}
+</script>  
+</head>
+<body>
+<div class="container">
+    <div>
+        <input type="text" id="t_ip" placeholder="ip입력"/>
+        <button>접속</button>
+    </div>
+    <div>
+        <textarea id="area"></textarea>        
+    </div>
+    <div>
+        <input type="text" id="t_input" placeholder="메시지 입력">
+    </div>
+</div>
+</body>
+</html>

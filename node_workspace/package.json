@@ -1,0 +1,15 @@
+{
+  "name": "korea_node",
+  "version": "1.0.0",
+  "description": "필요없어 ",
+  "main": "kk.js",
+  "scripts": {
+    "test": "xx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "d"
+  },
+  "author": "zino",
+  "license": "ISC"
+}

@@ -1,0 +1,5 @@
+1. node.js 워크스페이스로 이동
+2. express 프로젝트 생성기 설치
+	npm install -g express-generator
+3. 명령어로 express 프로젝트 생성
+	express 원하는프로젝트

@@ -198,6 +198,22 @@
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>5.1.49</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket 
+			jackson도 함께 설치하자!!
+		-->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>4.3.30.RELEASE</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.6</version>
+		</dependency>
 		
 	
 		<!-- Test -->

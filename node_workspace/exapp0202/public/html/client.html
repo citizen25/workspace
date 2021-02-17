@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+div{
+    border:2px solid red;
+    width:300px;
+    height:400px;
+}    
+div *{
+    width:97%;
+}
+textarea{
+    height:300px;
+    background:#FFDD00;
+}
+</style>   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> 
+<script>
+var webSocket; //이 html을 배포한 서버와 연결된 소켓 얻기!!
+
+function connect(){
+    //connect to server!!
+    var host = document.querySelector("#host").value;
+    webSocket = new WebSocket("ws://"+host);
+
+    //웹소켓 객체가 생성되었으므로, 이 시점 부터는 각종 이벤트를 처리하자!!
+    //서버와 연결을 성공했을때의 이벤트 
+    webSocket.onopen=function(e){
+        document.querySelector("#content").value+="접속성공\n";
+    }
+    webSocket.onerror=function(e){
+        document.querySelector("#content").value+="에러발생\n";
+    }
+    webSocket.onclose=function(e){
+        document.querySelector("#content").value+="접속해제\n";
+    }
+
+    //서버로부터 메시지가 도착했을때..
+    webSocket.onmessage=function(e){
+        var msg = e.data;
+        document.querySelector("#content").value+=msg+"\n";
+    }
+}   
+
+//서버에 메시지 전송하기
+function send(){
+    var msg = document.querySelector("#t_input").value;
+    webSocket.send(msg);
+    document.querySelector("#t_input").value="";
+}
+
+function enter(){
+    if(event.keyCode==13){
+        send();
+    }
+}
+</script>
+</head>
+<body>
+    <div>
+         <input type="text" id="host" value="192.168.35.96:9999">
+         <button onClick="connect()">접속</button>  
+         <textarea id="content"></textarea>
+         <input type="text" id="t_input" placeholder="메시지 입력" onKeyUp="enter()">                         
+    </div>
+
+</body>
+</html>

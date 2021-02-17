@@ -14,9 +14,11 @@ public class ChatThread extends Thread{
 	BufferedReader buffr;
 	BufferedWriter buffw;
 	boolean flag=true; //쓰레드 가동 여부를 결정하는 논리값, 이 쓰레드를 죽이고 싶다면 false로 준다!!
+	ChatServer chatServer;
 	
-	public ChatThread(Socket socket) {
+	public ChatThread(Socket socket, ChatServer chatServer) {
 		this.socket=socket;
+		this.chatServer = chatServer;
 		
 		try {
 			buffr = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -31,7 +33,11 @@ public class ChatThread extends Thread{
 		String msg=null;
 		try {
 			msg= buffr.readLine();
-			send(msg);
+			chatServer.area.append(msg+"\n");//로그에 남기기
+			
+			for(ChatThread chatThread : chatServer.vec) { //접속한 모든 접속자에 대해 send 호출 == broad Casting 방송하자!!
+				chatThread.send(msg);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

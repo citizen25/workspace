@@ -1,0 +1,65 @@
+<html 
+  	xmlns:th="http://www.thymeleaf.org" 
+  	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  	
+<nav class="mt-2" th:fragment="sideNaviFragment">
+   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+     <!-- Add icons to the links using the .nav-icon class
+          with font-awesome or any other icon font library -->
+	<!--  
+		class 속성 : menu_open, 
+						navi_link active
+	-->		          	
+          
+     <li class="nav-item has-treeview">
+       <a href="#" class="nav-link">
+         <i class="nav-icon fas fa-tachometer-alt"></i>
+         <p>
+           상품관리 하기
+           <i class="right fas fa-angle-left"></i>
+         </p>
+       </a>
+       <ul class="nav nav-treeview">
+         <li class="nav-item">
+           <a href="/admin/category/main.html" class="nav-link">
+             <i class="far fa-circle nav-icon"></i>
+             <p>카테고리 관리</p>
+           </a>
+         </li>
+         <li class="nav-item">
+           <a href="/admin/main2" class="nav-link">
+             <i class="far fa-circle nav-icon"></i>
+             <p>해당없슴</p>
+           </a>
+         </li>
+       </ul>
+     </li>
+     
+     <li class="nav-item has-treeview">
+       <a href="#" class="nav-link">
+         <i class="nav-icon fas fa-tachometer-alt"></i>
+         <p>
+           주문관리
+           <i class="right fas fa-angle-left"></i>
+         </p>
+       </a>
+       <ul class="nav nav-treeview">
+         <li class="nav-item">
+           <a href="/static/pages/tables/simple.html" class="nav-link">
+             <i class="far fa-circle nav-icon"></i>
+             <p>카테고리 관리</p>
+           </a>
+         </li>
+         <li class="nav-item">
+           <a href="/admin/main2" class="nav-link">
+             <i class="far fa-circle nav-icon"></i>
+             <p>해당없슴</p>
+           </a>
+         </li>
+       </ul>
+     </li>
+     
+     
+   </ul>
+ </nav>
+</html>      

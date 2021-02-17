@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<title>Document</title>
+<style>
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=button] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+</style>   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> 
+<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<script type="text/babel">
+var webSocket; //이 html을 배포한 서버와 연결된 소켓 얻기!!
+
+//재사용 가능성이 높은 html 태그를 리엑트의 컴포넌트로 등록
+class TableContent extends React.Component{
+
+    getItem(board_id){
+        return function(){//무조건 호출방지를 위한 익명함수 및 리턴...
+            getDetail(board_id);
+        }
+    }
+
+    render(){
+        var row=[];//tr을 누적할 배열    
+        for(var i=0;i<this.props.dataList.length;i++){
+            var board = this.props.dataList[i];//게시물 하나 꺼낸다
+            row.push(
+                <tr>
+                    <td>{i}</td>
+                    <td onClick={this.getItem(board.board_id)}>{board.title}</td>
+                    <td>{board.writer}</td>
+                    <td>{board.regdate}</td>
+                    <td>{board.hit}</td>
+                </tr>                
+            );
+        }
+
+        return (
+            <table>
+                <tr>
+                    <th>No</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>등록일</th>
+                    <th>조회수</th>
+                </tr>
+                {row}
+            </table>    
+        )
+    };
+}
+
+//문서가 로드되면, 웹소켓 서버에 접속을 시도하자!
+$(function(){
+    connect();
+    getList();//게시물 목록 가져오기
+
+    //등록
+    $("#bt_regist").click(function(){
+        regist();
+    });
+
+    //수정
+    $("#bt_edit").click(function(){
+        edit();
+    });
+
+    //삭제
+    $("#bt_del").click(function(){
+        del();
+    });
+
+});
+
+//비동기로 서버에 등록 요청
+function regist(){
+    var form = $("#regist-form").serialize();
+    var json={};
+    json["title"]=$("#title").val();
+    json["writer"]=$("#writer").val();
+    json["content"]=$("#content").val();
+
+    $.ajax({
+        url:"/board",
+        type:"POST",
+        data: JSON.stringify(json), 
+        contentType:"application/json;charset=utf-8",
+        success:function(responseData){
+            console.log("서버가 등록후 보낸 코드는 ",responseData.resultCode);
+        },
+        error:function(xhr, result, error){
+            console.log(xhr);
+        }
+    });
+}
+
+//비동기로 데이터 가져오기 
+function getList(){
+    $.ajax({
+        url:"/board",
+        type:"GET",
+        success:function(responseData){
+            //화면 갱신..react로...
+            console.log(responseData);
+            ReactDOM.render(<TableContent dataList={responseData.data}/>, document.getElementById("list-area"));
+
+        }
+    });
+}
+
+//한건 가져오기 
+//시간 10분 드립니다. 상세보기 처리해주세요~
+function getDetail(board_id){
+    $.ajax({
+        url:"/board/"+board_id,
+        type:"GET",
+        success:function(responseData){
+            console.log(responseData);
+        },
+        error:function(xhr, result, error){
+            console.log(xhr);
+        }
+    });
+}
+
+function connect(){
+    //connect to server!!
+    webSocket = new WebSocket("ws://localhost:9999");
+
+    //웹소켓 객체가 생성되었으므로, 이 시점 부터는 각종 이벤트를 처리하자!!
+    //서버와 연결을 성공했을때의 이벤트 
+    webSocket.onopen=function(e){
+        $("#board-title").html("서버 접속 완료");
+    }
+    webSocket.onerror=function(e){
+        console.log("에러 발생");
+    }
+    webSocket.onclose=function(e){
+        $("#board-title").html("서버 접속 해제");
+    }
+
+    //서버로부터 메시지가 도착했을때..
+    webSocket.onmessage=function(e){
+        var msg = e.data;
+        
+        console.log("msg is =", msg);
+
+        var json = JSON.parse(msg);        
+        console.log("웹소켓을 통해 서버로부터 받은 메시지: ", json.requestCode);
+
+        if(json.requestCode=="create"){//누군가 서버에 글 쓰면..
+            getList();
+        }else if(json.requestCode=="read"){
+
+        }else if(json.requestCode=="update"){//누군가 서버에 글 수정하면..
+            getList();
+        }else if(json.requestCode=="delete"){//누군가 서버에 글 삭제하면..
+            getList();
+        }
+    }
+}   
+
+//서버에 메시지 전송하기
+function send(){
+    var msg = document.querySelector("#t_input").value;
+    webSocket.send(msg);
+    document.querySelector("#t_input").value="";
+}
+
+function enter(){
+    if(event.keyCode==13){
+        send();
+    }
+}
+</script>
+</head>
+<body>
+<div class="container-fluid">
+    <h1 id="board-title">RealTime Board</h1>
+    <div class="row">
+        <div class="col-sm-3" style="background-color:lavender;">
+            <div class="container">
+                <form id="regist-form">
+                    <input type="text" id="title" placeholder="Your name..">
+                    <input type="text" id="writer" placeholder="Your last name..">
+                    <textarea id="content" placeholder="Write something.." style="height:200px"></textarea>
+                    <input type="button" value="등록" id="bt_regist">
+                </form>
+            </div>              
+        </div>
+    <div id="list-area" class="col-sm-6" style="background-color:lavenderblush;overflow:scroll"></div>
+    <div class="col-sm-3" style="background-color:lavender;">
+        <div class="container">
+            <form>
+                <input type="text" id="title2" placeholder="Your name..">
+                <input type="text" id="writer2" placeholder="Your last name..">
+                <textarea id="content2" placeholder="Write something.." style="height:200px"></textarea>
+                <input type="button" value="수정" id="bt_edit">
+                <input type="button" value="삭제" id="bt_del">
+            </form>
+        </div>              
+    </div>
+    </div>
+    </div>    
+</body>
+</html>

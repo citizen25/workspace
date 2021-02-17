@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html   
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<th:block th:replace="fragment/config :: configFragment"/>
+<script>
+
+$(function(){
+	$("button").click(function(){
+		upload();
+	});	
+});
+
+//동기 업로드
+function upload(){
+	$("form").attr({
+		action:"/admin/photo",
+		enctype:"multipart/form-data",
+		method:"POST"
+	});
+	
+	$("form").submit();
+}
+</script>
+</head>
+<body>
+	
+	<form>
+		<input type="text" name="title" placeholder="제목입력..."><p>
+		<input type="file" name="myFile"><p>
+		<button type="button">업로드</button>
+	</form>
+	
+</body>
+</html>
